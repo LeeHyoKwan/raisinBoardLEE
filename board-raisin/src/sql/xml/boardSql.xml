@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="board" type="com.raisin.model.dto.BoardDTO"/>
+
+	<!-- アカウント取得 -->
+	<select id="selectBoard" parameterClass="map" resultClass="board">
+		SELECT
+		*
+		FROM
+			board
+		<dynamic>
+			<isNotNull property="boardid">
+				WHERE
+					boardid = #boardid#
+			</isNotNull>
+		</dynamic>
+		ORDER BY
+			boardid DESC
+	</select>
+
+	<!-- board情報登録 -->
+	<insert id="insertBoard" parameterClass="map">
+		INSERT INTO
+			board
+			(`userid`, `title`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
+		VALUES
+			(#userid#, #title#, #content#, #createuser#, #createdt#, #modiuser#, #modidt#)
+	</insert>
+</sqlMap>

@@ -1,0 +1,16 @@
+/*
+ * jqgrid
+ */
+.ui-jqgrid tr.jqgrow {
+	outline-style: none;
+	height: 25px;
+}
+.ui-jqgrid tr.jqgrow td {
+	font-size:13px;
+}
+.ui-jqgrid tr.jqgrow td a{
+	margin-left: 10px;
+}
+.grid-col {
+  padding-left: 5px !important;
+}

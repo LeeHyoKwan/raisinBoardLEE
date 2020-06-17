@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<!-- 記事画面定義-->
+	<package name="board" extends="common" namespace="/board">
+
+		<!-- 記事一覧初期表示 -->
+		<action name="index" class="com.raisin.action.board.BoardListAction" method="execute">
+			<interceptor-ref name="loginChk"/>
+			<result name="success">/WEB-INF/view/jsp/board/board-list.jsp</result>
+		</action>
+
+		<!-- 掲示板作成Form -->
+		<action name = "writeForm" class="com.raisin.action.board.BoardListAction" method="writeForm">
+			<interceptor-ref name="loginChk"/>
+			<result name="success">/WEB-INF/view/jsp/board/board-write.jsp</result>
+		</action>
+
+		<!-- 掲示板作成処理 -->
+		<action name = "writeAction" class="com.raisin.action.board.BoardListAction" method="writeAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/index</result>
+		</action>
+
+		<!-- 掲示板詳細表示 -->
+		<action name = "viewForm" class="com.raisin.action.board.BoardViewAction" method="execute">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success">/WEB-INF/view/jsp/board/board-view.jsp</result>
+		</action>
+
+	</package>
+</struts>

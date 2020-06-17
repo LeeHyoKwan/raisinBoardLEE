@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <!-- DB接続情報 -->
+    <properties resource="db.properties"/>
+
+    <!-- 相対値はdb.propertiesを参照 -->
+    <transactionManager type="JDBC" commitRequired="false">
+        <dataSource type="SIMPLE">
+            <property name="JDBC.Driver" value="${driver}"/>
+            <property name="JDBC.ConnectionURL" value="${url}"/>
+            <property name="JDBC.Username" value="${userId}"/>
+            <property name="JDBC.Password" value="${userPw}"/>
+        </dataSource>
+    </transactionManager>
+
+    <!-- SQLMAPファイル -->
+    <sqlMap resource="xml/account.xml"/>
+    <sqlMap resource="xml/boardSql.xml"/>
+</sqlMapConfig>

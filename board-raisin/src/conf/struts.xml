@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 共通設定 -->
+	<package name="common" extends="struts-default">
+		<interceptors>
+			<!-- セッションチェックインターセプター -->
+			<interceptor name="loginChk" class="com.raisin.interceptor.LoginCheckInterceptor"/>
+		</interceptors>
+		<global-results>
+			<!-- ログインしてないユーザー -->
+			<result name="login" type="redirect">/login/index</result>
+			<!-- エラーハンドル -->
+			<result name="exception">/WEB-INF/view/jsp/common/error.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping result="exception" exception="java.lang.Exception" />
+		</global-exception-mappings>
+
+	</package>
+
+	<!-- ログイン画面 -->
+	<include file="struts/login.xml"/>
+	<!-- 記事画面 -->
+	<include file="struts/board.xml"/>
+
+</struts>
