@@ -15,6 +15,10 @@
 <!-- <script src="../resources/js/bootstrap.js" type="text/javascript"></script> -->
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="../resources/js/jquery-ui.js"></script>
+<script src="../resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="../resources/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
+<script src="../resources/js/i18n/grid.locale-ja.js" type="text/javascript"></script>
+
 <script>
 	jQuery.browser = {};
 	(function () {
@@ -26,8 +30,6 @@
 	    }
 	})();
 </script>
-<script src="../resources/js/i18n/grid.locale-ja.js" type="text/javascript"></script>
-<script src="../resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 
 </script>
 </head>
