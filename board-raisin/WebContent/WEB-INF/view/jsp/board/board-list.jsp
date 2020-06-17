@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>notice Board</title>
+<title>noticeBoard</title>
 
 <link href="../resources/css/bootstrap.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/jquery-ui.css" />
