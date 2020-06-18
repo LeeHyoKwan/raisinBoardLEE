@@ -50,6 +50,16 @@ function onClickSaveChk(){
 	return false;
 }
 
+function onClickCommentSaveChk(){
+	const comment = $("#comment").val();
+	if (isEmpty(comment)) {
+		alert("내용을 입력해주세요");
+		return false;
+	} else {
+		return true;
+	}
+}
+
 function onClickSave(){
 	$("#dialogSave").dialog("open");
 }
@@ -72,6 +82,14 @@ function isEmpty(str){
 
 function onClickEdit(){
 	document.boardView_form.action = "../board/editAction	";
+	document.boardView_form.submit();
+}
+
+function onClickCommentInsert(){
+	if(!onClickCommentSaveChk()){
+		return false;
+	}
+	document.boardView_form.action = "../comment/commentWriteAction";
 	document.boardView_form.submit();
 }
 

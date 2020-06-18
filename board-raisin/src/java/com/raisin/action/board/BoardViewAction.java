@@ -11,8 +11,9 @@ import org.apache.struts2.ServletActionContext;
 
 import com.raisin.action.BaseAction;
 import com.raisin.model.dto.BoardDTO;
-import com.raisin.model.dto.commentDTO;
+import com.raisin.model.dto.CommentDTO;
 import com.raisin.service.BoardService;
+import com.raisin.service.CommentService;
 
 /**
  * 記事一覧アクションクラス
@@ -28,16 +29,28 @@ public class BoardViewAction extends BaseAction {
 
 	private BoardDTO boardDto;
 
+	private CommentDTO commentDto;
+
 	private BoardService service;
+
+	private CommentService commentService;
 
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
-	private List<commentDTO> commentList = new ArrayList<commentDTO>();
+	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
 
 	/** コンストラクタ */
 	public BoardViewAction() {
 		if (service == null) {
 			service = new BoardService();
+		}
+
+		if (commentService == null) {
+			commentService = new CommentService();
+		}
+
+		if (commentDto == null) {
+			commentDto = new CommentDTO();
 		}
 	}
 
@@ -58,7 +71,8 @@ public class BoardViewAction extends BaseAction {
 			boardDto.setBoardid((String)request.getAttribute("boardid"));
 
 			//commentデータを取得し、リストに保存
-			commentList = service.getComment(boardDto);
+			commentDto.setBoardid((String)request.getAttribute("boardid"));
+			commentList = commentService.getComment(commentDto);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -80,6 +94,12 @@ public class BoardViewAction extends BaseAction {
 			list = service.getBoard(boardDto);
 			if (list.size() > 0) {
 				service.deleteBoard(boardDto);
+			}
+			// コマンド削除処理
+			commentDto.setBoardid(boardDto.getBoardid());
+			commentList = commentService.getComment(commentDto);
+			if (list.size() > 0) {
+				commentService.deleteBoard(commentDto);
 			}
 		} catch (Exception e) {
 			logger.error(e, e);
@@ -105,12 +125,20 @@ public class BoardViewAction extends BaseAction {
 		this.boardDto = boardDto;
 	}
 
-	public List<commentDTO> getCommentList() {
+	public List<CommentDTO> getCommentList() {
 		return commentList;
 	}
 
-	public void setCommentList(List<commentDTO> commentList) {
+	public void setCommentList(List<CommentDTO> commentList) {
 		this.commentList = commentList;
+	}
+
+	public CommentDTO getCommentDto() {
+		return commentDto;
+	}
+
+	public void setCommentDto(CommentDTO commentDto) {
+		this.commentDto = commentDto;
 	}
 
 

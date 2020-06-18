@@ -31,7 +31,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	</insert>
 
 	<!-- board情報更新 -->
-	<insert id="updateBoard" parameterClass="map">
+	<update id="updateBoard" parameterClass="map">
 		UPDATE
 			board
 		SET
@@ -41,13 +41,13 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			modidt = #modidt#
 		WHERE
 			boardid = #boardid#
-	</insert>
+	</update>
 
 		<!-- board情報削除 -->
-	<insert id="deleteBoard" parameterClass="map">
+	<delete id="deleteBoard" parameterClass="map">
 		DELETE FROM
 			board
 		WHERE
 			boardid = #boardid#
-	</insert>
+	</delete>
 </sqlMap>
