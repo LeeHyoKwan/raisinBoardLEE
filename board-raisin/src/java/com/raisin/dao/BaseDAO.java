@@ -73,7 +73,7 @@ public abstract class BaseDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	protected int delte(String id, Object object) throws SQLException {
+	protected int delete(String id, Object object) throws SQLException {
 		return client.delete(id, object);
 	}
 

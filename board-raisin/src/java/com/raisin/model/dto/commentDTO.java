@@ -7,17 +7,21 @@ package com.raisin.model.dto;
  * @since 2020/06/01
  * @version 1.0.0
  */
-public class BoardDTO {
+public class commentDTO {
+	private String commentid;
 	private String boardid;
 	private String userid;
-	private String title;
 	private String content;
 	private String createuser;
 	private String createdt;
 	private String modiuser;
-	private String modidt;
-	private String displayType;
 
+	public String getCommentid() {
+		return commentid;
+	}
+	public void setCommentid(String commentid) {
+		this.commentid = commentid;
+	}
 	public String getBoardid() {
 		return boardid;
 	}
@@ -29,12 +33,6 @@ public class BoardDTO {
 	}
 	public void setUserid(String userid) {
 		this.userid = userid;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public String getContent() {
 		return content;
@@ -66,12 +64,7 @@ public class BoardDTO {
 	public void setModidt(String modidt) {
 		this.modidt = modidt;
 	}
-	public String getDisplayType() {
-		return displayType;
-	}
-	public void setDisplayType(String displayType) {
-		this.displayType = displayType;
-	}
+	private String modidt;
 
 
 }

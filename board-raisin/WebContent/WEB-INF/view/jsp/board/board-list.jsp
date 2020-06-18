@@ -15,26 +15,18 @@
 
 <!-- <script src="../resources/js/bootstrap.js" type="text/javascript"></script> -->
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="../resources/js/boardJquery.js" type="text/javascript"></script>
 <script src="../resources/js/jquery-ui.js"></script>
 <script src="../resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+
+
 <script src="../resources/js/i18n/grid.locale-ja.js" type="text/javascript"></script>
 <script src="../resources/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
-<script>
-	jQuery.browser = {};
-	(function () {
-	    jQuery.browser.msie = false;
-	    jQuery.browser.version = 0;
-	    if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
-	        jQuery.browser.msie = true;
-	        jQuery.browser.version = RegExp.$1;
-	    }
-	})();
-</script>
-
+<script src="../resources/js/boardCommon.js" type="text/javascript"></script>
 <script>
 	// jqgrid初期設定
-	var searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일'];
-	var searchResultColModel =
+	const searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일'];
+	const searchResultColModel =
 	                [
 	                	{name:'boardid', align:'center', width:'30'},
 		                {name:'title', align:'left', width:'600'},
@@ -65,49 +57,14 @@
 			cmTemplate: { sortable: false },
 			shrinkToFit: false
 		});
-		$("#btn_write").button();
 	});
-
-	// boardテーブルデータを配列に設定
-	function getBoardData() {
-		var boardDataTbl = $('#boardDataTbl tr');
-		var rowData = new Array();
-		var dataArray = new Array();
-
-		var boardid = new String();
-		var title = new String();
-		var createuser = new String();
-		var createdt = new String();
-		var modiuser = new String();
-		var modidt = new String();
-
-		for(var i=0;i<boardDataTbl.length;i++) {
-			if (boardDataTbl[i].children.length != 1 ) {
-				boardidVl = boardDataTbl[i].children.boardid.innerHTML;
-				titleVl = boardDataTbl[i].children.title.innerHTML;
-				createuserVl = boardDataTbl[i].children.createuser.innerHTML;
-				createdtVl = boardDataTbl[i].children.createdt.innerHTML;
-				modiuserVl = boardDataTbl[i].children.modiuser.innerHTML;
-				modidtVl = boardDataTbl[i].children.modidt.innerHTML;
-				rowData = {
-								boardid: boardidVl,
-								title : titleVl,
-								createuser : createuserVl,
-								createdt : createdtVl,
-								modiuser : modiuserVl,
-								modidt : modidtVl};
-				dataArray.push(rowData);
-			}
-		}
-		return dataArray;
-	}
 </script>
 </head>
 <body>
 <main id="container"  style="width: 1051px; margin:0 auto;">
 	<section>
-	<h2 style="color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-left: 20px; margin-top: 15px; font-weight: bolder;">
-		<a style="text-decoration: none; color: #3c4790;" href="../board/index">이효관의 게시판  만들기
+	<h2 style="color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-top: 15px; font-weight: bolder;">
+		<a style="text-decoration: none; color: #3c4790;" href="../board/index">이효관의 게시판 만들기
 		</a>
 	</h2>
 	<hr align="left" style="background-color: #3c4790; height:1px; width: 1051px">

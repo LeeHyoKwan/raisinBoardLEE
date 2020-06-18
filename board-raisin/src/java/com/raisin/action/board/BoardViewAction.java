@@ -10,8 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.raisin.action.BaseAction;
-import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
+import com.raisin.model.dto.commentDTO;
 import com.raisin.service.BoardService;
 
 /**
@@ -32,6 +32,8 @@ public class BoardViewAction extends BaseAction {
 
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
+	private List<commentDTO> commentList = new ArrayList<commentDTO>();
+
 	/** コンストラクタ */
 	public BoardViewAction() {
 		if (service == null) {
@@ -46,8 +48,17 @@ public class BoardViewAction extends BaseAction {
 		try {
 			//boardデータを取得し、リストに保存
 			list = service.getBoard(boardDto);
-			request.setAttribute("title", list.get(0).getTitle());
-			request.setAttribute("content", list.get(0).getContent());
+			boardDto.setTitle(list.get(0).getTitle());
+			boardDto.setContent(list.get(0).getContent());
+			request.setAttribute("boardid", boardDto.getBoardid());
+
+			boardDto.setBoardid(null);
+			list = service.getBoard(boardDto);
+
+			boardDto.setBoardid((String)request.getAttribute("boardid"));
+
+			//commentデータを取得し、リストに保存
+			commentList = service.getComment(boardDto);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -63,23 +74,18 @@ public class BoardViewAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public String writeAction() throws Exception {
-		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "writeAction");
+	public String deleteAction() throws Exception {
+		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "deleteAction");
 		try {
-			AccountDTO account = super.getSessionUser();
-			final String sysDate = super.getSysDate();
-			boardDto.setUserid(account.getUserid());
-			boardDto.setCreateuser(account.getUsername());
-			boardDto.setModiuser(account.getUsername());
-			boardDto.setCreatedt(sysDate);
-			boardDto.setModidt(sysDate);
-			//boardデータを登録
-			service.insertBoard(boardDto);
+			list = service.getBoard(boardDto);
+			if (list.size() > 0) {
+				service.deleteBoard(boardDto);
+			}
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
 		} finally {
-			logger.info("---------------- end {}.{} ----------------", "BoardViewAction", "writeAction");
+			logger.info("---------------- end {}.{} ----------------", "BoardViewAction", "deleteAction");
 		}
 		return SUCCESS;
 	}
@@ -98,5 +104,15 @@ public class BoardViewAction extends BaseAction {
 	public void setBoardDto(BoardDTO boardDto) {
 		this.boardDto = boardDto;
 	}
+
+	public List<commentDTO> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<commentDTO> commentList) {
+		this.commentList = commentList;
+	}
+
+
 
 }

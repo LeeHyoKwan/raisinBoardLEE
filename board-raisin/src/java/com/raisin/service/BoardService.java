@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.raisin.dao.BoardDAO;
 import com.raisin.model.dto.BoardDTO;
+import com.raisin.model.dto.commentDTO;
 
 /**
  * 掲示板のサービスクラス
@@ -38,6 +39,19 @@ public class BoardService extends BaseService {
 	}
 
 	/**
+	 * 掲示板のコメント情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<commentDTO> getComment(BoardDTO boardDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		return boardDAO.selectComment(boardDto);
+	}
+
+	/**
 	 * 掲示板の情報を取得する
 	 *
 	 * @return
@@ -48,5 +62,31 @@ public class BoardService extends BaseService {
 		super.commitTransaction();
 		super.endTransaction();
 		boardDAO.insertBoard(boardDto);
+	}
+
+	/**
+	 * 掲示板の情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void updateBoard(BoardDTO boardDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		boardDAO.updateBoard(boardDto);
+	}
+
+	/**
+	 * 掲示板の情報を削除する。
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void deleteBoard(BoardDTO boardDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		boardDAO.deleteBoard(boardDto);
 	}
 }
