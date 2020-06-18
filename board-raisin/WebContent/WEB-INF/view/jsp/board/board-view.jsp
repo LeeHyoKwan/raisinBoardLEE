@@ -11,6 +11,7 @@
 <link href="../resources/css/bootstrap.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/ui.jqgrid.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/css/board-ui.css"/>
 
 <!-- <script src="../resources/js/bootstrap.js" type="text/javascript"></script> -->
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
@@ -107,13 +108,16 @@ $(window.document).ready(function(){
 								style="width: 1051px; height: 33px; line-height: 35px;
 								border-style: none; border-bottom: 1px solid #eee; background-color: #ffffff; font-weight: bolder;" disabled="true"/>
 						</div>
-						<div class="contentDiv" style="padding-top: 20px; padding-bottom: 20px;">
+						<div class="contentDiv" style="padding-top: 30px; padding-bottom: 30px;">
 							<s:textarea id="content" type="text" name="boardDto.content"
 								style="width: 1051px; line-height: 35px;
 								border-style: none; background-color: #ffffff; resize: none;" disabled="true"/>
 						</div>
-						<div style="border-top: 2px solid #525eaa;">
-							<table id="commentTbl" style="width:1051px; margin-top: 5px;">
+						<div style="font-family: '굴림',Gulim;font-size: 13px;color: #333;font-weight: bold;margin-bottom: 5px;">
+							<div style="float:left; margin-right: 5px;">댓글</div><div style=" color: #d31900;float:left">${commentSize}</div><div>개</div>
+						</div>
+						<div>
+							<table id="commentTbl" style="width:1051px; margin-top: 5px; border-top: 2px solid #525eaa;">
 								<s:iterator value="commentList" status = "stat">
 									<tr align = "center" style="border-bottom: 1px solid #ddd;">
 							            <td id="createuser" width="132px " align = "left" style="font-family: '굴림',Gulim; font-size: 12px; color: #777;"><s:property value = "createuser" /></td>
@@ -122,8 +126,13 @@ $(window.document).ready(function(){
 								</s:iterator>
 							</table>
 						</div>
+						<s:set var="commentSize">${commentSize}</s:set>
+						<s:if test="%{#commentSize!=0}">
+							<div style="height:69px">
+							</div>
+						</s:if>
 						<!-- コメント入力欄 -->
-						<div style="padding:10px; background-color:#fafafa; border-top: 2px solid #525eaa; border-bottom: 2px solid #525eaa; margin-top: 30px;">
+						<div style="padding:10px; background-color:#fafafa; border-top: 2px solid #525eaa; border-bottom: 2px solid #525eaa;">
 							<s:textarea id="comment" type="text" name="commentDto.content" maxlength="400" style="width: 1010px; height: 78px; border: 1px solid #cecdce;
 								background-color: #ffffff; resize: none; margin: 10px;"></s:textarea>
 							<div style="text-align-last: right;">
@@ -150,7 +159,12 @@ $(window.document).ready(function(){
 	<section>
 	<div style='width:1051px; display: block'>
 		<table id="boardTable"></table>
-		<div id="pager"></div>
+<!-- 		<div id="pager"></div> -->
+	<table style="margin-right: auto;margin-left: auto;">
+		<tr>
+			<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
+		</tr>
+	</table>
 	</div>
 	<br/>
 	<div style="display:none;">
@@ -166,6 +180,13 @@ $(window.document).ready(function(){
 		            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
+		      <s:set var="commentCount"><s:property value = "commentCount" /></s:set>
+					<s:if test="%{#commentCount!=0}">
+			            <td id="commentCount" align = "center"><s:a href="%{boardViewAction}">[<s:property value = "commentCount" />]</s:a></td>
+					</s:if>
+					<s:else>
+						<td id="commentCount" align = "center"><s:property value = "commentCount" /></td>
+					</s:else>
 		      </tr>
 			</s:iterator>
 		</table>

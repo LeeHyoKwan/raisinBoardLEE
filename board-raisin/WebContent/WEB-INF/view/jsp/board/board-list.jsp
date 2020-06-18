@@ -70,7 +70,14 @@
 	<hr align="left" style="background-color: #3c4790; height:1px; width: 1051px">
 	<div style='width:1051px; display: block'>
 		<table id="boardTable"></table>
-		<div id="pager"></div>
+<!-- 	<div id="pager"></div> -->
+
+	<table style="margin-right: auto;margin-left: auto;">
+		<tr>
+			<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
+		</tr>
+	</table>
+
 		<div style='float: right; margin-top: 5px;'>
 			<button onclick="javascript:location.href='../board/writeForm'"
 				type="button" id="btn_write" style="color:#fff;border-style:solid; background-color: #3c4790; font-weight: bold; border-radius: 4px">글쓰기</button>
@@ -84,12 +91,21 @@
 		            <td id="boardid" align = "center"><s:property value = "boardid" /></td>
 					<s:url var="boardViewAction"  action="viewForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
+			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 			        </s:url>
 					<td id="title" align = "center"><s:a href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
 		            <td id="createuser" align = "center"><s:property value = "createuser" /></td>
 		            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
+
+					<s:set var="commentCount"><s:property value = "commentCount" /></s:set>
+					<s:if test="%{#commentCount!=0}">
+			            <td id="commentCount" align = "center"><s:a href="%{boardViewAction}">[<s:property value = "commentCount" />]</s:a></td>
+					</s:if>
+					<s:else>
+						<td id="commentCount" align = "center"><s:property value = "commentCount" /></td>
+					</s:else>
 		      </tr>
 			</s:iterator>
 		</table>

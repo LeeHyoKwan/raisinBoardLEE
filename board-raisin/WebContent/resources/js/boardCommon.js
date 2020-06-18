@@ -7,17 +7,23 @@ function getBoardData() {
 	var rowData = new Array();
 	var dataArray = new Array();
 
-	var boardid = new String();
-	var title = new String();
-	var createuser = new String();
-	var createdt = new String();
-	var modiuser = new String();
-	var modidt = new String();
+	var boardidVl = new String();
+	var titleVl = new String();
+	var createuserVl = new String();
+	var createdtVl = new String();
+	var modiuserVl = new String();
+	var modidtVl = new String();
+	var commentCountVl = new String();
 
 	for(var i=0;i<boardDataTbl.length;i++) {
 		if (boardDataTbl[i].children.length != 1 ) {
 			boardidVl = boardDataTbl[i].children.boardid.innerHTML;
 			titleVl = boardDataTbl[i].children.title.innerHTML;
+			commentCountVl = boardDataTbl[i].children.commentCount.innerHTML;
+			if (commentCountVl != 0) {
+				commentCountVl = commentCountVl.replace("href","class='comment_num' href");
+				titleVl = titleVl + commentCountVl;
+			}
 			createuserVl = boardDataTbl[i].children.createuser.innerHTML;
 			createdtVl = boardDataTbl[i].children.createdt.innerHTML;
 			modiuserVl = boardDataTbl[i].children.modiuser.innerHTML;
