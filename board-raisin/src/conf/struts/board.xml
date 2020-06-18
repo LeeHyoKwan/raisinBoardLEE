@@ -33,5 +33,19 @@
 			<result name="success">/WEB-INF/view/jsp/board/board-view.jsp</result>
 		</action>
 
+		<!-- 掲示板詳細削除処理 -->
+		<action name = "deleteAction" class="com.raisin.action.board.BoardViewAction" method="deleteAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/index</result>
+		</action>
+
+		<!-- 掲示板詳細編集処理 -->
+		<action name = "editAction" class="com.raisin.action.board.BoardViewAction" method="execute">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success">/WEB-INF/view/jsp/board/board-write.jsp</result>
+		</action>
+
 	</package>
 </struts>

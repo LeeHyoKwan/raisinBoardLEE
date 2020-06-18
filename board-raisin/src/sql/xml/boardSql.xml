@@ -5,7 +5,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 <sqlMap>
 	<typeAlias alias="board" type="com.raisin.model.dto.BoardDTO"/>
 
-	<!-- アカウント取得 -->
+	<!-- board情報取得 -->
 	<select id="selectBoard" parameterClass="map" resultClass="board">
 		SELECT
 		*
@@ -28,5 +28,26 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			(`userid`, `title`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
 		VALUES
 			(#userid#, #title#, #content#, #createuser#, #createdt#, #modiuser#, #modidt#)
+	</insert>
+
+	<!-- board情報更新 -->
+	<insert id="updateBoard" parameterClass="map">
+		UPDATE
+			board
+		SET
+			title = #title#,
+			content = #content#,
+			modiuser = #modiuser#,
+			modidt = #modidt#
+		WHERE
+			boardid = #boardid#
+	</insert>
+
+		<!-- board情報削除 -->
+	<insert id="deleteBoard" parameterClass="map">
+		DELETE FROM
+			board
+		WHERE
+			boardid = #boardid#
 	</insert>
 </sqlMap>

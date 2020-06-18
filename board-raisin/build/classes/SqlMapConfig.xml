@@ -17,4 +17,5 @@
     <!-- SQLMAPファイル -->
     <sqlMap resource="xml/account.xml"/>
     <sqlMap resource="xml/boardSql.xml"/>
+    <sqlMap resource="xml/commentSql.xml"/>
 </sqlMapConfig>

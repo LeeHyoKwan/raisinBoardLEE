@@ -13,31 +13,15 @@
 
 <!-- <script src="../resources/js/bootstrap.js" type="text/javascript"></script> -->
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="../resources/js/boardJquery.js" type="text/javascript"></script>
 <script src="../resources/js/jquery-ui.js"></script>
 <script src="../resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="../resources/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
 <script src="../resources/js/i18n/grid.locale-ja.js" type="text/javascript"></script>
-
-
+<script src="../resources/js/boardCommon.js" type="text/javascript"></script>
 <script>
-	jQuery.browser = {};
-	(function () {
-	    jQuery.browser.msie = false;
-	    jQuery.browser.version = 0;
-	    if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
-	        jQuery.browser.msie = true;
-	        jQuery.browser.version = RegExp.$1;
-	    }
-	})();
-</script>
-
-<script>
-	function onClickCancel(){
-		$("#dialog").dialog("open");
-	}
-
     $(function(){
-        $("#dialog").dialog({
+        $("#dialogCancel").dialog({
             autoOpen:false,
             resizable:false,
             title: '글쓰기',
@@ -49,17 +33,28 @@
                 }
             }
         });
+
+        $("#dialogSave").dialog({
+            autoOpen:false,
+            resizable:false,
+            title: '글쓰기',
+            buttons:{
+                "취소":function(){
+                    $(this).dialog("close");
+                },"확인":function(){
+                	document.boardWrite_form.submit();
+                }
+            }
+        });
         $(".ui-dialog-buttonpane button:contains('확인')").attr('style','border-color:"#3c4790"; background: #4a57a8;color: #fff');
-        $("#btn_save").button();
-        $("#btn_cancel").button();
     });
 </script>
 </head>
 <body>
-<form class="form-signin" method="post" action="../board/writeAction">
+<form name="boardWrite_form" method="post" action="../board/writeAction">
 	<main id="container"  style="width: 1051px; margin:0 auto;">
 		<section>
-		<h2 style="color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-left: 20px; margin-top: 15px; font-weight: bolder;">
+		<h2 style="color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-top: 15px; font-weight: bolder;">
 			<a style="text-decoration: none; color: #3c4790;" href="../board/index">이효관의 게시판 만들기
 			</a>
 		</h2>
@@ -77,8 +72,8 @@
 						border: 1px solid #cecdce; color: #333; resize: none;" placeholder='본문을 입력해 주세요.'/>
 				</div>
 				<div style='float: right; margin-top: 5px; margin-right: 30px'>
-					<button
-						type="submit" id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">등록</button>
+					<button onsubmit="" onclick="return onClickSaveChk()"
+						id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">등록</button>
 				</div>
 
 				<div style='float: right; margin-top: 5px; margin-right: 10px'>
@@ -89,10 +84,15 @@
 		</article>
 		</section>
 	</main>
+	<s:hidden id="boardid"  type="text" name="boardDto.boardid" />
+	<s:hidden id="displayType"  type="text" name="boardDto.displayType"/>
 </form>
 </body>
 
-<div id="dialog">
+<div id="dialogCancel" style="display:none;">
    <p>글 작성을 그만두시겠습니까?</p>
+</div>
+<div id="dialogSave" style="display:none;">
+   <p>글을 등록하시겠습니까?</p>
 </div>
 </html>

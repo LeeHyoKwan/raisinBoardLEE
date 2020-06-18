@@ -71,8 +71,13 @@ public class BoardListAction extends BaseAction {
 			boardDto.setModiuser(account.getUsername());
 			boardDto.setCreatedt(sysDate);
 			boardDto.setModidt(sysDate);
-			//boardデータを登録
-			service.insertBoard(boardDto);
+			if ("edit".equals(boardDto.getDisplayType())) {
+				service.updateBoard(boardDto);
+				System.out.println(boardDto.getDisplayType());
+			} else {
+				//boardデータを登録
+				service.insertBoard(boardDto);
+			}
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;

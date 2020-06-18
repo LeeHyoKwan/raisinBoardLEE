@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.raisin.model.dto.BoardDTO;
+import com.raisin.model.dto.commentDTO;
 
 /**
  * 掲示板のDAOクラス
@@ -38,6 +39,22 @@ public class BoardDAO extends BaseDAO {
 	 * @return
 	 * @throws SQLException
 	 */
+	public List<commentDTO> selectComment(BoardDTO boardDto) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (boardDto == null) {
+			map.put("boardid", null);
+		} else {
+			map.put("boardid", boardDto.getBoardid());
+		}
+		return (List<commentDTO>) super.queryForList("selectComment", map);
+	}
+
+	/**
+	 * 掲示板の情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
 	public void insertBoard(BoardDTO boardDto) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		final String title = boardDto.getTitle();
@@ -56,5 +73,43 @@ public class BoardDAO extends BaseDAO {
 		map.put("createdt", createdt);
 		map.put("modidt", modidt);
 		super.insert("insertBoard", map);
+	}
+
+	/**
+	 * 掲示板の情報を取得する
+	 *
+	 * @return
+	 * @throws SQLExceptionupdateBoard
+	 */
+	public void updateBoard(BoardDTO boardDto) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		final String boardid = boardDto.getBoardid();
+		final String title = boardDto.getTitle();
+		final String content = boardDto.getContent();
+		final String modiuser = boardDto.getModiuser();
+		final String modidt = boardDto.getModidt();
+
+		map.put("boardid", boardid);
+		map.put("title", title);
+		map.put("content", content);
+		map.put("modiuser", modiuser);
+		map.put("modidt", modidt);
+		super.update("updateBoard", map);
+	}
+
+	/**
+	 * 掲示板の情報を削除する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void deleteBoard(BoardDTO boardDto) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (boardDto == null) {
+			map.put("boardid", null);
+		} else {
+			map.put("boardid", boardDto.getBoardid());
+		}
+		super.delete("deleteBoard", map);
 	}
 }
