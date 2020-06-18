@@ -84,11 +84,11 @@ $(window.document).ready(function(){
   </style>
     <script>
     $(document).ready(function() {
-      $('.contenDiv').on( 'keyup', 'textarea', function (e){
+      $('.contentDiv').on( 'keyup', 'textarea', function (e){
         $(this).css('height', 'auto' );
         $(this).height( this.scrollHeight );
       });
-      $('.contenDiv').find( 'textarea' ).keyup();
+      $('.contentDiv').find( 'textarea' ).keyup();
     });
   </script>
 <body >
@@ -107,28 +107,28 @@ $(window.document).ready(function(){
 								style="width: 1051px; height: 33px; line-height: 35px;
 								border-style: none; border-bottom: 1px solid #eee; background-color: #ffffff; font-weight: bolder;" disabled="true"/>
 						</div>
-						<div class="contenDiv" style="padding-top: 30px;">
+						<div class="contentDiv" style="padding-top: 20px; padding-bottom: 20px;">
 							<s:textarea id="content" type="text" name="boardDto.content"
 								style="width: 1051px; line-height: 35px;
 								border-style: none; background-color: #ffffff; resize: none;" disabled="true"/>
 						</div>
-						<hr align="left" style="background-color: #3c4790; height:0.2px; width: 1051px">
-						<table id="commentTbl" style="width:1051px">
-							<s:iterator value="commentList" status = "stat">
-								<tr align = "center">
-						            <td id="createuser" width="132px " align = "left"><s:property value = "createuser" /></td>
-						            <td id="content" align = "left"><s:property value = "content" /></td>
-						      </tr>
-							</s:iterator>
-						</table>
-
+						<div style="border-top: 2px solid #525eaa;">
+							<table id="commentTbl" style="width:1051px; margin-top: 5px;">
+								<s:iterator value="commentList" status = "stat">
+									<tr align = "center" style="border-bottom: 1px solid #ddd;">
+							            <td id="createuser" width="132px " align = "left" style="font-family: '굴림',Gulim; font-size: 12px; color: #777;"><s:property value = "createuser" /></td>
+							            <td id="content" align = "left" style="padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333;"><s:property value = "content" /></td>
+							      </tr>
+								</s:iterator>
+							</table>
+						</div>
 						<!-- コメント入力欄 -->
-						<div style="background-color:#fafafa; border-bottom: 1px solid #525e; border-top: 1px solid #525e; margin-top: 30px;">
-							<s:textarea style="width: 1030px; line-height: 35px;
+						<div style="padding:10px; background-color:#fafafa; border-top: 2px solid #525eaa; border-bottom: 2px solid #525eaa; margin-top: 30px;">
+							<s:textarea id="comment" type="text" name="commentDto.content" maxlength="400" style="width: 1010px; height: 78px; border: 1px solid #cecdce;
 								background-color: #ffffff; resize: none; margin: 10px;"></s:textarea>
-							<div>
-								<button onclick = "onClickEdit()"
-									type="button" id="btn_edit" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">등록</button>
+							<div style="text-align-last: right;">
+								<button onclick = "onClickCommentInsert()"
+									type="button" id="btn_comment_insert" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">등록</button>
 							</div>
 						</div>
 						<div style='float: right; margin-top: 5px;'>

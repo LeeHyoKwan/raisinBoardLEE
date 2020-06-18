@@ -3,7 +3,7 @@
 PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
-	<typeAlias alias="comment" type="com.raisin.model.dto.commentDTO"/>
+	<typeAlias alias="comment" type="com.raisin.model.dto.CommentDTO"/>
 
 	<!-- comment情報取得 -->
 	<select id="selectComment" parameterClass="map" resultClass="comment">
@@ -21,4 +21,20 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			boardid DESC
 	</select>
 
+	<!-- comment情報登録 -->
+	<insert id="insertComment" parameterClass="map">
+		INSERT INTO
+			board_comment
+			(`boardid`, `userid`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
+		VALUES
+			(#boardid#, #userid#, #content#, #createuser#, #createdt#, #modiuser#, #modidt#)
+	</insert>
+
+	<!-- board情報削除 -->
+	<delete id="deleteComment" parameterClass="map">
+		DELETE FROM
+			board_comment
+		WHERE
+			boardid = #boardid#
+	</delete>
 </sqlMap>

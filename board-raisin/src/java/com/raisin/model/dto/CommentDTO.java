@@ -7,7 +7,7 @@ package com.raisin.model.dto;
  * @since 2020/06/01
  * @version 1.0.0
  */
-public class commentDTO {
+public class CommentDTO {
 	private String commentid;
 	private String boardid;
 	private String userid;

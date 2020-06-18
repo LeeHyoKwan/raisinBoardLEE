@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<!-- 記事画面定義-->
+	<package name="comment" extends="common" namespace="/comment">
+
+		<!-- 掲示板コマンド作成処理 -->
+		<action name = "commentWriteAction" class="com.raisin.action.board.BoardComentAction" method="writeAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
+		</action>
+
+	</package>
+</struts>

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.raisin.model.dto.BoardDTO;
-import com.raisin.model.dto.commentDTO;
+import com.raisin.model.dto.CommentDTO;
 
 /**
  * 掲示板のDAOクラス
@@ -39,14 +39,14 @@ public class BoardDAO extends BaseDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<commentDTO> selectComment(BoardDTO boardDto) throws SQLException {
+	public List<CommentDTO> selectComment(BoardDTO boardDto) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (boardDto == null) {
 			map.put("boardid", null);
 		} else {
 			map.put("boardid", boardDto.getBoardid());
 		}
-		return (List<commentDTO>) super.queryForList("selectComment", map);
+		return (List<CommentDTO>) super.queryForList("selectComment", map);
 	}
 
 	/**

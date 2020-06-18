@@ -22,9 +22,11 @@
 
 	</package>
 
-	<!-- ログイン画面 -->
+	<!-- ログイン -->
 	<include file="struts/login.xml"/>
-	<!-- 記事画面 -->
+	<!-- 掲示板 -->
 	<include file="struts/board.xml"/>
+	<!-- コマンド -->
+	<include file="struts/comment.xml"/>
 
 </struts>
