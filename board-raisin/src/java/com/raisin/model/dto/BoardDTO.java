@@ -17,6 +17,7 @@ public class BoardDTO {
 	private String modiuser;
 	private String modidt;
 	private String displayType;
+	private int commentCount;
 
 	public String getBoardid() {
 		return boardid;
@@ -71,6 +72,12 @@ public class BoardDTO {
 	}
 	public void setDisplayType(String displayType) {
 		this.displayType = displayType;
+	}
+	public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
 	}
 
 

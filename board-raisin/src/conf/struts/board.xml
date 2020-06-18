@@ -10,6 +10,7 @@
 		<!-- 記事一覧初期表示 -->
 		<action name="index" class="com.raisin.action.board.BoardListAction" method="execute">
 			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
 			<result name="success">/WEB-INF/view/jsp/board/board-list.jsp</result>
 		</action>
 
