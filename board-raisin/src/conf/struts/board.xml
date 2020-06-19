@@ -24,7 +24,8 @@
 		<action name = "writeAction" class="com.raisin.action.board.BoardListAction" method="writeAction">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
-			<result name="success" type="redirect">/board/index</result>
+<!-- 			<result name="successInsert" type="redirect">/board/index</result> -->
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
 		</action>
 
 		<!-- 掲示板詳細表示 -->

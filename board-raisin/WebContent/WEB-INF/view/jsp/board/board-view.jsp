@@ -13,14 +13,15 @@
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/ui.jqgrid.css"/>
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/board-ui.css"/>
 
-<!-- <script src="../resources/js/bootstrap.js" type="text/javascript"></script> -->
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="../resources/js/boardJquery.js" type="text/javascript"></script>
 <script src="../resources/js/jquery-ui.js"></script>
 <script src="../resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="../resources/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
 <script src="../resources/js/i18n/grid.locale-ja.js" type="text/javascript"></script>
-<script src="../resources/js/boardCommon.js" type="text/javascript"></script>
+<script src="../resources/js/moment.min.js" type="text/javascript"></script>
+<script src="../resources/js/boardJs.js" type="text/javascript"></script>
+<script src="../resources/js/jqGridJs.js" type="text/javascript"></script>
 <script>
 $(function(){
     $("#dialogDelete").dialog({
@@ -43,54 +44,19 @@ $(function(){
         $(this).height( this.scrollHeight );
       });
       $('.wrap').find( 'textarea' ).keyup();
-});
 
-// jqgrid初期設定
-const searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일'];
-const searchResultColModel =
-                [
-                	{name:'boardid', align:'center', width:'30'},
-	                {name:'title', align:'left', width:'600'},
-	                {name:'createuser', align:'center',width:'80'},
-	                {name:'createdt', align:'center', width:'130'},
-	                {name:'modiuser', align:'center', width:'80'},
-	                {name:'modidt', align:'center', width:'130'}
-                ];
-
-$(window.document).ready(function(){
-	$("#boardTable").jqGrid({
-		datatype: 'local',
-		data: getBoardData(),
-		colNames: searchResultColNames,
-		colModel: searchResultColModel,
-		shrinkToFit:false,
-		restoreAfterSelect: false,
-		rowNum:10,
-		rowList:[10,20,30],
-		pager: '#pager',
-		pagerpos : 'center',
-		viewrecords: false,
-		shrinkToFit : true,
-		sortable : false,
-		width:1051,
-		height: "auto",
-		caption: '게시판',
-		cmTemplate: { sortable: false },
-		shrinkToFit: false
-	});
+    $('.contentDiv').on( 'keyup', 'textarea', function (e){
+        $(this).css('height', 'auto' );
+        $(this).height( this.scrollHeight );
+      });
+      $('.contentDiv').find( 'textarea' ).keyup();
 });
 </script>
 </head>
   <style>
   </style>
     <script>
-    $(document).ready(function() {
-      $('.contentDiv').on( 'keyup', 'textarea', function (e){
-        $(this).css('height', 'auto' );
-        $(this).height( this.scrollHeight );
-      });
-      $('.contentDiv').find( 'textarea' ).keyup();
-    });
+
   </script>
 <body >
 <main id="container"  style="width: 1051px; margin:0 auto;">
@@ -141,6 +107,10 @@ $(window.document).ready(function(){
 							</div>
 						</div>
 						<div style='float: right; margin-top: 5px;'>
+							<button onclick="javascript:location.href='../board/writeForm'"
+								type="button" id="btn_edit" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">글작성</button>
+						</div>
+						<div style='float: right; margin-top: 5px; margin-right: 10px'>
 							<button onclick = "onClickEdit()"
 								type="button" id="btn_edit" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">수정</button>
 						</div>
@@ -150,7 +120,11 @@ $(window.document).ready(function(){
 						</div>
 					</div>
 				</article>
+			<!-- 現在掲示板番号 -->
 			<s:hidden id="boardid"  type="text" name="boardDto.boardid" />
+			<!-- 現在ページ -->
+			<s:hidden id="currentPage"  type="text" name="currentPage" />
+			<!-- 掲示板更新用パラメータ -->
 			<s:hidden id="displayType"  type="text" name="boardDto.displayType" value="edit"/>
 		</form>
 	</section>
@@ -159,12 +133,11 @@ $(window.document).ready(function(){
 	<section>
 	<div style='width:1051px; display: block'>
 		<table id="boardTable"></table>
-<!-- 		<div id="pager"></div> -->
-	<table style="margin-right: auto;margin-left: auto;">
-		<tr>
-			<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
-		</tr>
-	</table>
+		<table style="margin-right: auto;margin-left: auto;">
+			<tr>
+				<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
+			</tr>
+		</table>
 	</div>
 	<br/>
 	<div style="display:none;">
@@ -175,12 +148,27 @@ $(window.document).ready(function(){
 					<s:url var="boardViewAction"  action="viewForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
 			        </s:url>
+			        <s:url var="boardEditAction"  action="editAction">
+			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
+			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			           	<s:param name="boardDto.displayType">edit</s:param>
+			        </s:url>
+			        <s:url var="boardDeleteAction"  action="deleteAction">
+			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
+			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			        </s:url>
+
 					<td id="title" align = "center"><s:a href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
 		            <td id="createuser" align = "center"><s:property value = "createuser" /></td>
 		            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
-		      <s:set var="commentCount"><s:property value = "commentCount" /></s:set>
+		            <td id="action1" align = "center"><s:a class="actionLink"  href="%{boardViewAction}">상세</s:a></td>
+					<td id="action2" align = "center"><s:a class="actionLink" href="%{boardEditAction}">편집</s:a></td>
+					<td id="action3" align = "center"><s:a class="actionLink" href="%{boardDeleteAction}">삭제</s:a></td>
+					<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
+
+		      		<s:set var="commentCount"><s:property value = "commentCount" /></s:set>
 					<s:if test="%{#commentCount!=0}">
 			            <td id="commentCount" align = "center"><s:a href="%{boardViewAction}">[<s:property value = "commentCount" />]</s:a></td>
 					</s:if>

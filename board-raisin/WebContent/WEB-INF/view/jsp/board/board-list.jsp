@@ -13,8 +13,8 @@
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/ui.jqgrid.css"/>
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/board-ui.css"/>
 
-<!-- <script src="../resources/js/bootstrap.js" type="text/javascript"></script> -->
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="../resources/js/bootstrap.js" type="text/javascript"></script>
 <script src="../resources/js/boardJquery.js" type="text/javascript"></script>
 <script src="../resources/js/jquery-ui.js"></script>
 <script src="../resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
@@ -22,42 +22,10 @@
 
 <script src="../resources/js/i18n/grid.locale-ja.js" type="text/javascript"></script>
 <script src="../resources/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
-<script src="../resources/js/boardCommon.js" type="text/javascript"></script>
+<script src="../resources/js/moment.min.js" type="text/javascript"></script>
+<script src="../resources/js/boardJs.js" type="text/javascript"></script>
+<script src="../resources/js/jqGridJs.js" type="text/javascript"></script>
 <script>
-	// jqgrid初期設定
-	const searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일'];
-	const searchResultColModel =
-	                [
-	                	{name:'boardid', align:'center', width:'30'},
-		                {name:'title', align:'left', width:'600'},
-		                {name:'createuser', align:'center',width:'80'},
-		                {name:'createdt', align:'center', width:'130'},
-		                {name:'modiuser', align:'center', width:'80'},
-		                {name:'modidt', align:'center', width:'130'}
-	                ];
-
-	$(window.document).ready(function(){
-		$("#boardTable").jqGrid({
-			datatype: 'local',
-			data: getBoardData(),
-			colNames: searchResultColNames,
-			colModel: searchResultColModel,
-			shrinkToFit:false,
-			restoreAfterSelect: false,
-			rowNum:10,
-			rowList:[10,20,30],
-			pager: '#pager',
-			pagerpos : 'center',
-			viewrecords: false,
-			shrinkToFit : true,
-			sortable : false,
-			width:1051,
-			height: "auto",
-			caption: '게시판',
-			cmTemplate: { sortable: false },
-			shrinkToFit: false
-		});
-	});
 </script>
 </head>
 <body>
@@ -70,14 +38,11 @@
 	<hr align="left" style="background-color: #3c4790; height:1px; width: 1051px">
 	<div style='width:1051px; display: block'>
 		<table id="boardTable"></table>
-<!-- 	<div id="pager"></div> -->
-
-	<table style="margin-right: auto;margin-left: auto;">
-		<tr>
-			<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
-		</tr>
-	</table>
-
+		<table style="margin-right: auto;margin-left: auto;">
+			<tr>
+				<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
+			</tr>
+		</table>
 		<div style='float: right; margin-top: 5px;'>
 			<button onclick="javascript:location.href='../board/writeForm'"
 				type="button" id="btn_write" style="color:#fff;border-style:solid; background-color: #3c4790; font-weight: bold; border-radius: 4px">글쓰기</button>
@@ -88,16 +53,30 @@
 		<table id="boardDataTbl" >
 			<s:iterator value="list" status = "stat">
 				<tr align = "center">
-		            <td id="boardid" align = "center"><s:property value = "boardid" /></td>
 					<s:url var="boardViewAction"  action="viewForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
 			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 			        </s:url>
-					<td id="title" align = "center"><s:a href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
+			        <s:url var="boardEditAction"  action="editAction">
+			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
+			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			            <s:param name="boardDto.displayType">edit</s:param>
+			        </s:url>
+					<s:url var="boardDeleteAction"  action="deleteAction">
+			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
+			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			        </s:url>
+
+		            <td id="boardid" align = "center"><s:property value = "boardid" /></td>
+					<td id="title" align = "center"><s:a class="titleLink" href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
 		            <td id="createuser" align = "center"><s:property value = "createuser" /></td>
 		            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
+					<td id="action1" align = "center"><s:a class="actionLink" href="%{boardViewAction}">상세</s:a></td>
+					<td id="action2" align = "center"><s:a class="actionLink" href="%{boardEditAction}">편집</s:a></td>
+					<td id="action3" align = "center"><s:a class="actionLink" href="%{boardDeleteAction}">삭제</s:a></td>
+					<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
 
 					<s:set var="commentCount"><s:property value = "commentCount" /></s:set>
 					<s:if test="%{#commentCount!=0}">

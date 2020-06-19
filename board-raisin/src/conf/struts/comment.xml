@@ -11,7 +11,7 @@
 		<action name = "commentWriteAction" class="com.raisin.action.board.BoardComentAction" method="writeAction">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
-			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}&amp;currentPage=${currentPage}</result>
 		</action>
 
 	</package>

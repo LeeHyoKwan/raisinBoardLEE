@@ -6,7 +6,7 @@
 	font-size:13px;
 }
 .ui-jqgrid tr.jqgrow td a{
-	margin-left: 10px;
+	margin-left: 5px;
 }
 .grid-col {
   padding-left: 5px !important;
@@ -15,4 +15,13 @@
 .comment_num{
 	font-size: 12px;
     color: #999 !important;
+}
+
+.actionLink {
+	color:red !important;
+	font-weight:bold;
+}
+
+a[class*="Link"]:hover{
+	text-decoration: underline !important;
 }
