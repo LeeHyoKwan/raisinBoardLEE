@@ -16,6 +16,8 @@ public class BoardDTO {
 	private String createdt;
 	private String modiuser;
 	private String modidt;
+	private int boardcount;
+
 	private String displayType;
 	private int commentCount;
 
@@ -78,6 +80,12 @@ public class BoardDTO {
 	}
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
+	}
+	public int getBoardcount() {
+		return boardcount;
+	}
+	public void setBoardcount(int boardcount) {
+		this.boardcount = boardcount;
 	}
 
 

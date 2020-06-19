@@ -22,12 +22,15 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	</select>
 
 	<!-- board情報登録 -->
-	<insert id="insertBoard" parameterClass="map">
+	<insert id="insertBoard" parameterClass="board">
 		INSERT INTO
 			board
 			(`userid`, `title`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
 		VALUES
 			(#userid#, #title#, #content#, #createuser#, #createdt#, #modiuser#, #modidt#)
+		<selectKey keyProperty="boardid" resultClass="string" type="post">
+			SELECT LAST_INSERT_ID() as boardid
+		</selectKey>
 	</insert>
 
 	<!-- board情報更新 -->

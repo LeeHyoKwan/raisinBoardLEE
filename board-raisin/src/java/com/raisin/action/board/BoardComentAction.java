@@ -16,7 +16,7 @@ import com.raisin.model.dto.CommentDTO;
 import com.raisin.service.CommentService;
 
 /**
- * 記事一覧アクションクラス
+ * 記事コマンドアクションクラス
  *
  * @author raisin
  * @since 2020/06/01
@@ -35,6 +35,9 @@ public class BoardComentAction extends BaseAction {
 
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
+	// ページング
+	private int currentPage = 1; // 現在ページ
+
 	/** コンストラクタ */
 	public BoardComentAction() {
 		if (service == null) {
@@ -44,29 +47,26 @@ public class BoardComentAction extends BaseAction {
 
 	@Override
 	public String execute() throws Exception {
-		logger.info("---------------- start {}.{} ----------------", "BoardListAction", "execute");
+		logger.info("---------------- start {}.{} ----------------", "BoardComentAction", "execute");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
 		} finally {
-			logger.info("---------------- end {}.{} ----------------", "BoardListAction", "execute");
+			logger.info("---------------- end {}.{} ----------------", "BoardComentAction", "execute");
 		}
 		return SUCCESS;
 	}
 
-	public String writeForm() throws Exception {
-		logger.info("---------------- start {}.{} ----------------", "BoardListAction", "writeForm");
-		logger.info("---------------- end {}.{} ----------------", "BoardListAction", "writeForm");
-		return SUCCESS;
-	}
-
 	public String writeAction() throws Exception {
-		logger.info("---------------- start {}.{} ----------------", "BoardListAction", "writeAction");
+		logger.info("---------------- start {}.{} ----------------", "BoardComentAction", "writeAction");
 		try {
+			// ユーザーセッション情報
 			AccountDTO account = super.getSessionUser();
+			// 日付情報
 			final String sysDate = super.getSysDate();
+			// 登録データ設定（board）
 			commentDto.setUserid(account.getUserid());
 			commentDto.setCreateuser(account.getUsername());
 			commentDto.setModiuser(account.getUsername());
@@ -75,15 +75,11 @@ public class BoardComentAction extends BaseAction {
 			commentDto.setBoardid(boardDto.getBoardid());
 			// コマンドデータを登録
 			service.insertComment(commentDto);
-//			HttpServletRequest request = ServletActionContext.getRequest();
-//			request.setAttribute("boardid", commentDto.getBoardid());
-//			BoardViewAction boardViewAction = new BoardViewAction();
-//			boardViewAction.execute();
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
 		} finally {
-			logger.info("---------------- end {}.{} ----------------", "BoardListAction", "writeAction");
+			logger.info("---------------- end {}.{} ----------------", "BoardComentAction", "writeAction");
 		}
 		return SUCCESS;
 	}
@@ -109,6 +105,14 @@ public class BoardComentAction extends BaseAction {
 
 	public void setCommentDto(CommentDTO commentDto) {
 		this.commentDto = commentDto;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 }

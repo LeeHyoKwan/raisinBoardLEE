@@ -1,3 +1,4 @@
+
 package com.raisin.action.board;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import com.raisin.service.BoardService;
 import com.raisin.service.CommentService;
 
 /**
- * 記事一覧アクションクラス
+ * 記事詳細アクションクラス
  *
  * @author raisin
  * @since 2020/06/01
@@ -40,13 +41,13 @@ public class BoardViewAction extends BaseAction {
 
 	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
 
-	//pagin
-	private int currentPage = 1; // 현재 페이지
-    private int totalCount; // 총 게시물의 수
-    private int blockCount = 10; // 한 페이지의  게시물의 수
-    private int blockPage = 5; // 한 화면에 보여줄 페이지 수
-    private String pagingHtml; // 페이징을 구현한 html
-    private PagingAction page; // 페이징 클래스
+	// ページング
+	private int currentPage = 1; // 現在ページ
+    private int totalCount; // 全掲示物数
+    private int blockCount = 10; // 1ページあたり掲示物数
+    private int blockPage = 5; // 一画面に表示するページ数
+    private String pagingHtml; // パージングHTML
+    private PagingAction page; // ページングクラス
 
 	/** コンストラクタ */
 	public BoardViewAction() {
@@ -68,49 +69,46 @@ public class BoardViewAction extends BaseAction {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "execute");
 		try {
-			//boardデータを取得し、リストに保存
+			// 掲示物の詳細情報設定
 			list = service.getBoard(boardDto);
 			boardDto.setTitle(list.get(0).getTitle());
 			boardDto.setContent(list.get(0).getContent());
 			request.setAttribute("boardid", boardDto.getBoardid());
 
+			// 全掲示板取得
 			boardDto.setBoardid(null);
 			list = service.getBoard(boardDto);
 
+			// 該当掲示物の番号設定
 			boardDto.setBoardid((String)request.getAttribute("boardid"));
 
 			//commentデータを取得し、リストに保存
 			commentDto.setBoardid((String)request.getAttribute("boardid"));
 			commentList = commentService.getComment(commentDto);
+
+			// 1掲示物のコマンド数設定
 			request.setAttribute("commentSize", commentList.size());
 
-			// 掲示物あたりのコメント数取得
+			// 掲示物あたりのコメント数設定
 			for (int listIndex = 0; listIndex < list.size(); listIndex++) {
 				commentDto.setBoardid(list.get(listIndex).getBoardid());
-//				commentList =commentService.getComment(commentDto);
 				list.get(listIndex).setCommentCount(commentService.getComment(commentDto).size());
 			}
 
-			// ★★ページング開始
-			//paging
-			totalCount = list.size(); // 전체 글 개수를 구한다.
-			// pagingAction 객체 생성
+			// ページング設定
+			totalCount = list.size(); // 全掲示物数
+			// pagingAction オブジェクト生成
             page = new PagingAction(currentPage, totalCount, blockCount, blockPage);
-            pagingHtml = page.getPagingHtml().toString(); // 페이지 html 생성
-            pagingHtml = page.getPagingHtml().toString(); // 페이지 html 생성
-            // 현재 페이지에서 보여줄 마지막 글의 번호 설정
+            // ページ html生成
+            pagingHtml = page.getPagingHtml().toString();
+            // 現在ページで表示する最後番号設定
             int lastCount = totalCount;
 
-            /**
-             * 현재 페이지의 마지막 글의 번호가
-             * 전체의 마지막 글 번호보다 작으면 lastCount를 +1 번호로 설정
-             */
+            // 現在ページの最後の番号が全体の番号より小さい場合はlastCountを+1に設定
             if(page.getEndCount() < totalCount)
                   lastCount = page.getEndCount() + 1;
-
-            // 전체 리스트에서 현재 페이지만큼의 리스트만 가져온다.
+            // 全リストから現在ページのリストを設定
             list = list.subList(page.getStartCount(), lastCount);
-
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -121,21 +119,24 @@ public class BoardViewAction extends BaseAction {
 	}
 
 	public String writeForm() throws Exception {
-		logger.info("---------------- start {}.{} ----------------", "BoardListAction", "writeForm");
-		logger.info("---------------- end {}.{} ----------------", "BoardListAction", "writeForm");
+		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "writeForm");
+		logger.info("---------------- end {}.{} ----------------", "BoardViewAction", "writeForm");
 		return SUCCESS;
 	}
 
 	public String deleteAction() throws Exception {
 		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "deleteAction");
 		try {
+			// 削除対象boardデータ取得
 			list = service.getBoard(boardDto);
+			// データがある場合は削除処理
 			if (list.size() > 0) {
 				service.deleteBoard(boardDto);
 			}
-			// コマンド削除処理
+			// 削除対象のコマンドデータ取得
 			commentDto.setBoardid(boardDto.getBoardid());
 			commentList = commentService.getComment(commentDto);
+			// データがある場合は削除処理
 			if (commentList.size() > 0) {
 				commentService.deleteBoard(commentDto);
 			}
