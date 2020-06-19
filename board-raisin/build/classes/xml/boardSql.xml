@@ -46,6 +46,16 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			boardid = #boardid#
 	</update>
 
+	<!-- board情報更新 -->
+	<update id="updateBoardCount" parameterClass="board">
+		UPDATE
+			board
+		SET
+			boardcount = boardcount + 1
+		WHERE
+			boardid = #boardid#
+	</update>
+
 		<!-- board情報削除 -->
 	<delete id="deleteBoard" parameterClass="map">
 		DELETE FROM

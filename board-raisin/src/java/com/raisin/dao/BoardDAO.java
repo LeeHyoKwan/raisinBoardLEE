@@ -56,47 +56,27 @@ public class BoardDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public void insertBoard(BoardDTO boardDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-//		final String title = boardDto.getTitle();
-//		final String content = boardDto.getContent();
-//		final String createuser = boardDto.getCreateuser();
-//		final String modiuser = boardDto.getModiuser();
-//		final String userid = boardDto.getUserid();
-//		final String createdt = boardDto.getCreatedt();
-//		final String modidt = boardDto.getModidt();
-//
-//		map.put("title", title);
-//		map.put("content", content);
-//		map.put("createuser", createuser);
-//		map.put("modiuser", modiuser);
-//		map.put("userid", userid);
-//		map.put("createdt", createdt);
-//		map.put("modidt", modidt);
 		super.insert("insertBoard", boardDto);
-//		Object sn = map.get("boardid");
-//		System.out.println(sn);
 	}
 
 	/**
-	 * 掲示板の情報を取得する
+	 * 掲示板の情報を更新する
 	 *
 	 * @return
 	 * @throws SQLExceptionupdateBoard
 	 */
 	public void updateBoard(BoardDTO boardDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		final String boardid = boardDto.getBoardid();
-		final String title = boardDto.getTitle();
-		final String content = boardDto.getContent();
-		final String modiuser = boardDto.getModiuser();
-		final String modidt = boardDto.getModidt();
+		super.update("updateBoard", boardDto);
+	}
 
-		map.put("boardid", boardid);
-		map.put("title", title);
-		map.put("content", content);
-		map.put("modiuser", modiuser);
-		map.put("modidt", modidt);
-		super.update("updateBoard", map);
+	/**
+	 * 照会カウンター更新する。
+	 *
+	 * @return
+	 * @throws SQLExceptionupdateBoard
+	 */
+	public void updateBoardcount(BoardDTO boardDto) throws SQLException {
+		super.update("updateBoardCount", boardDto);
 	}
 
 	/**
