@@ -18,10 +18,50 @@
 }
 
 .actionLink {
-	color:red !important;
+	color:#0051a9 !important;
 	font-weight:bold;
 }
 
 a[class*="Link"]:hover{
 	text-decoration: underline !important;
+}
+
+/* .ui-jqgrid { border-right-width: 0px; border-left-width: 0px; } */
+/* .ui-jqgrid { border-width: 0px; } */
+/* .ui-jqgrid tr.ui-row-ltr td { border-right-color: transparent; } */
+/* th.ui-th-column { border-right-color: transparent !important } */
+
+/* .ui-jqgrid tr.ui-row-ltr td { border-bottom-color: transparent; } */
+.ui-jqgrid-labels .ui-th-column { border-right-color: transparent;}
+/* .ui-jqgrid tr.ui-row-ltr td { border-collapse:collapse} */
+/* .ui-jqgrid tr.ui-row-ltr td { border: none;} */
+
+/* .ui-jqgrid tr.ui-row-ltr td { */
+/*     border-right-color: inherit; */
+/*     border-right-style: solid; */
+/*     border-right-width: 1px; */
+/* } */
+td {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.ui-widget-content{
+	border: 0px;
+	border-color:transparent !important;
+}
+
+tr[role="row"]{
+	border-color:#dddddd !important;
+}
+tr[role="row"]:last-child{
+	border-color:transparent !important;
+}
+table[id=boardTable] {
+	border-bottom: 1px solid #3c4790 !important;
+	border-collapse: unset;
+}
+
+div[id=gbox_boardTable] {
+	border-top: 1px solid #3c4790 !important;
 }

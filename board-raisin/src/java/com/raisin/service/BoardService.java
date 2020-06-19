@@ -65,7 +65,7 @@ public class BoardService extends BaseService {
 	}
 
 	/**
-	 * 掲示板の情報を取得する
+	 * 掲示板の情報を更新する
 	 *
 	 * @return
 	 * @throws SQLException
@@ -75,6 +75,19 @@ public class BoardService extends BaseService {
 		super.commitTransaction();
 		super.endTransaction();
 		boardDAO.updateBoard(boardDto);
+	}
+
+	/**
+	 * 照会カウンター更新
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void updateBoardcount(BoardDTO boardDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		boardDAO.updateBoardcount(boardDto);
 	}
 
 	/**

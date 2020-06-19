@@ -75,6 +75,9 @@ public class BoardViewAction extends BaseAction {
 			boardDto.setContent(list.get(0).getContent());
 			request.setAttribute("boardid", boardDto.getBoardid());
 
+			// 照会カウンター更新
+			service.updateBoardcount(boardDto);
+
 			// 全掲示板取得
 			boardDto.setBoardid(null);
 			list = service.getBoard(boardDto);

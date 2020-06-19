@@ -31,8 +31,13 @@ $(window.document).ready(function(){
 		height: "auto",
 		caption: '게시판',
 		cmTemplate: { sortable: false },
-		shrinkToFit: false
+		shrinkToFit: false,
+		beforeSelectRow: function(rowid, e) {
+		    return false;
+		}
 	});
+	$(".ui-jqgrid-titlebar").hide();
+
 	// actionHeader設定
 	actionHeader();
 });
