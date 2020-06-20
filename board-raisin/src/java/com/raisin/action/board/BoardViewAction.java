@@ -73,10 +73,15 @@ public class BoardViewAction extends BaseAction {
 			list = service.getBoard(boardDto);
 			boardDto.setTitle(list.get(0).getTitle());
 			boardDto.setContent(list.get(0).getContent());
+			boardDto.setCreateuser(list.get(0).getCreateuser());
+			boardDto.setCreatedt(list.get(0).getCreatedt());
+
 			request.setAttribute("boardid", boardDto.getBoardid());
 
-			// 照会カウンター更新
-			service.updateBoardcount(boardDto);
+			if ("view".equals(boardDto.getDisplayType())) {
+				// 照会カウンター更新
+				service.updateBoardcount(boardDto);
+			}
 
 			// 全掲示板取得
 			boardDto.setBoardid(null);
