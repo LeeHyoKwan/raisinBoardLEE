@@ -45,11 +45,11 @@ $(function(){
       });
       $('.wrap').find( 'textarea' ).keyup();
 
-    $('.contentDiv').on( 'keyup', 'textarea', function (e){
+    $('.content_div').on( 'keyup', 'textarea', function (e){
         $(this).css('height', 'auto' );
         $(this).height( this.scrollHeight );
       });
-      $('.contentDiv').find( 'textarea' ).keyup();
+      $('.content_div').find( 'textarea' ).keyup();
 });
 </script>
 </head>
@@ -59,35 +59,48 @@ $(function(){
 
   </script>
 <body >
-<main id="container"  style="width: 1051px; margin:0 auto;">
+<main class="main_layout">
 	<section>
 		<form name="boardView_form"method="post" action="../board/writeAction">
-				<h2 style="color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-top: 15px; font-weight: bolder;">
-					<a style="text-decoration: none; color: #3c4790;" href="../board/index">이효관의 게시판 만들기
-					</a>
+				<h2>
+					<a class="head_title" href="../board/index">이효관의 게시판 만들기</a>
 				</h2>
-				<hr align="left" style="background-color: #3c4790; height:1px; width: 1051px">
 				<article id="write_wrap">
 					<div >
+						<header>
+							<div class="header_div">
+								<h3>
+									<s:label class="title_subject" id="title"  type="text" name="boardDto.title"></s:label>
+								</h3>
+								<div class="writer">
+									<div class="writer_lf">
+										<span>
+											<s:label name="boardDto.createuser" />
+										</span>
+										<span class="writer_dt">
+											<s:label name="boardDto.createdt" />
+										</span>
+									</div>
+									<div class="writer_rf">
+										<span>조회</span>
+										<span>추천</span>
+										<span>댓글</span>
+									</div>
+								</div>
+							</div>
+						</header>
+						<div class="content_div">
+							<s:textarea class="content_ta" id="content" type="text" name="boardDto.content" disabled="true"/>
+						</div>
+						<div class="comment_div">
+							<div class="comment_lf">댓글</div><div class="comment_rt">${commentSize}</div><div>개</div>
+						</div>
 						<div>
-							<s:textfield id="title"  type="text" name="boardDto.title"  maxlength="40"
-								style="width: 1051px; height: 33px; line-height: 35px;
-								border-style: none; border-bottom: 1px solid #eee; background-color: #ffffff; font-weight: bolder;" disabled="true"/>
-						</div>
-						<div class="contentDiv" style="padding-top: 30px; padding-bottom: 30px;">
-							<s:textarea id="content" type="text" name="boardDto.content"
-								style="width: 1051px; line-height: 35px;
-								border-style: none; background-color: #ffffff; resize: none;" disabled="true"/>
-						</div>
-						<div style="font-family: '굴림',Gulim;font-size: 13px;color: #333;font-weight: bold;margin-bottom: 5px;">
-							<div style="float:left; margin-right: 5px;">댓글</div><div style=" color: #d31900;float:left">${commentSize}</div><div>개</div>
-						</div>
-						<div>
-							<table id="commentTbl" style="width:1051px; margin-top: 5px; border-top: 2px solid #525eaa;">
+							<table class="cmt_tbl" id="commentTbl">
 								<s:iterator value="commentList" status = "stat">
-									<tr align = "center" style="border-bottom: 1px solid #ddd;">
-							            <td id="createuser" width="132px " align = "left" style="font-family: '굴림',Gulim; font-size: 12px; color: #777;"><s:property value = "createuser" /></td>
-							            <td id="content" align = "left" style="padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333;"><s:property value = "content" /></td>
+									<tr class="cmt_tr" align="center">
+							            <td class="cmt_cu" id="createuser" width="132px " align = "left"><s:property value = "createuser" /></td>
+							            <td class="cmt_cnt" id="content" align = "left"><s:property value = "content" /></td>
 							      </tr>
 								</s:iterator>
 							</table>
@@ -98,25 +111,21 @@ $(function(){
 							</div>
 						</s:if>
 						<!-- コメント入力欄 -->
-						<div style="padding:10px; background-color:#fafafa; border-top: 2px solid #525eaa; border-bottom: 2px solid #525eaa;">
-							<s:textarea id="comment" type="text" name="commentDto.content" maxlength="400" style="width: 1010px; height: 78px; border: 1px solid #cecdce;
-								background-color: #ffffff; resize: none; margin: 10px;"></s:textarea>
-							<div style="text-align-last: right;">
-								<button onclick = "onClickCommentInsert()"
-									type="button" id="btn_comment_insert" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">등록</button>
+						<div class="cmt_inp">
+							<s:textarea class="cmt_txta" id="comment" type="text" name="commentDto.content" maxlength="400"></s:textarea>
+							<div class="cmt_in_div">
+								<button class="view_btn" onclick = "onClickCommentInsert()"
+									type="button" id="btn_comment_insert">등록</button>
 							</div>
 						</div>
-						<div style='float: right; margin-top: 5px;'>
-							<button onclick="javascript:location.href='../board/writeForm'"
-								type="button" id="btn_edit" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">글작성</button>
+						<div class="view_ibtn_div">
+							<button class="view_btn" onclick="javascript:location.href='../board/writeForm'" type="button" id="btn_edit">글작성</button>
 						</div>
-						<div style='float: right; margin-top: 5px; margin-right: 10px'>
-							<button onclick = "onClickEdit()"
-								type="button" id="btn_edit" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">수정</button>
+						<div class="view_edbtn_div">
+							<button class="view_btn" onclick = "onClickEdit()" type="button" id="btn_edit">수정</button>
 						</div>
-						<div style='float: right; margin-top: 5px; margin-right: 10px'>
-							<button onclick="onClickDelete()"
-								type="button" id="btn_delete" style="color:#fff;border-style:solid; background-color: #666; border-radius: 4px">삭제</button>
+						<div class="view_edbtn_div">
+							<button class="view_btn" onclick="onClickDelete()" type="button" id="btn_delete">삭제</button>
 						</div>
 					</div>
 				</article>
@@ -129,15 +138,17 @@ $(function(){
 		</form>
 	</section>
 </main>
-<main id="container"  style="width: 1051px; margin:0 auto; padding-top:50px">
+<main class="main_view_layout">
 	<section>
-	<div style='width:1051px; display: block'>
+	<div class="list_layout">
 		<table id="boardTable"></table>
-		<table style="margin-right: auto;margin-left: auto;">
-			<tr>
-				<td colspan = "5"><s:property value = "pagingHtml"  escapeHtml = "false" /></td>
-			</tr>
-		</table>
+			<table class="page_table">
+				<tr>
+					<td colspan = "5">
+						<s:property value = "pagingHtml"  escapeHtml = "false" />
+					</td>
+				</tr>
+			</table>
 	</div>
 	<br/>
 	<div style="display:none;">
@@ -147,6 +158,8 @@ $(function(){
 		            <td id="boardid" align = "center"><s:property value = "boardid" /></td>
 					<s:url var="boardViewAction"  action="viewForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
+			            <s:param name="boardDto.displayType">view</s:param>
+			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 			        </s:url>
 			        <s:url var="boardEditAction"  action="editAction">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
@@ -158,14 +171,14 @@ $(function(){
 			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 			        </s:url>
 
-					<td id="title" align = "center"><s:a href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
+					<td id="title" align = "center"><s:a class="titleLink" href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
 		            <td id="createuser" align = "center"><s:property value = "createuser" /></td>
 		            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
-		            <td id="action1" align = "center"><s:a class="actionLink"  href="%{boardViewAction}">상세</s:a></td>
-					<td id="action2" align = "center"><s:a class="actionLink" href="%{boardEditAction}">편집</s:a></td>
-					<td id="action3" align = "center"><s:a class="actionLink" href="%{boardDeleteAction}">삭제</s:a></td>
+		            <td id="action1" align = "center"><s:a class="actionSLink"  href="%{boardViewAction}">상세</s:a></td>
+					<td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
+					<td id="action3" align = "center"><s:a class="actionDLink" href="%{boardDeleteAction}">삭제</s:a></td>
 					<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
 
 		      		<s:set var="commentCount"><s:property value = "commentCount" /></s:set>

@@ -17,8 +17,18 @@
     color: #999 !important;
 }
 
-.actionLink {
-	color:#0051a9 !important;
+.actionSLink {
+	color:#3d49d8 !important;
+	font-weight:bold;
+}
+
+.actionELink {
+	color:#3d49d8 !important;
+	font-weight:bold;
+}
+
+.actionDLink {
+	color:#d31900 !important;
 	font-weight:bold;
 }
 
@@ -26,21 +36,10 @@ a[class*="Link"]:hover{
 	text-decoration: underline !important;
 }
 
-/* .ui-jqgrid { border-right-width: 0px; border-left-width: 0px; } */
-/* .ui-jqgrid { border-width: 0px; } */
-/* .ui-jqgrid tr.ui-row-ltr td { border-right-color: transparent; } */
-/* th.ui-th-column { border-right-color: transparent !important } */
+.ui-jqgrid-labels .ui-th-column {
+	border-right-color: transparent;
+}
 
-/* .ui-jqgrid tr.ui-row-ltr td { border-bottom-color: transparent; } */
-.ui-jqgrid-labels .ui-th-column { border-right-color: transparent;}
-/* .ui-jqgrid tr.ui-row-ltr td { border-collapse:collapse} */
-/* .ui-jqgrid tr.ui-row-ltr td { border: none;} */
-
-/* .ui-jqgrid tr.ui-row-ltr td { */
-/*     border-right-color: inherit; */
-/*     border-right-style: solid; */
-/*     border-right-width: 1px; */
-/* } */
 td {
     border-left: none !important;
     border-right: none !important;
@@ -54,9 +53,11 @@ td {
 tr[role="row"]{
 	border-color:#dddddd !important;
 }
+
 tr[role="row"]:last-child{
 	border-color:transparent !important;
 }
+
 table[id=boardTable] {
 	border-bottom: 1px solid #3c4790 !important;
 	border-collapse: unset;
@@ -65,3 +66,132 @@ table[id=boardTable] {
 div[id=gbox_boardTable] {
 	border-top: 1px solid #3c4790 !important;
 }
+
+.writer_lf {
+    float: left;
+}
+
+.writer_rf {
+    float: right;
+}
+
+.writer {
+    position: relative;
+    font-size: 13px;
+    background-color: #FCFCFC;
+    height: 25px;
+    padding: 0 2px;
+    border-bottom: 1px solid #ded7d79c !important;
+}
+
+.header_div {
+	background-color: #FCFCFC;
+}
+
+h2 { color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-top: 15px; font-weight: bolder;}
+
+h3 {
+	padding: 0 2px;
+}
+
+.head_title{
+	text-decoration: none;
+	color: #3c4790;
+}
+.head_title:hover{
+	 text-decoration:none !important;
+	color: #3c4790;
+}
+
+.main_layout{
+	width: 1051px;
+	margin:0 auto;
+}
+
+.main_view_layout{
+	width: 1051px;
+	margin:0 auto;
+	padding-top:50px;
+}
+
+.title_subject{ width: 1051px; height: 30px; line-height: 35px; font-size:16px;margin-bottom:0px !important; border-style: none; background-color: #ffffff; font-weight: bolder; border-top: 1px solid #3c4790; background-color: #FCFCFC }
+
+.list_layout{
+	width:1051px;
+	display: block
+}
+
+.page_table{
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* .btn_write{ color:#fff;border-style:solid; background-color: #3c4790; font-weight: bold; border-radius: 4px; } */
+
+.writer_dt{
+	margin-left: 15px;
+}
+
+.content_div{
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.comment_div{ font-family: '굴림',Gulim;font-size: 13px;color: #333;font-weight: bold;margin-bottom: 5px; }
+
+.comment_lf{
+	float:left;
+	margin-right: 5px;
+}
+
+.comment_rt{
+	color: #d31900;
+	float:left
+}
+
+.cmt_tbl{width:1051px; margin-top: 5px; border-top: 2px solid #525eaa;}
+
+.cmt_tr{
+	border-bottom: 1px solid #ddd;
+}
+
+.cmt_cu{
+	font-family: '굴림',Gulim; font-size: 12px; color: #777;
+}
+
+.cmt_cnt{
+	padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333;
+}
+
+.cmt_inp{
+	padding:10px; background-color:#fafafa; border-top: 2px solid #525eaa; border-bottom: 2px solid #525eaa;
+}
+
+.cmt_txta{
+	width: 1010px; height: 78px; border: 1px solid #cecdce; background-color: #ffffff; resize: none; margin: 10px;
+}
+
+.cmt_in_div{
+	text-align-last: right;
+}
+
+.view_btn{
+	color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px;
+}
+
+.list_btn_div{
+	float: right; margin-top: 5px;
+}
+
+.write_sel{
+	padding-bottom: 30px;
+}
+
+.view_ibtn_div{
+	float: right; margin-top: 5px;
+}
+
+.view_edbtn_div{
+	float: right; margin-top: 5px; margin-right: 10px
+}
+.content_ta{ width: 1051px; line-height: 35px;margin-left: -3px; border-style: none; background-color: #ffffff; resize: none; }

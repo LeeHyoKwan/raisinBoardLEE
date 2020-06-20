@@ -63,12 +63,12 @@
 			<div style="height:700px">
 				<div style="padding: 30px;">
 					<s:textfield id="title"  type="text" name="boardDto.title" maxlength="40"
-						style="width: 701px; height: 33px; padding: 0 12px; line-height: 35px;
+						style="width: 701px; height: 33px; padding: 0 12px;
 						border: 1px solid #cecdce; color: #333;" placeholder='제목을 입력해 주세요.'/>
 				</div>
 				<div style="margin-left: 30px;">
 					<s:textarea id="content"  name="boardDto.content"
-						style="width: 987px; height: 450px; padding: 0 12px; line-height: 35px;
+						style="width: 987px; height: 450px; padding: 0 12px;
 						border: 1px solid #cecdce; color: #333; resize: none;" placeholder='본문을 입력해 주세요.'/>
 				</div>
 				<div style='float: right; margin-top: 5px; margin-right: 30px'>

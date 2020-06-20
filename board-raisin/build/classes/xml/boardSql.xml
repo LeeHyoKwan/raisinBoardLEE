@@ -27,21 +27,21 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			board
 			(`userid`, `title`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
 		VALUES
-			(#userid#, #title#, #content#, #createuser#, #createdt#, #modiuser#, #modidt#)
+			(#userid#, #title#, #content#, #createuser#, sysdate(), #modiuser#, sysdate())
 		<selectKey keyProperty="boardid" resultClass="string" type="post">
 			SELECT LAST_INSERT_ID() as boardid
 		</selectKey>
 	</insert>
 
 	<!-- board情報更新 -->
-	<update id="updateBoard" parameterClass="map">
+	<update id="updateBoard" parameterClass="board">
 		UPDATE
 			board
 		SET
 			title = #title#,
 			content = #content#,
 			modiuser = #modiuser#,
-			modidt = #modidt#
+			modidt = sysdate()
 		WHERE
 			boardid = #boardid#
 	</update>
