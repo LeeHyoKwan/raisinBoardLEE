@@ -94,4 +94,17 @@ public class BoardDAO extends BaseDAO {
 		}
 		super.delete("deleteBoard", map);
 	}
+
+	/**
+	 * 照会カウンター更新する。
+	 *
+	 * @return
+	 * @throws SQLExceptionupdateBoard
+	 */
+	public void updateVotecount(String boardid, String voteKbn) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("boardid", boardid);
+		map.put("voteKbn", voteKbn);
+		super.update("updateVoteCount", map);
+	}
 }

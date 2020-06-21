@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/ui.jqgrid.css"/>
 <link rel="stylesheet" type="text/css" media="screen" href="../resources/css/board-ui.css"/>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
 <script src="../resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="../resources/js/boardJquery.js" type="text/javascript"></script>
@@ -82,9 +83,9 @@ $(function(){
 										</span>
 									</div>
 									<div class="writer_rf">
-										<span>조회</span>
-										<span>추천</span>
-										<span>댓글</span>
+										<span class="view_count">조회 <s:label name="boardDto.boardcount" /></span>
+										<span class="view_rec_num">추천 <s:label name="boardDto.voteCountUp" /></span>
+										<span class="view_comment_count">댓글 <s:label name="boardDto.commentCount" /></span>
 									</div>
 								</div>
 							</div>
@@ -92,8 +93,28 @@ $(function(){
 						<div class="content_div">
 							<s:textarea class="content_ta" id="content" type="text" name="boardDto.content" disabled="true"/>
 						</div>
+
+
+						<div class="vote">
+							<button type="button" class="vb-btn vb-white" onclick="onClickVote('up');">
+								<span class="lang">
+									<i class="xi-thumbs-up" style="color:#F94966"></i> 추천 수
+								</span>
+								<span class="num" id="vm_v_count"><s:label name="boardDto.voteCountUp" /></span>
+							</button>
+							<button type="button" class="vb-btn vb-white" onclick="onClickVote('down');">
+								<span class="lang">
+									<i class="xi-thumbs-down" style="color:#336699"></i> 비추천 수
+								</span>
+								<span class="num" id="vm_b_count"><s:label name="boardDto.voteCountDown" /></span>
+							</button>
+						</div>
+
+
+
+
 						<div class="comment_div">
-							<div class="comment_lf">댓글</div><div class="comment_rt">${commentSize}</div><div>개</div>
+							<div class="comment_lf">댓글</div><div class="comment_rt"><s:label name="boardDto.commentCount"/></div><div>개</div>
 						</div>
 						<div>
 							<table class="cmt_tbl" id="commentTbl">
@@ -105,7 +126,7 @@ $(function(){
 								</s:iterator>
 							</table>
 						</div>
-						<s:set var="commentSize">${commentSize}</s:set>
+						<s:set var="commentSize"><s:label name="boardDto.commentCount" /></s:set>
 						<s:if test="%{#commentSize!=0}">
 							<div style="height:69px">
 							</div>
@@ -153,7 +174,7 @@ $(function(){
 	<br/>
 	<div style="display:none;">
 		<table id="boardDataTbl" >
-			<s:iterator value="list" status = "stat">
+			<s:iterator value="allList" status = "stat">
 				<tr align = "center">
 		            <td id="boardid" align = "center"><s:property value = "boardid" /></td>
 					<s:url var="boardViewAction"  action="viewForm">

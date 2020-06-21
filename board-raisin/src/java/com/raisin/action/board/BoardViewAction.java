@@ -4,11 +4,8 @@ package com.raisin.action.board;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 
 import com.raisin.action.BaseAction;
 import com.raisin.action.PagingAction;
@@ -39,6 +36,8 @@ public class BoardViewAction extends BaseAction {
 
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
+	private List<BoardDTO> allList = new ArrayList<BoardDTO>();
+
 	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
 
 	// ページング
@@ -48,6 +47,8 @@ public class BoardViewAction extends BaseAction {
     private int blockPage = 5; // 一画面に表示するページ数
     private String pagingHtml; // パージングHTML
     private PagingAction page; // ページングクラス
+
+    private String voteKbn;
 
 	/** コンストラクタ */
 	public BoardViewAction() {
@@ -66,42 +67,44 @@ public class BoardViewAction extends BaseAction {
 
 	@Override
 	public String execute() throws Exception {
-		HttpServletRequest request = ServletActionContext.getRequest();
 		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "execute");
 		try {
+			// 詳細をクリックした場合
+			if ("view".equals(boardDto.getDisplayType())) {
+				// 照会カウンター更新
+				service.updateBoardcount(boardDto);
+			}
+
 			// 掲示物の詳細情報設定
 			list = service.getBoard(boardDto);
 			boardDto.setTitle(list.get(0).getTitle());
 			boardDto.setContent(list.get(0).getContent());
 			boardDto.setCreateuser(list.get(0).getCreateuser());
 			boardDto.setCreatedt(list.get(0).getCreatedt());
+			boardDto.setBoardcount(list.get(0).getBoardcount());
+			boardDto.setVoteCountUp(list.get(0).getVoteCountUp());
+			boardDto.setVoteCountDown(list.get(0).getVoteCountDown());
 
-			request.setAttribute("boardid", boardDto.getBoardid());
-
-			if ("view".equals(boardDto.getDisplayType())) {
-				// 照会カウンター更新
-				service.updateBoardcount(boardDto);
-			}
+			//commentデータを取得し、リストに保存
+			commentDto.setBoardid(boardDto.getBoardid());
+			commentList = commentService.getComment(commentDto);
+			boardDto.setCommentCount(commentList.size());
+			// 1掲示物のコマンド数設定
+			final String selBoardid = boardDto.getBoardid();
 
 			// 全掲示板取得
 			boardDto.setBoardid(null);
-			list = service.getBoard(boardDto);
-
-			// 該当掲示物の番号設定
-			boardDto.setBoardid((String)request.getAttribute("boardid"));
-
-			//commentデータを取得し、リストに保存
-			commentDto.setBoardid((String)request.getAttribute("boardid"));
-			commentList = commentService.getComment(commentDto);
-
-			// 1掲示物のコマンド数設定
-			request.setAttribute("commentSize", commentList.size());
+			allList = service.getBoard(boardDto);
 
 			// 掲示物あたりのコメント数設定
-			for (int listIndex = 0; listIndex < list.size(); listIndex++) {
-				commentDto.setBoardid(list.get(listIndex).getBoardid());
-				list.get(listIndex).setCommentCount(commentService.getComment(commentDto).size());
+			for (int listIndex = 0; listIndex < allList.size(); listIndex++) {
+				commentDto.setBoardid(allList.get(listIndex).getBoardid());
+				allList.get(listIndex).setCommentCount(commentService.getComment(commentDto).size());
 			}
+
+			// 該当掲示物の番号設定
+			boardDto.setBoardid(selBoardid);
+
 
 			// ページング設定
 			totalCount = list.size(); // 全掲示物数
@@ -157,12 +160,33 @@ public class BoardViewAction extends BaseAction {
 		return SUCCESS;
 	}
 
+	public String voteAction() throws Exception {
+		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "voteUp");
+		try {
+			service.updateVotecount(boardDto.getBoardid(),voteKbn);
+		} catch (Exception e) {
+			logger.error(e, e);
+			throw e;
+		} finally {
+			logger.info("---------------- end {}.{} ----------------", "BoardViewAction", "voteUp");
+		}
+		return SUCCESS;
+	}
+
 	public List<BoardDTO> getList() {
 		return list;
 	}
     public void setList(List<BoardDTO> list) {
     	this.list = list;
     }
+
+	public List<BoardDTO> getAllList() {
+		return allList;
+	}
+
+	public void setAllList(List<BoardDTO> allList) {
+		this.allList = allList;
+	}
 
 	public BoardDTO getBoardDto() {
 		return boardDto;
@@ -215,4 +239,14 @@ public class BoardViewAction extends BaseAction {
 	public PagingAction getPage() {
 		return page;
 	}
+
+	public String getVoteKbn() {
+		return voteKbn;
+	}
+
+	public void setVoteKbn(String voteKbn) {
+		this.voteKbn = voteKbn;
+	}
+
+
 }

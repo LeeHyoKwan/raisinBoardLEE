@@ -60,3 +60,8 @@ function onClickCommentInsert(){
 	document.boardView_form.action = "../comment/commentWriteAction";
 	document.boardView_form.submit();
 }
+
+function onClickVote(voteKbn){
+	document.boardView_form.action = "../board/voteAction?voteKbn="+voteKbn+"";
+	document.boardView_form.submit();
+}

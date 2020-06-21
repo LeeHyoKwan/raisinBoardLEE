@@ -102,4 +102,17 @@ public class BoardService extends BaseService {
 		super.endTransaction();
 		boardDAO.deleteBoard(boardDto);
 	}
+
+	/**
+	 * 推薦カウンター更新
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void updateVotecount(String boardid, String voteKbn) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		boardDAO.updateVotecount(boardid, voteKbn);
+	}
 }

@@ -129,7 +129,6 @@ h3 {
 /* .btn_write{ color:#fff;border-style:solid; background-color: #3c4790; font-weight: bold; border-radius: 4px; } */
 
 .writer_dt{
-	margin-left: 15px;
 }
 
 .content_div{
@@ -195,3 +194,41 @@ h3 {
 	float: right; margin-top: 5px; margin-right: 10px
 }
 .content_ta{ width: 1051px; line-height: 35px;margin-left: -3px; border-style: none; background-color: #ffffff; resize: none; }
+
+.gallview_head .gall_date, .gallview_head .gall_count, .gallview_head .gall_reply_num, .gallview_head .gall_comment {
+    cursor: default;
+}
+
+.view_rec_num::before, .view_comment_count::before, .writer_dt::before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: #ccc;
+    margin: 0 10px 0 6px;
+    vertical-align: -2px;
+}
+
+.vote {
+    text-align: center;
+    margin: 15px;
+}
+
+.vote>.vb-white {
+    color: #000;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+i.xi, i[class^="xi-"], i[class*=" xi-"] {
+    display: inline-block;
+    font-family: xeicon;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
