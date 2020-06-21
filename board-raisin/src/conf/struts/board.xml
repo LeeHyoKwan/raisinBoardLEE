@@ -24,7 +24,6 @@
 		<action name = "writeAction" class="com.raisin.action.board.BoardListAction" method="writeAction">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
-<!-- 			<result name="successInsert" type="redirect">/board/index</result> -->
 			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
 		</action>
 
@@ -47,6 +46,13 @@
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
 			<result name="success">/WEB-INF/view/jsp/board/board-write.jsp</result>
+		</action>
+
+		<!-- 掲示板推薦処理 -->
+		<action name = "voteAction" class="com.raisin.action.board.BoardViewAction" method="voteAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
 		</action>
 
 	</package>

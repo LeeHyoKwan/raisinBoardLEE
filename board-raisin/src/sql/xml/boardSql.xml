@@ -46,7 +46,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			boardid = #boardid#
 	</update>
 
-	<!-- board情報更新 -->
+	<!-- board情報更新 照会数-->
 	<update id="updateBoardCount" parameterClass="board">
 		UPDATE
 			board
@@ -63,4 +63,21 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		WHERE
 			boardid = #boardid#
 	</delete>
+
+		<!-- board情報更新 推薦-->
+	<update id="updateVoteCount" parameterClass="map">
+		UPDATE
+			board
+		SET
+		<dynamic>
+			<isEqual property="voteKbn"  compareValue="up">
+				voteCountUp = voteCountUp + 1
+			</isEqual>
+			<isEqual property="voteKbn"  compareValue="down">
+				voteCountDown = voteCountDown + 1
+			</isEqual>
+		</dynamic>
+		WHERE
+			boardid = #boardid#
+	</update>
 </sqlMap>
