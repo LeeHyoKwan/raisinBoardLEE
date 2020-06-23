@@ -14,5 +14,11 @@
 			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}&amp;currentPage=${currentPage}</result>
 		</action>
 
+		<!-- 掲示板コマンド削除処理 -->
+		<action name = "commentDeleteAction" class="com.raisin.action.board.BoardComentAction" method="deleteAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${commentDto.boardid}</result>
+		</action>
 	</package>
 </struts>

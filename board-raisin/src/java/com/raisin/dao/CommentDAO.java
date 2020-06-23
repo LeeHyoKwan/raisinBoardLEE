@@ -39,23 +39,7 @@ public class CommentDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public void insertComment(CommentDTO commentDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		final String boardid = commentDto.getBoardid();
-		final String content = commentDto.getContent();
-		final String createuser = commentDto.getCreateuser();
-		final String modiuser = commentDto.getModiuser();
-		final String userid = commentDto.getUserid();
-		final String createdt = commentDto.getCreatedt();
-		final String modidt = commentDto.getModidt();
-
-		map.put("boardid", boardid);
-		map.put("content", content);
-		map.put("createuser", createuser);
-		map.put("modiuser", modiuser);
-		map.put("userid", userid);
-		map.put("createdt", createdt);
-		map.put("modidt", modidt);
-		super.insert("insertComment", map);
+		super.insert("insertComment", commentDto);
 	}
 
 	/**
@@ -65,12 +49,6 @@ public class CommentDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public void deleteBoard(CommentDTO commentDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (commentDto == null) {
-			map.put("boardid", null);
-		} else {
-			map.put("boardid", commentDto.getBoardid());
-		}
-		super.delete("deleteComment", map);
+		super.delete("deleteComment", commentDto);
 	}
 }

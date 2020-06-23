@@ -35,6 +35,8 @@ public class BoardComentAction extends BaseAction {
 
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
+	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
+
 	// ページング
 	private int currentPage = 1; // 現在ページ
 
@@ -65,13 +67,10 @@ public class BoardComentAction extends BaseAction {
 			// ユーザーセッション情報
 			AccountDTO account = super.getSessionUser();
 			// 日付情報
-			final String sysDate = super.getSysDate();
 			// 登録データ設定（board）
 			commentDto.setUserid(account.getUserid());
 			commentDto.setCreateuser(account.getUsername());
 			commentDto.setModiuser(account.getUsername());
-			commentDto.setCreatedt(sysDate);
-			commentDto.setModidt(sysDate);
 			commentDto.setBoardid(boardDto.getBoardid());
 			// コマンドデータを登録
 			service.insertComment(commentDto);
@@ -84,12 +83,34 @@ public class BoardComentAction extends BaseAction {
 		return SUCCESS;
 	}
 
+	public String deleteAction() throws Exception {
+		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "deleteAction");
+		try {
+			// コマンド削除
+			service.deleteBoard(commentDto);
+		} catch (Exception e) {
+			logger.error(e, e);
+			throw e;
+		} finally {
+			logger.info("---------------- end {}.{} ----------------", "BoardViewAction", "deleteAction");
+		}
+		return SUCCESS;
+	}
+
 	public List<BoardDTO> getList() {
 		return list;
 	}
     public void setList(List<BoardDTO> list) {
     	this.list = list;
     }
+
+	public List<CommentDTO> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<CommentDTO> commentList) {
+		this.commentList = commentList;
+	}
 
 	public BoardDTO getBoardDto() {
 		return boardDto;
