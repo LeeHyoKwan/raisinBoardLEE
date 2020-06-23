@@ -94,7 +94,6 @@ $(function(){
 							<s:textarea class="content_ta" id="content" type="text" name="boardDto.content" disabled="true"/>
 						</div>
 
-
 						<div class="vote">
 							<button type="button" class="vb-btn vb-white" onclick="onClickVote('up');">
 								<span class="lang">
@@ -110,9 +109,6 @@ $(function(){
 							</button>
 						</div>
 
-
-
-
 						<div class="comment_div">
 							<div class="comment_lf">댓글</div><div class="comment_rt"><s:label name="boardDto.commentCount"/></div><div>개</div>
 						</div>
@@ -121,7 +117,19 @@ $(function(){
 								<s:iterator value="commentList" status = "stat">
 									<tr class="cmt_tr" align="center">
 							            <td class="cmt_cu" id="createuser" width="132px " align = "left"><s:property value = "createuser" /></td>
-							            <td class="cmt_cnt" id="content" align = "left"><s:property value = "content" /></td>
+							            <td class="cmt_cnt" id="content" align = "left" style=""><s:property value = "content" /></td>
+							            <td id="content" align = "left">
+							            	<s:url var="deleteAction"  action="../comment/commentDeleteAction">
+									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
+									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
+									        </s:url>
+									        <s:a  href="%{deleteAction}">
+									        	<i class="cmic xi-pen">수정&nbsp</i>
+									        </s:a>
+									         <s:a  href="%{deleteAction}">
+								            	<i class="cmic xi-eraser">삭제</i>
+									        </s:a>
+							            </td>
 							      </tr>
 								</s:iterator>
 							</table>

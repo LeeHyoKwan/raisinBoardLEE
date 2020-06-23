@@ -159,7 +159,7 @@ h3 {
 }
 
 .cmt_cnt{
-	padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333;
+	padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333; width:805px;
 }
 
 .cmt_inp{
@@ -231,4 +231,9 @@ i.xi, i[class^="xi-"], i[class*=" xi-"] {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.cmic {
+	font-size: small;
+	color: #3a3a3a;
 }

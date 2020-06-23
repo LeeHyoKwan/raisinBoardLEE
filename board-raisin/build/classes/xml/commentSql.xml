@@ -22,19 +22,20 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	</select>
 
 	<!-- comment情報登録 -->
-	<insert id="insertComment" parameterClass="map">
+	<insert id="insertComment" parameterClass="comment">
 		INSERT INTO
 			board_comment
 			(`boardid`, `userid`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
 		VALUES
-			(#boardid#, #userid#, #content#, #createuser#, #createdt#, #modiuser#, #modidt#)
+			(#boardid#, #userid#, #content#, #createuser#, sysdate(), #modiuser#, sysdate())
 	</insert>
 
 	<!-- board情報削除 -->
-	<delete id="deleteComment" parameterClass="map">
+	<delete id="deleteComment" parameterClass="comment">
 		DELETE FROM
 			board_comment
 		WHERE
 			boardid = #boardid#
+			AND commentid = #commentid#
 	</delete>
 </sqlMap>

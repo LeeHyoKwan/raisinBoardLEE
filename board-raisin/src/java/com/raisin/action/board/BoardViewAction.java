@@ -138,12 +138,7 @@ public class BoardViewAction extends BaseAction {
 	public String deleteAction() throws Exception {
 		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "deleteAction");
 		try {
-			// 削除対象boardデータ取得
-			list = service.getBoard(boardDto);
-			// データがある場合は削除処理
-			if (list.size() > 0) {
-				service.deleteBoard(boardDto);
-			}
+			service.deleteBoard(boardDto);
 			// 削除対象のコマンドデータ取得
 			commentDto.setBoardid(boardDto.getBoardid());
 			commentList = commentService.getComment(commentDto);
