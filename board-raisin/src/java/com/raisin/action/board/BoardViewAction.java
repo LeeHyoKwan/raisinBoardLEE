@@ -107,7 +107,7 @@ public class BoardViewAction extends BaseAction {
 
 
 			// ページング設定
-			totalCount = list.size(); // 全掲示物数
+			totalCount = allList.size(); // 全掲示物数
 			// pagingAction オブジェクト生成
             page = new PagingAction(currentPage, totalCount, blockCount, blockPage);
             // ページ html生成
@@ -116,10 +116,11 @@ public class BoardViewAction extends BaseAction {
             int lastCount = totalCount;
 
             // 現在ページの最後の番号が全体の番号より小さい場合はlastCountを+1に設定
-            if(page.getEndCount() < totalCount)
-                  lastCount = page.getEndCount() + 1;
+            if(page.getEndCount() < totalCount) {
+            	lastCount = page.getEndCount() + 1;
+            }
             // 全リストから現在ページのリストを設定
-            list = list.subList(page.getStartCount(), lastCount);
+            allList = allList.subList(page.getStartCount(), lastCount);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;

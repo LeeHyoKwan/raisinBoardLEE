@@ -1,6 +1,6 @@
 $(window.document).ready(function(){
 	// jqgrid初期設定
-	const searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일', '상세', '편집', '삭제', '조회'];
+	const searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일', '상세', '편집', '삭제', '조회', '권한'];
 	const searchResultColModel =
 	                [
 	                	{name:'boardid', align:'center', width:'30'},
@@ -12,7 +12,8 @@ $(window.document).ready(function(){
 		                {name:'action1', align:'center', width:'60'},
 		                {name:'action2', align:'center', width:'60'},
 		                {name:'action3', align:'center', width:'60'},
-		                {name:'boardcount', align:'center', width:'60'}
+		                {name:'boardcount', align:'center', width:'60'},
+		                {name:'authorityAccount', align:'center', hidden:true}
 	                ];
 	$("#boardTable").jqGrid({
 		datatype: 'local',
@@ -58,6 +59,7 @@ function getBoardData() {
 	var action2Vl = new String();
 	var action3Vl = new String();
 	var boardcountVl = new String();
+	var authorityAccountVl = new String();
 
 	for(var i=0;i<boardDataTbl.length;i++) {
 		if (boardDataTbl[i].children.length != 1 ) {
@@ -85,6 +87,8 @@ function getBoardData() {
 			action3Vl = boardDataTbl[i].children.action3.innerHTML;
 
 			boardcountVl = boardDataTbl[i].children.boardcount.innerHTML;
+
+			authorityAccountVl = boardDataTbl[i].children.authorityAccount.innerHTML;
 			rowData = {
 							boardid: boardidVl,
 							title : titleVl,
@@ -95,7 +99,8 @@ function getBoardData() {
 							action1 : action1Vl,
 							action2 : action2Vl,
 							action3 : action3Vl,
-							boardcount : boardcountVl};
+							boardcount : boardcountVl,
+							authorityAccount : authorityAccountVl};
 			dataArray.push(rowData);
 		}
 	}

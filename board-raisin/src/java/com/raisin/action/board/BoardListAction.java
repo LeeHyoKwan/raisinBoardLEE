@@ -83,10 +83,23 @@ public class BoardListAction extends BaseAction {
             int lastCount = totalCount;
 
             // 現在ページの最後の番号が全体の番号より小さい場合はlastCountを+1に設定
-            if(page.getEndCount() < totalCount)
-                  lastCount = page.getEndCount() + 1;
+            if(page.getEndCount() < totalCount) {
+            	lastCount = page.getEndCount() + 1;
+            }
             // 全リストから現在ページのリストを設定
             list = list.subList(page.getStartCount(), lastCount);
+
+
+            // ユーザー権限確認
+            AccountDTO account = super.getSessionUser();
+            for(int accountIndex=0; accountIndex < list.size(); accountIndex++) {
+            	if(account.getUserid().equals(list.get(accountIndex).getUserid())){
+            		list.get(accountIndex).setAuthorityAccount(true);
+            	} else {
+            		list.get(accountIndex).setAuthorityAccount(false);
+            	}
+            }
+
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;

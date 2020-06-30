@@ -22,6 +22,7 @@ public class BoardDTO {
 
 	private String displayType;
 	private int commentCount;
+	private boolean authorityAccount;
 
 	public String getBoardid() {
 		return boardid;
@@ -100,6 +101,12 @@ public class BoardDTO {
 	}
 	public void setVoteCountDown(int voteCountDown) {
 		this.voteCountDown = voteCountDown;
+	}
+	public boolean isAuthorityAccount() {
+		return authorityAccount;
+	}
+	public void setAuthorityAccount(boolean authorityAccount) {
+		this.authorityAccount = authorityAccount;
 	}
 
 

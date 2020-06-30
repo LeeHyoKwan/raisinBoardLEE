@@ -64,7 +64,7 @@ $(function(){
 	<section>
 		<form name="boardView_form"method="post" action="../board/writeAction">
 				<h2>
-					<a class="head_title" href="../board/index">이효관의 게시판 만들기</a>
+					<a class="head_title" href="../board/index">게시판 만들기</a>
 				</h2>
 				<article id="write_wrap">
 					<div >
@@ -120,6 +120,10 @@ $(function(){
 							            <td class="cmt_cnt" id="content" align = "left" style=""><s:property value = "content" /></td>
 							            <td id="content" align = "left">
 							            	<s:url var="deleteAction"  action="../comment/commentDeleteAction">
+									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
+									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
+									        </s:url>
+									        <s:url var="editAction"  action="../comment/commentEditAction">
 									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
 									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
 									        </s:url>
@@ -209,6 +213,7 @@ $(function(){
 					<td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
 					<td id="action3" align = "center"><s:a class="actionDLink" href="%{boardDeleteAction}">삭제</s:a></td>
 					<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
+					<td id="authorityAccount" align = "center"><s:property value = "authorityAccount" /></td>
 
 		      		<s:set var="commentCount"><s:property value = "commentCount" /></s:set>
 					<s:if test="%{#commentCount!=0}">
