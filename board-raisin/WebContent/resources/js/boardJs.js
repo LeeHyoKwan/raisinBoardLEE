@@ -40,6 +40,11 @@ function onClickDelete(){
 	$("#dialogDelete").dialog("open");
 }
 
+function onClickDeleteList(action){
+	document.boardList_form.action = action;
+    $("#dialogDeleteList").dialog("open");
+}
+
 function isEmpty(str){
     if(typeof str == "undefined" || str == null || str == "") {
     	return true;
