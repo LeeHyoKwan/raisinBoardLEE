@@ -11,6 +11,7 @@ import com.raisin.action.BaseAction;
 import com.raisin.action.PagingAction;
 import com.raisin.model.dto.BoardDTO;
 import com.raisin.model.dto.CommentDTO;
+import com.raisin.model.vo.BoardVO;
 import com.raisin.service.BoardService;
 import com.raisin.service.CommentService;
 
@@ -27,6 +28,8 @@ public class BoardViewAction extends BaseAction {
 	private Logger logger = LogManager.getLogger(BoardViewAction.class);
 
 	private BoardDTO boardDto;
+
+	private BoardVO boardVO;
 
 	private CommentDTO commentDto;
 
@@ -63,6 +66,10 @@ public class BoardViewAction extends BaseAction {
 		if (commentDto == null) {
 			commentDto = new CommentDTO();
 		}
+
+		if (boardVO == null) {
+			boardVO = new BoardVO();
+		}
 	}
 
 	@Override
@@ -70,7 +77,7 @@ public class BoardViewAction extends BaseAction {
 		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "execute");
 		try {
 			// 詳細をクリックした場合
-			if ("view".equals(boardDto.getDisplayType())) {
+			if ("view".equals(boardVO.getDisplayType())) {
 				// 照会カウンター更新
 				service.updateBoardcount(boardDto);
 			}
@@ -242,6 +249,14 @@ public class BoardViewAction extends BaseAction {
 
 	public void setVoteKbn(String voteKbn) {
 		this.voteKbn = voteKbn;
+	}
+
+	public BoardVO getBoardVO() {
+		return boardVO;
+	}
+
+	public void setBoardVO(BoardVO boardVO) {
+		this.boardVO = boardVO;
 	}
 
 

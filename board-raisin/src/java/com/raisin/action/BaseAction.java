@@ -60,7 +60,6 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	 */
 	protected void setSessionUser(AccountDTO account) {
 		session.put(CommonContants.SESSION_USER, account);
-		context.setSession(session);
 	}
 
 	protected String getSysDate() {

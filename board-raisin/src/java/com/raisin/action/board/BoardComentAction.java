@@ -3,11 +3,8 @@ package com.raisin.action.board;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 
 import com.raisin.action.BaseAction;
 import com.raisin.model.dto.AccountDTO;
@@ -33,8 +30,6 @@ public class BoardComentAction extends BaseAction {
 
 	private CommentService service;
 
-	private List<BoardDTO> list = new ArrayList<BoardDTO>();
-
 	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
 
 	// ページング
@@ -50,8 +45,8 @@ public class BoardComentAction extends BaseAction {
 	@Override
 	public String execute() throws Exception {
 		logger.info("---------------- start {}.{} ----------------", "BoardComentAction", "execute");
-		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
+			commentDto = service.getCommentObj(commentDto);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -97,12 +92,22 @@ public class BoardComentAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public List<BoardDTO> getList() {
-		return list;
+	public String editAction() throws Exception {
+		logger.info("---------------- start {}.{} ----------------", "BoardViewAction", "deleteAction");
+		try {
+			// ユーザーセッション情報
+			AccountDTO account = super.getSessionUser();
+			commentDto.setModiuser(account.getUsername());
+			// コマンド削除
+			service.updateBoard(commentDto);
+		} catch (Exception e) {
+			logger.error(e, e);
+			throw e;
+		} finally {
+			logger.info("---------------- end {}.{} ----------------", "BoardViewAction", "deleteAction");
+		}
+		return SUCCESS;
 	}
-    public void setList(List<BoardDTO> list) {
-    	this.list = list;
-    }
 
 	public List<CommentDTO> getCommentList() {
 		return commentList;

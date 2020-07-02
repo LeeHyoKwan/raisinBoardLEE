@@ -21,6 +21,13 @@
 			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${commentDto.boardid}</result>
 		</action>
 
+		<!-- 掲示板コマンド編集FORM処理 -->
+		<action name = "commentFormAction" class="com.raisin.action.board.BoardComentAction" method="execute">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success">/WEB-INF/view/jsp/board/comment-write.jsp</result>
+		</action>
+
 		<!-- 掲示板コマンド編集処理 -->
 		<action name = "commentEditAction" class="com.raisin.action.board.BoardComentAction" method="editAction">
 			<interceptor-ref name="loginChk"/>
