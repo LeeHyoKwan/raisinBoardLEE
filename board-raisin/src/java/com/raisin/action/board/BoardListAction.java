@@ -11,6 +11,7 @@ import com.raisin.action.PagingAction;
 import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
 import com.raisin.model.dto.CommentDTO;
+import com.raisin.model.vo.BoardVO;
 import com.raisin.service.BoardService;
 import com.raisin.service.CommentService;
 
@@ -27,6 +28,8 @@ public class BoardListAction extends BaseAction {
 	private Logger logger = LogManager.getLogger(BoardListAction.class);
 
 	private BoardDTO boardDto;
+
+	private BoardVO boardVO;
 
 	private CommentDTO commentDto;
 
@@ -99,7 +102,6 @@ public class BoardListAction extends BaseAction {
             		list.get(accountIndex).setAuthorityAccount(false);
             	}
             }
-
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -129,7 +131,7 @@ public class BoardListAction extends BaseAction {
 			boardDto.setCreatedt(sysDate);
 			boardDto.setModidt(sysDate);
 			// displayがeditの場合、更新処理実施
-			if ("edit".equals(boardDto.getDisplayType())) {
+			if ("edit".equals(boardVO.getDisplayType())) {
 				service.updateBoard(boardDto);
 			} else {
 				//boardデータを登録
@@ -204,6 +206,14 @@ public class BoardListAction extends BaseAction {
 
 	public PagingAction getPage() {
 		return page;
+	}
+
+	public BoardVO getBoardVO() {
+		return boardVO;
+	}
+
+	public void setBoardVO(BoardVO boardVO) {
+		this.boardVO = boardVO;
 	}
 
 

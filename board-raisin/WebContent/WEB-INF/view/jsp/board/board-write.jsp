@@ -85,7 +85,7 @@
 		</section>
 	</main>
 	<s:hidden id="boardid"  type="text" name="boardDto.boardid" />
-	<s:hidden id="displayType"  type="text" name="boardDto.displayType"/>
+	<s:hidden id="displayType"  type="text" name="boardVO.displayType"/>
 </form>
 </body>
 

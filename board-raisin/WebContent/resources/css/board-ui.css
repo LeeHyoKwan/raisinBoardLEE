@@ -32,6 +32,27 @@
 	font-weight:bold;
 }
 
+.actionSLinkFalse {
+	pointer-events: none;
+	cursor: default;
+	color: gray !important;
+	font-weight:bold;
+}
+
+.actionELinkFalse {
+	pointer-events: none;
+	cursor: default;
+	color: gray !important;
+	font-weight:bold;
+}
+
+.actionDLinkFalse {
+	pointer-events: none;
+	cursor: default;
+	color: gray !important;
+	font-weight:bold;
+}
+
 a[class*="Link"]:hover{
 	text-decoration: underline !important;
 }
@@ -159,7 +180,7 @@ h3 {
 }
 
 .cmt_cnt{
-	padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333; width:805px;
+	padding: 10px; font-family: '굴림',Gulim; font-size: 13px; color: #333; width:700px;
 }
 
 .cmt_inp{
@@ -168,6 +189,10 @@ h3 {
 
 .cmt_txta{
 	width: 1010px; height: 78px; border: 1px solid #cecdce; background-color: #ffffff; resize: none; margin: 10px;
+}
+
+.cmt_txta_edi{
+	width: 1050px; height: 250px; border: 1px solid #cecdce; background-color: #ffffff; resize: none;
 }
 
 .cmt_in_div{
@@ -231,9 +256,16 @@ i.xi, i[class^="xi-"], i[class*=" xi-"] {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 12px;
+    color: #5d5a5a;
 }
 
 .cmic {
 	font-size: small;
 	color: #3a3a3a;
+}
+
+.date_time {
+    font-size: 12px;
+    color: #999;
 }

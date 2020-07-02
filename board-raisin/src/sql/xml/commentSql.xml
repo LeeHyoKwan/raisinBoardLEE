@@ -6,17 +6,24 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	<typeAlias alias="comment" type="com.raisin.model.dto.CommentDTO"/>
 
 	<!-- comment情報取得 -->
-	<select id="selectComment" parameterClass="map" resultClass="comment">
+	<select id="selectComment" parameterClass="comment" resultClass="comment">
 		SELECT
 		*
 		FROM
 			board_comment
+			WHERE
+			1=1
 		<dynamic>
 			<isNotNull property="boardid">
-				WHERE
-					boardid = #boardid#
+					AND boardid = #boardid#
 			</isNotNull>
 		</dynamic>
+		<dynamic>
+			<isNotNull property="commentid">
+					AND commentid = #commentid#
+			</isNotNull>
+		</dynamic>
+
 		ORDER BY
 			boardid DESC
 	</select>
@@ -34,6 +41,19 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	<delete id="deleteComment" parameterClass="comment">
 		DELETE FROM
 			board_comment
+		WHERE
+			boardid = #boardid#
+			AND commentid = #commentid#
+	</delete>
+
+		<!-- board情報削除 -->
+	<delete id="updateComment" parameterClass="comment">
+		UPDATE
+			board_comment
+		SET
+			content = #content#,
+			modiuser = #modiuser#,
+			modidt = sysdate()
 		WHERE
 			boardid = #boardid#
 			AND commentid = #commentid#

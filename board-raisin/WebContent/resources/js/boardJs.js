@@ -18,6 +18,16 @@ function onClickSaveChk(){
 	return false;
 }
 
+function onClickCommentEditChk(){
+	const content = $("#content").val();
+	if (isEmpty(content)) {
+		alert("내용을 입력해주세요");
+		return false;
+	}
+	onClickSave();
+	return false;
+}
+
 function onClickCommentSaveChk(){
 	const comment = $("#comment").val();
 	if (isEmpty(comment)) {
@@ -45,6 +55,11 @@ function onClickDeleteList(action){
     $("#dialogDeleteList").dialog("open");
 }
 
+function onClickCommentDeleteList(action){
+	document.boardView_form.action = action;
+    $("#dialogCommentDeleteList").dialog("open");
+}
+
 function isEmpty(str){
     if(typeof str == "undefined" || str == null || str == "") {
     	return true;
@@ -69,4 +84,9 @@ function onClickCommentInsert(){
 function onClickVote(voteKbn){
 	document.boardView_form.action = "../board/voteAction?voteKbn="+voteKbn+"";
 	document.boardView_form.submit();
+}
+
+function onClickBack(action){
+	document.commentView_form.action = action;
+	document.commentView_form.submit();
 }

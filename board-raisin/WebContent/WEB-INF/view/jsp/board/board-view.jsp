@@ -38,6 +38,19 @@ $(function(){
             }
         }
     });
+
+    $("#dialogCommentDeleteList").dialog({
+        autoOpen:false,
+        resizable:false,
+        title: '댓글',
+        buttons:{
+            "취소":function(){
+                $(this).dialog("close");
+            },"확인":function(){
+            	document.boardView_form.submit();
+            }
+        }
+    });
     $(".ui-dialog-buttonpane button:contains('확인')").attr('style','border-color:"#3c4790"; background: #4a57a8;color: #fff');
 
     $('.wrap').on( 'keyup', 'textarea', function (e){
@@ -117,22 +130,25 @@ $(function(){
 								<s:iterator value="commentList" status = "stat">
 									<tr class="cmt_tr" align="center">
 							            <td class="cmt_cu" id="createuser" width="132px " align = "left"><s:property value = "createuser" /></td>
-							            <td class="cmt_cnt" id="content" align = "left" style=""><s:property value = "content" /></td>
+							            <td class="cmt_cnt" id="content" align = "left"><s:property value = "content" /></td>
+							            <td class="date_time" id="createdt" align = "left"><s:property value = "createdt" /></td>
 							            <td id="content" align = "left">
+							            <s:if test="#session.SESSION_USER.userid == userid ">
 							            	<s:url var="deleteAction"  action="../comment/commentDeleteAction">
 									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
 									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
 									        </s:url>
-									        <s:url var="editAction"  action="../comment/commentEditAction">
+									        <s:url var="editAction"  action="../comment/commentFormAction">
 									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
 									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
 									        </s:url>
-									        <s:a  href="%{deleteAction}">
+									        <s:a  href="%{editAction}">
 									        	<i class="cmic xi-pen">수정&nbsp</i>
 									        </s:a>
-									         <s:a  href="%{deleteAction}">
+									         <s:a  href="javascript:onClickCommentDeleteList('%{deleteAction}')">
 								            	<i class="cmic xi-eraser">삭제</i>
 									        </s:a>
+									    </s:if>
 							            </td>
 							      </tr>
 								</s:iterator>
@@ -167,7 +183,7 @@ $(function(){
 			<!-- 現在ページ -->
 			<s:hidden id="currentPage"  type="text" name="currentPage" />
 			<!-- 掲示板更新用パラメータ -->
-			<s:hidden id="displayType"  type="text" name="boardDto.displayType" value="edit"/>
+			<s:hidden id="displayType"  type="text" name="boardVO.displayType" value="edit"/>
 		</form>
 	</section>
 </main>
@@ -191,13 +207,13 @@ $(function(){
 		            <td id="boardid" align = "center"><s:property value = "boardid" /></td>
 					<s:url var="boardViewAction"  action="viewForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
-			            <s:param name="boardDto.displayType">view</s:param>
+			            <s:param name="boardVO.displayType">view</s:param>
 			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 			        </s:url>
 			        <s:url var="boardEditAction"  action="editAction">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
 			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
-			           	<s:param name="boardDto.displayType">edit</s:param>
+			           	<s:param name="boardVO.displayType">edit</s:param>
 			        </s:url>
 			        <s:url var="boardDeleteAction"  action="deleteAction">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
@@ -210,8 +226,14 @@ $(function(){
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
 		            <td id="action1" align = "center"><s:a class="actionSLink"  href="%{boardViewAction}">상세</s:a></td>
-					<td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
-					<td id="action3" align = "center"><s:a class="actionDLink" href="%{boardDeleteAction}">삭제</s:a></td>
+					<s:if test="#session.SESSION_USER.userid != userid ">
+			            	<td id="action2" align = "center"><s:a class="actionELinkFalse" href="%{boardEditAction}">편집</s:a></td>
+			            	<td id="action3" align = "center"><s:a class="actionDLinkFalse" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
+			            </s:if>
+			            <s:else>
+				            <td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
+							<td id="action3" align = "center"><s:a class="actionDLink" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
+			            </s:else>
 					<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
 					<td id="authorityAccount" align = "center"><s:property value = "authorityAccount" /></td>
 
@@ -230,6 +252,9 @@ $(function(){
 </main>
 <div id="dialogDelete" style="display:none;">
    <p>글을 삭제하시겠습니까?</p>
+</div>
+<div id="dialogCommentDeleteList" style="display:none;">
+   <p>댓글을 삭제하시겠습니까?</p>
 </div>
 </body>
 </html>

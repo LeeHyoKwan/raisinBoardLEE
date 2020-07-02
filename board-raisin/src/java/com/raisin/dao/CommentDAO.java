@@ -1,9 +1,7 @@
 package com.raisin.dao;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.raisin.model.dto.CommentDTO;
 
@@ -23,17 +21,27 @@ public class CommentDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public List<CommentDTO> selectComment(CommentDTO commentDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (commentDto == null) {
-			map.put("boardid", null);
-		} else {
-			map.put("boardid", commentDto.getBoardid());
-		}
-		return (List<CommentDTO>) super.queryForList("selectComment", map);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		if (commentDto == null) {
+//			map.put("boardid", null);
+//		} else {
+//			map.put("boardid", commentDto.getBoardid());
+//		}
+		return (List<CommentDTO>) super.queryForList("selectComment", commentDto);
 	}
 
 	/**
-	 * 掲示板のコマンド情報を取得する
+	 * 掲示板のコメント情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public CommentDTO selectCommentObj(CommentDTO commentDto) throws SQLException {
+		return (CommentDTO)super.queryForObject("selectComment", commentDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を取得する
 	 *
 	 * @return
 	 * @throws SQLException
@@ -43,12 +51,22 @@ public class CommentDAO extends BaseDAO {
 	}
 
 	/**
-	 * 掲示板のコマンド情報を削除する
+	 * 掲示板のコメント情報を削除する
 	 *
 	 * @return
 	 * @throws SQLException
 	 */
 	public void deleteBoard(CommentDTO commentDto) throws SQLException {
 		super.delete("deleteComment", commentDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を更新する
+	 *
+	 * @return
+	 * @throws SQLExceptionupdateBoard
+	 */
+	public void updateBoard(CommentDTO commentDto) throws SQLException {
+		super.update("updateComment", commentDto);
 	}
 }

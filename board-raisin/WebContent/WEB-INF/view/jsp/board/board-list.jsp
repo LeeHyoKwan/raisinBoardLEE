@@ -71,13 +71,13 @@ $(function(){
 						<tr align = "center">
 							<s:url var="boardViewAction"  action="viewForm">
 					            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
-					            <s:param name="boardDto.displayType">view</s:param>
+					            <s:param name="boardVO.displayType">view</s:param>
 					            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 					        </s:url>
 					        <s:url var="boardEditAction"  action="editAction">
 					            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
 					            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
-					            <s:param name="boardDto.displayType">edit</s:param>
+					            <s:param name="boardVO.displayType">edit</s:param>
 					        </s:url>
 							<s:url var="boardDeleteAction"  action="deleteAction">
 					            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
@@ -90,9 +90,15 @@ $(function(){
 				            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 				            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 				            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
-							<td id="action1" align = "center"><s:a class="actionSLink" href="%{boardViewAction}">상세</s:a></td>
-							<td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
-							<td id="action3" align = "center"><s:a class="actionDLink" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
+			            	<td id="action1" align = "center"><s:a class="actionSLink" href="%{boardViewAction}">상세</s:a></td>
+			            	<s:if test="#session.SESSION_USER.userid != userid ">
+				            	<td id="action2" align = "center"><s:a class="actionELinkFalse" href="%{boardEditAction}">편집</s:a></td>
+				            	<td id="action3" align = "center"><s:a class="actionDLinkFalse" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
+				            </s:if>
+				            <s:else>
+					            <td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
+								<td id="action3" align = "center"><s:a class="actionDLink" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
+				            </s:else>
 							<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
 							<td id="authorityAccount" align = "center"><s:property value = "authorityAccount" /></td>
 

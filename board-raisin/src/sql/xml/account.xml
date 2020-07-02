@@ -14,7 +14,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			account
 		WHERE
 			userid = #userid#
-			and password = #password#
+<!-- 			and password = #password# -->
 	</select>
 
 </sqlMap>

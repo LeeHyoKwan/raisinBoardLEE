@@ -38,7 +38,20 @@ public class CommentService extends BaseService {
 	}
 
 	/**
-	 * 掲示板のコマンド情報を登録する
+	 * 掲示板のコメント情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public CommentDTO getCommentObj(CommentDTO commentDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		return commentDAO.selectCommentObj(commentDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を登録する
 	 *
 	 * @return
 	 * @throws SQLException
@@ -51,7 +64,7 @@ public class CommentService extends BaseService {
 	}
 
 	/**
-	 * 掲示板のコマンド情報を削除する。
+	 * 掲示板のコメント情報を削除する。
 	 *
 	 * @return
 	 * @throws SQLException
@@ -61,5 +74,18 @@ public class CommentService extends BaseService {
 		super.commitTransaction();
 		super.endTransaction();
 		commentDAO.deleteBoard(commentDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を更新する。
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void updateBoard(CommentDTO commentDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		commentDAO.updateBoard(commentDto);
 	}
 }
