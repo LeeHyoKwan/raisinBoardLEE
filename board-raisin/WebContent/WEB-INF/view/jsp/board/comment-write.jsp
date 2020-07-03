@@ -71,7 +71,7 @@
 							<s:textarea class="cmt_txta_edi" id="content" type="text" name="commentDto.content"/>
 						</div>
 						<div style='float:left; margin-top: 5px;'>
-							<button onclick="onClickBack('../board/viewForm')"
+							<button type="button" onclick="onClickBack('../board/viewForm')"
 								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">돌아가기</button>
 						</div>
 						<div style='float:right; margin-top: 5px;'>

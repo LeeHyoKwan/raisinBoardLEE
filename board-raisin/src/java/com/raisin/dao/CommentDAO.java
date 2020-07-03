@@ -21,12 +21,6 @@ public class CommentDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public List<CommentDTO> selectComment(CommentDTO commentDto) throws SQLException {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		if (commentDto == null) {
-//			map.put("boardid", null);
-//		} else {
-//			map.put("boardid", commentDto.getBoardid());
-//		}
 		return (List<CommentDTO>) super.queryForList("selectComment", commentDto);
 	}
 

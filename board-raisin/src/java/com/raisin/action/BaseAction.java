@@ -1,6 +1,6 @@
 package com.raisin.action;
 
-import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
@@ -9,6 +9,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.raisin.constants.CommonContants;
 import com.raisin.model.dto.AccountDTO;
+import com.raisin.model.dto.BoardDTO;
+import com.raisin.model.vo.PagingVO;
 
 /**
  * アクションの基底クラス
@@ -62,10 +64,25 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 		session.put(CommonContants.SESSION_USER, account);
 	}
 
-	protected String getSysDate() {
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy/MM/dd HH:mm:ss");
-		String format_time1 = format1.format (System.currentTimeMillis());
-		return format_time1;
+	/**
+	 * ページング処理
+	 * @param account
+	 */
+	protected List<BoardDTO> setPaging(List<BoardDTO> list, PagingVO pagingVO) {
+		int totalCount = list.size(); // 全掲示物数
+		// pagingAction オブジェクト生成7
+		PagingAction page = new PagingAction(
+        		pagingVO.getCurrentPage(), totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage());
+        // ページ html生成
+        pagingVO.setPagingHtml(page.getPagingHtml().toString());
+        // 現在ページで表示する最後番号設定
+        int lastCount = totalCount;
+        // 現在ページの最後の番号が全体の番号より小さい場合はlastCountを+1に設定
+        if(page.getEndCount() < totalCount) {
+        	lastCount = page.getEndCount() + 1;
+        }
+        // 全リストから現在ページのリストを設定
+        return list = list.subList(page.getStartCount(), lastCount);
 	}
 
 }

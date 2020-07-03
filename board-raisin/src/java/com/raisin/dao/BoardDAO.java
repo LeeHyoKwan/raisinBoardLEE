@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.raisin.model.dto.BoardDTO;
-import com.raisin.model.dto.CommentDTO;
 
 /**
  * 掲示板のDAOクラス
@@ -24,13 +23,7 @@ public class BoardDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public List<BoardDTO> selectBoard(BoardDTO boardDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (boardDto == null) {
-			map.put("boardid", null);
-		} else {
-			map.put("boardid", boardDto.getBoardid());
-		}
-		return (List<BoardDTO>) super.queryForList("selectBoard", map);
+		return (List<BoardDTO>) super.queryForList("selectBoard", boardDto);
 	}
 
 	/**
@@ -39,14 +32,8 @@ public class BoardDAO extends BaseDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<CommentDTO> selectComment(BoardDTO boardDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (boardDto == null) {
-			map.put("boardid", null);
-		} else {
-			map.put("boardid", boardDto.getBoardid());
-		}
-		return (List<CommentDTO>) super.queryForList("selectComment", map);
+	public BoardDTO selectBoardObj(BoardDTO boardDto) throws SQLException {
+		return (BoardDTO) super.queryForObject("selectBoard", boardDto);
 	}
 
 	/**
@@ -86,13 +73,7 @@ public class BoardDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public void deleteBoard(BoardDTO boardDto) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (boardDto == null) {
-			map.put("boardid", null);
-		} else {
-			map.put("boardid", boardDto.getBoardid());
-		}
-		super.delete("deleteBoard", map);
+		super.delete("deleteBoard", boardDto);
 	}
 
 	/**

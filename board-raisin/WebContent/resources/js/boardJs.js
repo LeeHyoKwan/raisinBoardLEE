@@ -69,7 +69,7 @@ function isEmpty(str){
 }
 
 function onClickEdit(){
-	document.boardView_form.action = "../board/editAction	";
+	document.boardView_form.action = "../board/editForm";
 	document.boardView_form.submit();
 }
 
@@ -82,11 +82,11 @@ function onClickCommentInsert(){
 }
 
 function onClickVote(voteKbn){
-	document.boardView_form.action = "../board/voteAction?voteKbn="+voteKbn+"";
+	document.boardView_form.action = "../board/voteAction?boardVO.voteKbn="+voteKbn+"";
 	document.boardView_form.submit();
 }
 
 function onClickBack(action){
-	document.commentView_form.action = action;
-	document.commentView_form.submit();
+	const boardid = $('#boardid').val();
+	location.href=action + "?boardDto.boardid=" + boardid;
 }

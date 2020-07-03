@@ -55,7 +55,7 @@ $(function(){
 				<table class="page_table">
 					<tr>
 						<td colspan = "5">
-							<s:property value = "pagingHtml"  escapeHtml = "false" />
+							<s:property value="pagingVO.pagingHtml"  escapeHtml = "false" />
 						</td>
 					</tr>
 				</table>
@@ -74,7 +74,7 @@ $(function(){
 					            <s:param name="boardVO.displayType">view</s:param>
 					            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 					        </s:url>
-					        <s:url var="boardEditAction"  action="editAction">
+					        <s:url var="boardEditAction"  action="editForm">
 					            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
 					            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
 					            <s:param name="boardVO.displayType">edit</s:param>
