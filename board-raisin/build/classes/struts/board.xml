@@ -27,6 +27,13 @@
 			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
 		</action>
 
+		<!-- 掲示板編集処理 -->
+		<action name = "editAction" class="com.raisin.action.board.BoardListAction" method="editAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
+		</action>
+
 		<!-- 掲示板詳細表示 -->
 		<action name = "viewForm" class="com.raisin.action.board.BoardViewAction" method="execute">
 			<interceptor-ref name="loginChk"/>
@@ -41,8 +48,8 @@
 			<result name="success" type="redirect">/board/index</result>
 		</action>
 
-		<!-- 掲示板詳細編集処理 -->
-		<action name = "editAction" class="com.raisin.action.board.BoardViewAction" method="execute">
+		<!-- 掲示板詳細編集FORM-->
+		<action name = "editForm" class="com.raisin.action.board.BoardViewAction" method="writeForm">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
 			<result name="success">/WEB-INF/view/jsp/board/board-write.jsp</result>

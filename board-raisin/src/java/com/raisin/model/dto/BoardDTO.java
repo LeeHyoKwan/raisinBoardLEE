@@ -20,9 +20,7 @@ public class BoardDTO {
 	private int voteCountUp;
 	private int voteCountDown;
 
-	private String displayType;
 	private int commentCount;
-	private boolean authorityAccount;
 
 	public String getBoardid() {
 		return boardid;
@@ -72,12 +70,6 @@ public class BoardDTO {
 	public void setModidt(String modidt) {
 		this.modidt = modidt;
 	}
-	public String getDisplayType() {
-		return displayType;
-	}
-	public void setDisplayType(String displayType) {
-		this.displayType = displayType;
-	}
 	public int getCommentCount() {
 		return commentCount;
 	}
@@ -101,12 +93,6 @@ public class BoardDTO {
 	}
 	public void setVoteCountDown(int voteCountDown) {
 		this.voteCountDown = voteCountDown;
-	}
-	public boolean isAuthorityAccount() {
-		return authorityAccount;
-	}
-	public void setAuthorityAccount(boolean authorityAccount) {
-		this.authorityAccount = authorityAccount;
 	}
 
 

@@ -6,11 +6,12 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	<typeAlias alias="board" type="com.raisin.model.dto.BoardDTO"/>
 
 	<!-- board情報取得 -->
-	<select id="selectBoard" parameterClass="map" resultClass="board">
+	<select id="selectBoard" parameterClass="board" resultClass="board">
 		SELECT
-		*
+		*,
+		(SELECT COUNT(*) FROM develop_schema.board_comment WHERE A.boardid = boardid) AS commentCount
 		FROM
-			board
+			board A
 		<dynamic>
 			<isNotNull property="boardid">
 				WHERE
@@ -57,7 +58,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	</update>
 
 		<!-- board情報削除 -->
-	<delete id="deleteBoard" parameterClass="map">
+	<delete id="deleteBoard" parameterClass="board">
 		DELETE FROM
 			board
 		WHERE
