@@ -90,8 +90,10 @@ public class BoardViewAction extends BaseAction {
 
 			// 全掲示板取得（下段）
 			boardDto.setBoardid(null);
+			setLimitStart(pagingVO,boardDto);
 			allList = service.getBoard(boardDto);
-			allList = super.setPaging(allList, pagingVO);
+			service.getBoardCount(boardDto);
+			super.setPaging(boardDto, pagingVO);
 
 			// 該当掲示物の番号設定
 			boardDto.setBoardid(selBoardid);

@@ -42,6 +42,18 @@ public abstract class BaseDAO {
 	}
 
 	/**
+	 * Selectを実行する「単体」パラメータ無
+	 *
+	 * @param id
+	 * @param object
+	 * @return
+	 * @throws SQLException
+	 */
+	protected Object queryForCountObject(String id) throws SQLException {
+		return client.queryForObject(id);
+	}
+
+	/**
 	 * Insertを実行する
 	 *
 	 * @param id

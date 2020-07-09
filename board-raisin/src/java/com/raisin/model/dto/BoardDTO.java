@@ -21,6 +21,8 @@ public class BoardDTO {
 	private int voteCountDown;
 
 	private int commentCount;
+	private int limitStart;
+	private int rowCount;
 
 	public String getBoardid() {
 		return boardid;
@@ -93,6 +95,18 @@ public class BoardDTO {
 	}
 	public void setVoteCountDown(int voteCountDown) {
 		this.voteCountDown = voteCountDown;
+	}
+	public int getLimitStart() {
+		return limitStart;
+	}
+	public void setLimitStart(int limitStart) {
+		this.limitStart = limitStart;
+	}
+	public int getRowCount() {
+		return rowCount;
+	}
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
 	}
 
 

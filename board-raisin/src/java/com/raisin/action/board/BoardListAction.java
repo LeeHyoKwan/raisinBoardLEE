@@ -3,6 +3,7 @@ package com.raisin.action.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,15 +50,20 @@ public class BoardListAction extends BaseAction {
 		if (pagingVO == null) {
 			pagingVO = new PagingVO();
 		}
+		if (boardDto == null) {
+			boardDto = new BoardDTO();
+		}
 	}
 
 	@Override
 	public String execute() throws Exception {
 		logger.debug("---------------- start {}.{} ----------------", "BoardListAction", "execute");
 		try {
+			setLimitStart(pagingVO,boardDto);
 			// リスト設定（ページング）
 			list = service.getBoard(boardDto);
-			list = super.setPaging(list, pagingVO);
+			service.getBoardCount(boardDto);
+			super.setPaging(boardDto, pagingVO);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -76,6 +82,12 @@ public class BoardListAction extends BaseAction {
 	public String writeAction() throws Exception {
 		logger.debug("---------------- start {}.{} ----------------", "BoardListAction", "writeAction");
 		try {
+			String errMessage = service.nullChkBoard(boardDto);
+			if (StringUtils.isNotEmpty(errMessage)) {
+				boardVO.setErrMessage(errMessage);
+				return INPUT;
+			}
+
 			// ユーザーセッション情報
 			AccountDTO account = super.getSessionUser();
 			// 登録データ設定（board）
@@ -146,6 +158,5 @@ public class BoardListAction extends BaseAction {
 	public void setPagingVO(PagingVO pagingVO) {
 		this.pagingVO = pagingVO;
 	}
-
 
 }

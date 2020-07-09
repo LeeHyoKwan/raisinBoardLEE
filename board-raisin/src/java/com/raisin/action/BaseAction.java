@@ -1,6 +1,5 @@
 package com.raisin.action;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
@@ -65,24 +64,38 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	}
 
 	/**
+	 * セッションにユーザー情報を設定する
+	 * @param account
+	 */
+	protected void removeSession() {
+		session.remove(CommonContants.SESSION_USER);
+	}
+
+	/**
+	 * ページング用LIMIT設定
+	 * @param account
+	 */
+	protected void setLimitStart(PagingVO pagingVO, BoardDTO boardDto) {
+		int currentPage = pagingVO.getCurrentPage();
+		if (currentPage == 1) {
+			boardDto.setLimitStart(0);
+		} else {
+			boardDto.setLimitStart(currentPage * 10 - 10);
+		}
+
+	}
+
+	/**
 	 * ページング処理
 	 * @param account
 	 */
-	protected List<BoardDTO> setPaging(List<BoardDTO> list, PagingVO pagingVO) {
-		int totalCount = list.size(); // 全掲示物数
+	protected void setPaging(BoardDTO boardDto, PagingVO pagingVO) {
+		int totalCount = boardDto.getRowCount();// 全掲示物数
 		// pagingAction オブジェクト生成7
 		PagingAction page = new PagingAction(
         		pagingVO.getCurrentPage(), totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage());
         // ページ html生成
         pagingVO.setPagingHtml(page.getPagingHtml().toString());
-        // 現在ページで表示する最後番号設定
-        int lastCount = totalCount;
-        // 現在ページの最後の番号が全体の番号より小さい場合はlastCountを+1に設定
-        if(page.getEndCount() < totalCount) {
-        	lastCount = page.getEndCount() + 1;
-        }
-        // 全リストから現在ページのリストを設定
-        return list = list.subList(page.getStartCount(), lastCount);
 	}
 
 }

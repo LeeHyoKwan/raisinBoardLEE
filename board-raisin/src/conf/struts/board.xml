@@ -17,6 +17,7 @@
 		<!-- 掲示板作成Form -->
 		<action name = "writeForm" class="com.raisin.action.board.BoardListAction" method="writeForm">
 			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
 			<result name="success">/WEB-INF/view/jsp/board/board-write.jsp</result>
 		</action>
 
@@ -24,14 +25,15 @@
 		<action name = "writeAction" class="com.raisin.action.board.BoardListAction" method="writeAction">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
-			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
+			<result name="input" type="redirect">/board/writeForm?boardVO.errMessage=${boardVO.errMessage}</result>
+			<result name="success" type="redirect">/board/index</result>
 		</action>
 
 		<!-- 掲示板編集処理 -->
 		<action name = "editAction" class="com.raisin.action.board.BoardListAction" method="editAction">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
-			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}</result>
+			<result name="success" type="redirect">/board/index</result>
 		</action>
 
 		<!-- 掲示板詳細表示 -->
