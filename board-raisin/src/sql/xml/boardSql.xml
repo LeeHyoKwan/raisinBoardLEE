@@ -20,6 +20,15 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		</dynamic>
 		ORDER BY
 			boardid DESC
+		LIMIT #limitStart#,10
+	</select>
+
+	<!-- board情報取得 -->
+	<select id="selectBoardCount" resultClass ="board">
+		SELECT
+		COUNT(*) as rowCount
+		FROM
+			board
 	</select>
 
 	<!-- board情報登録 -->

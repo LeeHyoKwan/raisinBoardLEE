@@ -47,7 +47,7 @@ public class LoginAction extends BaseAction {
 	 */
 	public String login() throws Exception {
 
-		logger.info("----------------start {}.{}----------------", "loginAction", "execute");
+		logger.info("----------------start {}.{}----------------", "loginAction", "login");
 
 		try {
 			String errMessage = service.chkAccount(loginVO);
@@ -70,10 +70,23 @@ public class LoginAction extends BaseAction {
 			logger.error(e, e);
 			throw e;
 		} finally {
-			logger.info("---------------- end {}.{} ----------------", "loginAction", "execute");
+			logger.info("---------------- end {}.{} ----------------", "loginAction", "login");
 		}
 	}
 
+	public String logout() throws Exception {
+		logger.info("----------------start {}.{}----------------", "loginAction", "logout");
+		try {
+			super.removeSession();
+			return SUCCESS;
+		} catch (Exception e) {
+			logger.error(e, e);
+			throw e;
+		} finally {
+			logger.info("---------------- end {}.{} ----------------", "loginAction", "logout");
+		}
+
+	}
 	public LoginVO getLoginVO() {
 		return loginVO;
 	}
@@ -81,5 +94,6 @@ public class LoginAction extends BaseAction {
 	public void setLoginVO(LoginVO loginVO) {
 		this.loginVO = loginVO;
 	}
+
 
 }

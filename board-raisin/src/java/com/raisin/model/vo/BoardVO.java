@@ -5,6 +5,7 @@ public class BoardVO {
 
 	private String displayType;
 	private String voteKbn;
+	private String errMessage;
 
 	public String getDisplayType() {
 		return displayType;
@@ -18,6 +19,12 @@ public class BoardVO {
 	}
 	public void setVoteKbn(String voteKbn) {
 		this.voteKbn = voteKbn;
+	}
+	public String getErrMessage() {
+		return errMessage;
+	}
+	public void setErrMessage(String errMessage) {
+		this.errMessage = errMessage;
 	}
 
 

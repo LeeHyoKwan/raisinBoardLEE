@@ -6,14 +6,14 @@ $(function(){
 function onClickSaveChk(){
 	const title = $("#title").val();
 	const content = $("#content").val();
-	if (isEmpty(title)) {
-		alert("제목을 입력해주세요");
-		return false;
-	}
-	if (isEmpty(content)) {
-		alert("내용을 입력해주세요");
-		return false;
-	}
+//	if (isEmpty(title)) {
+//		alert("제목을 입력해주세요");
+//		return false;
+//	}
+//	if (isEmpty(content)) {
+//		alert("내용을 입력해주세요");
+//		return false;
+//	}
 	onClickSave();
 	return false;
 }

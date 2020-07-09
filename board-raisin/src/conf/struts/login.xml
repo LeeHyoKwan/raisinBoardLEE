@@ -17,5 +17,10 @@
 			<result name="success" type="redirect">/board/index</result>
 		</action>
 
+		<!-- ログインボタンクリック -->
+		<action name="logout" class="com.raisin.action.login.LoginAction" method="logout">
+			<result name="input" type="redirect">/board/index</result>
+			<result name="success">/WEB-INF/view/jsp/login/login.jsp</result>
+		</action>
 	</package>
 </struts>

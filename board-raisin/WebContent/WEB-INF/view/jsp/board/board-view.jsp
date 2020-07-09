@@ -28,11 +28,11 @@ $(function(){
     $("#dialogDelete").dialog({
         autoOpen:false,
         resizable:false,
-        title: '글쓰기',
+        title: '削除',
         buttons:{
-            "취소":function(){
+            "キャンセル":function(){
                 $(this).dialog("close");
-            },"확인":function(){
+            },"確認":function(){
             	document.boardView_form.action = "../board/deleteAction";
             	document.boardView_form.submit();
             }
@@ -42,16 +42,16 @@ $(function(){
     $("#dialogCommentDeleteList").dialog({
         autoOpen:false,
         resizable:false,
-        title: '댓글',
+        title: 'コメント削除',
         buttons:{
-            "취소":function(){
+            "キャンセル":function(){
                 $(this).dialog("close");
-            },"확인":function(){
+            },"確認":function(){
             	document.boardView_form.submit();
             }
         }
     });
-    $(".ui-dialog-buttonpane button:contains('확인')").attr('style','border-color:"#3c4790"; background: #4a57a8;color: #fff');
+    $(".ui-dialog-buttonpane button:contains('確認')").attr('style','border-color:"#3c4790"; background: #4a57a8;color: #fff');
 
     $('.wrap').on( 'keyup', 'textarea', function (e){
         $(this).css('height', 'auto' );
@@ -76,8 +76,15 @@ $(function(){
 <main class="main_layout">
 	<section>
 		<form name="boardView_form"method="post" action="../board/writeAction">
+				<div style=" text-align-last: right; font: 11px gulim, Arial;color: #777;margin-top: 15px;">
+					<span>ログイン ユーザー:   </span>
+					<span><s:property value="#session.SESSION_USER.username" /></span>
+				</div>
+				<div style="text-align-last: right; font: 11px gulim, Arial;color: #777;">
+					<span><a href="../login/logout">ログアウト</a></span>
+				</div>
 				<h2>
-					<a class="head_title" href="../board/index">게시판 만들기</a>
+					<a class="head_title" href="../board/index">掲示板</a>
 				</h2>
 				<article id="write_wrap">
 					<div >
@@ -96,9 +103,9 @@ $(function(){
 										</span>
 									</div>
 									<div class="writer_rf">
-										<span class="view_count">조회 <s:label name="boardDto.boardcount" /></span>
-										<span class="view_rec_num">추천 <s:label name="boardDto.voteCountUp" /></span>
-										<span class="view_comment_count">댓글 <s:label name="boardDto.commentCount" /></span>
+										<span class="view_count">照会 <s:label name="boardDto.boardcount" /></span>
+										<span class="view_rec_num">推薦 <s:label name="boardDto.voteCountUp" /></span>
+										<span class="view_comment_count">コメント <s:label name="boardDto.commentCount" /></span>
 									</div>
 								</div>
 							</div>
@@ -110,20 +117,20 @@ $(function(){
 						<div class="vote">
 							<button type="button" class="vb-btn vb-white" onclick="onClickVote('up');">
 								<span class="lang">
-									<i class="xi-thumbs-up" style="color:#F94966"></i> 추천 수
+									<i class="xi-thumbs-up" style="color:#F94966"></i> 推薦
 								</span>
 								<span class="num" id="vm_v_count"><s:label name="boardDto.voteCountUp" /></span>
 							</button>
 							<button type="button" class="vb-btn vb-white" onclick="onClickVote('down');">
 								<span class="lang">
-									<i class="xi-thumbs-down" style="color:#336699"></i> 비추천 수
+									<i class="xi-thumbs-down" style="color:#336699"></i> 非推薦
 								</span>
 								<span class="num" id="vm_b_count"><s:label name="boardDto.voteCountDown" /></span>
 							</button>
 						</div>
 
 						<div class="comment_div">
-							<div class="comment_lf">댓글</div><div class="comment_rt"><s:label name="boardDto.commentCount"/></div><div>개</div>
+							<div class="comment_lf">コメント</div><div class="comment_rt"><s:label name="boardDto.commentCount"/></div><div>個</div>
 						</div>
 						<div>
 							<table class="cmt_tbl" id="commentTbl">
@@ -143,10 +150,10 @@ $(function(){
 									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
 									        </s:url>
 									        <s:a  href="%{editAction}">
-									        	<i class="cmic xi-pen">수정&nbsp</i>
+									        	<i class="cmic xi-pen">編集&nbsp</i>
 									        </s:a>
 									         <s:a  href="javascript:onClickCommentDeleteList('%{deleteAction}')">
-								            	<i class="cmic xi-eraser">삭제</i>
+								            	<i class="cmic xi-eraser">削除</i>
 									        </s:a>
 									    </s:if>
 							            </td>
@@ -164,24 +171,24 @@ $(function(){
 							<s:textarea class="cmt_txta" id="comment" type="text" name="commentDto.content" maxlength="400"></s:textarea>
 							<div class="cmt_in_div">
 								<button class="view_btn" onclick = "onClickCommentInsert()"
-									type="button" id="btn_comment_insert">등록</button>
+									type="button" id="btn_comment_insert">投稿</button>
 							</div>
 						</div>
 						<div class="view_ibtn_div">
-							<button class="view_btn" onclick="javascript:location.href='../board/writeForm'" type="button" id="btn_edit">글작성</button>
+							<button class="view_btn" onclick="javascript:location.href='../board/writeForm'" type="button" id="btn_edit">記事登録</button>
 						</div>
 						<div class="view_edbtn_div">
-							<button class="view_btn" onclick = "onClickEdit()" type="button" id="btn_edit">수정</button>
+							<button class="view_btn" onclick = "onClickEdit()" type="button" id="btn_edit">編集</button>
 						</div>
 						<div class="view_edbtn_div">
-							<button class="view_btn" onclick="onClickDelete()" type="button" id="btn_delete">삭제</button>
+							<button class="view_btn" onclick="onClickDelete()" type="button" id="btn_delete">削除</button>
 						</div>
 					</div>
 				</article>
 			<!-- 現在掲示板番号 -->
 			<s:hidden id="boardid"  type="text" name="boardDto.boardid" />
 			<!-- 現在ページ -->
-			<s:hidden id="currentPage"  type="text" name="currentPage" />
+			<s:hidden id="currentPage"  type="text" name="pagingVO.currentPage" />
 			<!-- 掲示板更新用パラメータ -->
 			<s:hidden id="displayType"  type="text" name="boardVO.displayType" value="edit"/>
 		</form>
@@ -208,16 +215,16 @@ $(function(){
 					<s:url var="boardViewAction"  action="viewForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
 			            <s:param name="boardVO.displayType">view</s:param>
-			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			            <s:param name="pagingVO.currentPage"><s:property value="pagingVO.currentPage" /></s:param>
 			        </s:url>
 			        <s:url var="boardEditAction"  action="editForm">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
-			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			            <s:param name="pagingVO.currentPage"><s:property value="pagingVO.currentPage" /></s:param>
 			           	<s:param name="boardVO.displayType">edit</s:param>
 			        </s:url>
 			        <s:url var="boardDeleteAction"  action="deleteAction">
 			            <s:param name="boardDto.boardid"><s:property value="boardid" /></s:param>
-			            <s:param name="currentPage"><s:property value="currentPage" /></s:param>
+			            <s:param name="pagingVO.currentPage"><s:property value="pagingVO.currentPage" /></s:param>
 			        </s:url>
 
 					<td id="title" align = "center"><s:a class="titleLink" href="%{boardViewAction}"><s:property value = "title" /></s:a></td>
@@ -225,15 +232,15 @@ $(function(){
 		            <td id="createdt" align = "center"><s:property value = "createdt" /></td>
 		            <td id="modiuser" align = "center"><s:property value = "modiuser" /></td>
 		            <td id="modidt" align = "center"><s:property value = "modidt" /></td>
-		            <td id="action1" align = "center"><s:a class="actionSLink"  href="%{boardViewAction}">상세</s:a></td>
+		            <td id="action1" align = "center"><s:a class="actionSLink"  href="%{boardViewAction}">詳細</s:a></td>
 					<s:if test="#session.SESSION_USER.userid != userid ">
-			            	<td id="action2" align = "center"><s:a class="actionELinkFalse" href="%{boardEditAction}">편집</s:a></td>
-			            	<td id="action3" align = "center"><s:a class="actionDLinkFalse" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
-			            </s:if>
-			            <s:else>
-				            <td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">편집</s:a></td>
-							<td id="action3" align = "center"><s:a class="actionDLink" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >삭제</s:a></td>
-			            </s:else>
+		            	<td id="action2" align = "center"><s:a class="actionELinkFalse" href="%{boardEditAction}">編集</s:a></td>
+		            	<td id="action3" align = "center"><s:a class="actionDLinkFalse" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >削除</s:a></td>
+		            </s:if>
+		            <s:else>
+			            <td id="action2" align = "center"><s:a class="actionELink" href="%{boardEditAction}">編集</s:a></td>
+						<td id="action3" align = "center"><s:a class="actionDLink" href="javascript:onClickDeleteList('%{boardDeleteAction}')" >削除</s:a></td>
+		            </s:else>
 					<td id="boardcount" align = "center"><s:property value = "boardcount" /></td>
 					<td id="authorityAccount" align = "center"><s:property value = "authorityAccount" /></td>
 
@@ -251,10 +258,10 @@ $(function(){
 	</section>
 </main>
 <div id="dialogDelete" style="display:none;">
-   <p>글을 삭제하시겠습니까?</p>
+   <p>削除しますか?</p>
 </div>
 <div id="dialogCommentDeleteList" style="display:none;">
-   <p>댓글을 삭제하시겠습니까?</p>
+   <p>コメントを削除しますか?</p>
 </div>
 </body>
 </html>

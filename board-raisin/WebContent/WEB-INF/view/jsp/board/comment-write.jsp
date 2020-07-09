@@ -28,16 +28,16 @@
         $("#dialogSave").dialog({
             autoOpen:false,
             resizable:false,
-            title: '글쓰기',
+            title: '保存',
             buttons:{
-                "취소":function(){
+                "キャンセル":function(){
                     $(this).dialog("close");
-                },"확인":function(){
+                },"確認":function(){
                 	document.commentView_form.submit();
                 }
             }
         });
-        $(".ui-dialog-buttonpane button:contains('확인')").attr('style','border-color:"#3c4790"; background: #4a57a8;color: #fff');
+        $(".ui-dialog-buttonpane button:contains('確認')").attr('style','border-color:"#3c4790"; background: #4a57a8;color: #fff');
     });
 </script>
 </head>
@@ -45,15 +45,22 @@
 <main class="main_layout">
 	<section>
 		<form name="commentView_form"method="post" action="../comment/commentEditAction">
+				<div style=" text-align-last: right; font: 11px gulim, Arial;color: #777;margin-top: 15px;">
+					<span>ログイン ユーザー:   </span>
+					<span><s:property value="#session.SESSION_USER.username" /></span>
+				</div>
+				<div style="text-align-last: right; font: 11px gulim, Arial;color: #777;">
+					<span><a href="../login/logout">ログアウト</a></span>
+				</div>
 				<h2>
-					<a class="head_title" href="../board/index">게시판 만들기</a>
+					<a class="head_title" href="../board/index">掲示板</a>
 				</h2>
 				<article id="write_wrap">
 					<div >
 						<header>
 							<div class="header_div">
 								<h3>
-									<label class="title_subject" id="title" >댓글수정</label>
+									<label class="title_subject" id="title" style="text-align-last: center; font-size: smaller;">コメント編集</label>
 								</h3>
 								<div class="writer">
 									<div class="writer_lf">
@@ -72,11 +79,11 @@
 						</div>
 						<div style='float:left; margin-top: 5px;'>
 							<button type="button" onclick="onClickBack('../board/viewForm')"
-								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">돌아가기</button>
+								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">戻る</button>
 						</div>
 						<div style='float:right; margin-top: 5px;'>
 							<button onclick="return onClickCommentEditChk()"
-								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">등록</button>
+								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">確定</button>
 						</div>
 					</div>
 				</article>
@@ -89,6 +96,6 @@
 </main>
 </body>
 <div id="dialogSave" style="display:none;">
-   <p>댓글을 수정하시겠습니까?</p>
+   <p>保存しますか?</p>
 </div>
 </html>

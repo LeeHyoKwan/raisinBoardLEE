@@ -1,19 +1,17 @@
 $(window.document).ready(function(){
 	// jqgrid初期設定
-	const searchResultColNames =  ['No', '제목', '글쓴이', '작성일', '갱신자', '갱신일', '상세', '편집', '삭제', '조회', '권한'];
+	const searchResultColNames =  ['No', '記事タイトル', '投稿者', '投稿日時', '更新日時', '詳細', '編集', '削除', '照会'];
 	const searchResultColModel =
 	                [
 	                	{name:'boardid', align:'center', width:'30'},
-		                {name:'title', align:'left', width:'500'},
+		                {name:'title', align:'left', width:'440'},
 		                {name:'createuser', align:'center',width:'80'},
-		                {name:'createdt', align:'center', width:'60'},
-		                {name:'modiuser', align:'center', width:'80'},
-		                {name:'modidt', align:'center', width:'60'},
+		                {name:'createdt', align:'center', width:'130'},
+		                {name:'modidt', align:'center', width:'130'},
 		                {name:'action1', align:'center', width:'60'},
 		                {name:'action2', align:'center', width:'60'},
 		                {name:'action3', align:'center', width:'60'},
-		                {name:'boardcount', align:'center', width:'60'},
-		                {name:'authorityAccount', align:'center', hidden:true}
+		                {name:'boardcount', align:'center', width:'60'}
 	                ];
 	$("#boardTable").jqGrid({
 		datatype: 'local',
@@ -30,7 +28,7 @@ $(window.document).ready(function(){
 		sortable : false,
 		width:1051,
 		height: "auto",
-		caption: '게시판',
+		caption: '掲示板',
 		cmTemplate: { sortable: false },
 		shrinkToFit: false,
 		beforeSelectRow: function(rowid, e) {
@@ -59,7 +57,6 @@ function getBoardData() {
 	var action2Vl = new String();
 	var action3Vl = new String();
 	var boardcountVl = new String();
-	var authorityAccountVl = new String();
 
 	for(var i=0;i<boardDataTbl.length;i++) {
 		if (boardDataTbl[i].children.length != 1 ) {
@@ -72,14 +69,14 @@ function getBoardData() {
 			}
 			createuserVl = boardDataTbl[i].children.createuser.innerHTML;
 
-			var createdtFm = creatDateFomat(boardDataTbl[i]);
-			boardDataTbl[i].children.createdt.innerText = createdtFm;
+//			var createdtFm = creatDateFomat(boardDataTbl[i]);
+//			boardDataTbl[i].children.createdt.innerText = createdtFm;
 			createdtVl = boardDataTbl[i].children.createdt.innerHTML;
 
 			modiuserVl = boardDataTbl[i].children.modiuser.innerHTML;
 
-			var modidtFm = modiDateFomat(boardDataTbl[i]);
-			boardDataTbl[i].children.modidt.innerText = modidtFm;
+//			var modidtFm = modiDateFomat(boardDataTbl[i]);
+//			boardDataTbl[i].children.modidt.innerText = modidtFm;
 			modidtVl = boardDataTbl[i].children.modidt.innerHTML;
 
 			action1Vl = boardDataTbl[i].children.action1.innerHTML;
@@ -88,19 +85,16 @@ function getBoardData() {
 
 			boardcountVl = boardDataTbl[i].children.boardcount.innerHTML;
 
-			authorityAccountVl = boardDataTbl[i].children.authorityAccount.innerHTML;
 			rowData = {
 							boardid: boardidVl,
 							title : titleVl,
 							createuser : createuserVl,
 							createdt : createdtVl,
-							modiuser : modiuserVl,
 							modidt : modidtVl,
 							action1 : action1Vl,
 							action2 : action2Vl,
 							action3 : action3Vl,
-							boardcount : boardcountVl,
-							authorityAccount : authorityAccountVl};
+							boardcount : boardcountVl};
 			dataArray.push(rowData);
 		}
 	}
@@ -110,7 +104,7 @@ function getBoardData() {
 function actionHeader(){
 	// actionHeader設定
 	var newWidth = $("#boardTable_action1").width() +$("#boardTable_action2").width()+ $("#boardTable_action1").width();
-	$("#boardTable").jqGrid("setLabel", "action1", "엑션", "", {
+	$("#boardTable").jqGrid("setLabel", "action1", "アクション", "", {
 	        style: "width: " + "180px;",
 	        colspan: "3"
 	    });

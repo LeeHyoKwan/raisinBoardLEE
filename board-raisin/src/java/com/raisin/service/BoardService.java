@@ -3,7 +3,11 @@ package com.raisin.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.raisin.constants.CommonContants;
 import com.raisin.dao.BoardDAO;
+import com.raisin.manager.MessageManager;
 import com.raisin.model.dto.BoardDTO;
 
 /**
@@ -23,6 +27,29 @@ public class BoardService extends BaseService {
 			boardDAO = new BoardDAO();
 		}
 	}
+
+	/**
+	 * nullチェックする。
+	 * @param boardDto
+	 * @return
+	 * @throws SQLException
+	 */
+	public String nullChkBoard(BoardDTO boardDto) throws SQLException {
+		String title = boardDto.getTitle();
+		String content = boardDto.getContent();
+
+		if (StringUtils.isEmpty(title)) {
+			return MessageManager.getMessage(CommonContants.MESSAGE_COMMON_INPUT_ISEMPTY, "タイトル");
+		}
+
+		if (StringUtils.isEmpty(content)) {
+			return MessageManager.getMessage(CommonContants.MESSAGE_COMMON_INPUT_ISEMPTY, "本文");
+		}
+		return null;
+	}
+
+
+
 
 	/**
 	 * 掲示板の情報を取得する
@@ -48,6 +75,19 @@ public class BoardService extends BaseService {
 		super.commitTransaction();
 		super.endTransaction();
 		return boardDAO.selectBoardObj(boardDto);
+	}
+
+	/**
+	 * 掲示板の件数を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void getBoardCount(BoardDTO boardDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		boardDto.setRowCount(boardDAO.selectBoardCount().getRowCount());
 	}
 
 	/**

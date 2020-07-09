@@ -52,8 +52,14 @@ public class PagingAction
 
             if(currentPage > blockPage) {
 	            pagingHtml.append("<a href=../board/index.action?pagingVO.currentPage="
+	                     + (1) + ">");
+	            pagingHtml.append("最初へ");
+	            pagingHtml.append("</a>");
+	            pagingHtml.append("&nbsp;&nbsp;");
+
+	            pagingHtml.append("<a href=../board/index.action?pagingVO.currentPage="
 	                     + (startPage - 1) + ">");
-	            pagingHtml.append("이전");
+	            pagingHtml.append("前へ");
 	            pagingHtml.append("</a>");
             }
             pagingHtml.append("&nbsp;&nbsp;");
@@ -82,8 +88,15 @@ public class PagingAction
             if(totalPage - startPage >= blockPage) {
               pagingHtml.append("<a href=../board/index.action?pagingVO.currentPage="
                      + (endPage + 1) + ">");
-              pagingHtml.append("다음");
+              pagingHtml.append("次へ");
               pagingHtml.append("</a>");
+
+              pagingHtml.append("&nbsp;&nbsp;");
+              pagingHtml.append("<a href=../board/index.action?pagingVO.currentPage="
+	                     + (totalPage) + ">");
+              pagingHtml.append("最後へ");
+              pagingHtml.append("</a>");
+
             }
       }
 

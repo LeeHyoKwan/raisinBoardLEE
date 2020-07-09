@@ -109,7 +109,7 @@ div[id=gbox_boardTable] {
 	background-color: #FCFCFC;
 }
 
-h2 { color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; margin-top: 15px; font-weight: bolder;}
+h2 { color: #3c4790; font-size: 24px; font-family: 'Nanum Gothic', sans-serif; letter-spacing: -1px; font-weight: bolder;}
 
 h3 {
 	padding: 0 2px;
@@ -135,7 +135,7 @@ h3 {
 	padding-top:50px;
 }
 
-.title_subject{ width: 1051px; height: 30px; line-height: 35px; font-size:16px;margin-bottom:0px !important; border-style: none; background-color: #ffffff; font-weight: bolder; border-top: 1px solid #3c4790; background-color: #FCFCFC }
+.title_subject{ width: 1051px; line-height: 35px; font-size:16px;margin-bottom:0px !important; border-style: none; background-color: #ffffff; font-weight: bolder; border-top: 1px solid #3c4790; background-color: #FCFCFC }
 
 .list_layout{
 	width:1051px;
@@ -153,8 +153,8 @@ h3 {
 }
 
 .content_div{
-	padding-top: 30px;
-	padding-bottom: 30px;
+/* 	padding-top: 20px; */
+/* 	padding-bottom: 30px; */
 }
 
 .comment_div{ font-family: '굴림',Gulim;font-size: 13px;color: #333;font-weight: bold;margin-bottom: 5px; }

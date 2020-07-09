@@ -37,6 +37,16 @@ public class BoardDAO extends BaseDAO {
 	}
 
 	/**
+	 * 掲示板の件数を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public BoardDTO selectBoardCount() throws SQLException {
+		return (BoardDTO)super.queryForCountObject("selectBoardCount");
+	}
+
+	/**
 	 * 掲示板の情報を取得する
 	 *
 	 * @return
