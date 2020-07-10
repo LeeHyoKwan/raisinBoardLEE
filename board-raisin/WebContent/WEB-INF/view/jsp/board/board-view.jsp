@@ -137,7 +137,7 @@ $(function(){
 								<s:iterator value="commentList" status = "stat">
 									<tr class="cmt_tr" align="center">
 							            <td class="cmt_cu" id="createuser" width="132px " align = "left"><s:property value = "createuser" /></td>
-							            <td class="cmt_cnt" id="content" align = "left"><s:property value = "content" /></td>
+							            <td onclick='replyOpen(this);' class="cmt_cnt" id="content" align = "left" style="cursor: pointer;"><s:property value = "content" /></td>
 							            <td class="date_time" id="createdt" align = "left"><s:property value = "createdt" /></td>
 							            <td id="content" align = "left">
 							            <s:if test="#session.SESSION_USER.userid == userid ">
@@ -158,6 +158,16 @@ $(function(){
 									    </s:if>
 							            </td>
 							      </tr>
+							      <tr style="border-top:1px solid #ddd;">
+							      	<td></td>
+							      	<td colspan= 3>
+							      		<div class="reply_div" style="height:180px; width:915px; background: #fafafa; border: 1px solid #ddd; display: none;">
+							      			<textarea style="width:892px; height:100px" class="cmt_txta" id="reply" name="commentDto.reply" maxlength="400"></textarea>
+							      			<button class="view_btn" onclick = "onClickCommentInsert()" style="float:right; margin-right: 10px;"
+												type="button" id="btn_comment_insert">投稿</button>
+							      		</div>
+							      	</td>
+							      </tr>
 								</s:iterator>
 							</table>
 						</div>
@@ -168,7 +178,7 @@ $(function(){
 						</s:if>
 						<!-- コメント入力欄 -->
 						<div class="cmt_inp">
-							<s:textarea class="cmt_txta" id="comment" type="text" name="commentDto.content" maxlength="400"></s:textarea>
+							<s:textarea class="cmt_txta" id="comment" type="text" name="commentDto.content" maxlength="400" onkeypress="userKeyPress('insert')"></s:textarea>
 							<div class="cmt_in_div">
 								<button class="view_btn" onclick = "onClickCommentInsert()"
 									type="button" id="btn_comment_insert">投稿</button>

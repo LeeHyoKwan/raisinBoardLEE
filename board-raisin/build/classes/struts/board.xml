@@ -25,7 +25,8 @@
 		<action name = "writeAction" class="com.raisin.action.board.BoardListAction" method="writeAction">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
-			<result name="input" type="redirect">/board/writeForm?boardVO.errMessage=${boardVO.errMessage}</result>
+<!-- 			<result name="input" type="redirect">/board/writeForm?boardVO.errMessage=${boardVO.errMessage}</result> -->
+			<result name="input">/WEB-INF/view/jsp/board/board-write.jsp</result>
 			<result name="success" type="redirect">/board/index</result>
 		</action>
 
