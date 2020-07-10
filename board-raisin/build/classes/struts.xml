@@ -8,7 +8,12 @@
 	<package name="common" extends="struts-default">
 		<interceptors>
 			<!-- セッションチェックインターセプター -->
-			<interceptor name="loginChk" class="com.raisin.interceptor.LoginCheckInterceptor"/>
+			<interceptor name="loginInterceptor" class="com.raisin.interceptor.LoginCheckInterceptor"/>
+			<interceptor-stack name="loginChk">
+				<interceptor-ref name="createSession"/>
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="defaultStack"/>
+			</interceptor-stack>
 		</interceptors>
 		<global-results>
 			<!-- ログインしてないユーザー -->
@@ -29,5 +34,7 @@
 	<include file="struts/board.xml"/>
 	<!-- コマンド -->
 	<include file="struts/comment.xml"/>
+	<!-- reply -->
+	<include file="struts/reply.xml"/>
 
 </struts>
