@@ -25,6 +25,20 @@
 <script src="../resources/js/jqGridJs.js" type="text/javascript"></script>
 <script>
 	$(function(){
+        $("#dialogCancel").dialog({
+            autoOpen:false,
+            resizable:false,
+            title: '戻る',
+            buttons:{
+                "キャンセル":function(){
+                    $(this).dialog("close");
+                },"確認":function(){
+                	const boardid = $('#boardid').val();
+                	location.href='../board/viewForm' + "?boardDto.boardid=" + boardid;
+                }
+            }
+        });
+
         $("#dialogSave").dialog({
             autoOpen:false,
             resizable:false,
@@ -33,7 +47,13 @@
                 "キャンセル":function(){
                     $(this).dialog("close");
                 },"確認":function(){
-                	document.commentView_form.submit();
+                	const cheResult = onClickCommentEditChk();
+                	if(cheResult == null || cheResult == "" ){
+	                	document.commentView_form.submit();
+                	} else {
+                		$(this).dialog("close");
+                		$('#'+ cheResult + '').focus();
+                	}
                 }
             }
         });
@@ -75,14 +95,14 @@
 							</div>
 						</header>
 						<div class="content_div" style="border-bottom: 1px solid #ded7d79c !important;">
-							<s:textarea class="cmt_txta_edi" id="content" type="text" name="commentDto.content"/>
+							<s:textarea class="cmt_txta_edi" id="comment" type="text" name="commentDto.content" maxlength="400" onkeypress="userKeyPress('edit')"/>
 						</div>
 						<div style='float:left; margin-top: 5px;'>
-							<button type="button" onclick="onClickBack('../board/viewForm')"
+							<button type="button" onclick="onClickCancel()"
 								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">戻る</button>
 						</div>
 						<div style='float:right; margin-top: 5px;'>
-							<button onclick="return onClickCommentEditChk()"
+							<button type="button" onclick='$("#dialogSave").dialog("open");'
 								id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">確定</button>
 						</div>
 					</div>
@@ -95,6 +115,9 @@
 	</section>
 </main>
 </body>
+<div id="dialogCancel" style="display:none;">
+   <p>記事詳細に戻りますか。</p>
+</div>
 <div id="dialogSave" style="display:none;">
    <p>保存しますか?</p>
 </div>

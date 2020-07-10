@@ -43,7 +43,13 @@
                 "キャンセル":function(){
                     $(this).dialog("close");
                 },"確認":function(){
-                	document.boardWrite_form.submit();
+                	const cheResult = onClickSaveChk();
+                	if(cheResult == null || cheResult == "" ){
+	                	document.boardWrite_form.submit();
+                	} else {
+                		$(this).dialog("close");
+                		$('#'+ cheResult + '').focus();
+                	}
                 }
             }
         });
@@ -73,79 +79,71 @@
 										<label class="title_subject" style="height: 30px; text-align-last: center; font-size: smaller;">記事編集</label>
 						            </s:if>
 						            <s:else>
-						            	<label class="title_subject" style="height: 50px;text-align-last: center; font-size: smaller;border-bottom: 1px solid #ded7d79c !important;">記事登録</label>
+						            	<label class="title_subject" style="height: 30px; text-align-last: center; font-size: smaller;">記事編集</label>
 						            </s:else>
 								</h3>
-								<s:if test="boardVO.displayType == 'edit' ">
+
 									<div class="writer">
 										<div class="writer_lf">
-											<span>
-												<s:label name="boardDto.createuser" />
-											</span>
-											<span class="writer_dt">
-												<s:label name="boardDto.createdt" />
-											</span>
+											<s:if test="boardVO.displayType == 'edit' ">
+												<span>
+													<s:label name="boardDto.createuser" />
+												</span>
+												<span class="writer_dt">
+													<s:label name="boardDto.createdt" />
+												</span>
+											</s:if>
 										</div>
 									</div>
-								</s:if>
 							</div>
 						</header>
-						<s:if test="boardVO.displayType == 'edit' ">
 							<div class="content_div" style="padding-top: 10px; border-bottom: 1px solid #ded7d79c !important;">
 								<div>
 									<div>
+									<s:if test="boardVO.errMessage == 'タイトルが入力されていません。'">
+								       <div class="text-danger">
+								            <h6 class="col-4" style="font-weight: bold;">
+								                <s:property value="boardVO.errMessage"/>
+											</h6>
+								       </div>
+							       </s:if>
 										<s:textfield id="title"  type="text" name="boardDto.title" maxlength="40"
 											style="width: 1050px; height: 33px; padding: 0 12px;
 											border: 1px solid #cecdce; color: #333;" placeholder='タイトルを入力してください。'/>
 									</div>
 									<div style="padding-top: 10px;">
+									<s:if test="boardVO.errMessage == '本文が入力されていません。'">
+								       <div class="text-danger">
+								            <h6 class="col-4" style="font-weight: bold;">
+								                <s:property value="boardVO.errMessage"/>
+											</h6>
+								       </div>
+							       </s:if>
 										<s:textarea id="content"  name="boardDto.content"
 											style="width: 1050px; height: 450px; padding: 0 12px;
 											border: 1px solid #cecdce; color: #333; resize: none;" placeholder='本文を入力してください。'/>
 									</div>
 								</div>
 							</div>
-						</s:if>
-						<s:else>
-							<div class="content_div" style="border-bottom: 1px solid #ded7d79c !important;">
-								<div>
-									<div>
-										<s:textfield id="title"  type="text" name="boardDto.title" maxlength="40"
-											style="width: 1050px; height: 33px; padding: 0 12px;
-											border: 1px solid #cecdce; color: #333;" placeholder='タイトルを入力してください。'/>
-									</div>
-									<div style="padding-top: 10px;">
-										<s:textarea id="content"  name="boardDto.content"
-											style="width: 1050px; height: 450px; padding: 0 12px;
-											border: 1px solid #cecdce; color: #333; resize: none;" placeholder='本文を入力してください。'/>
-									</div>
-								</div>
-							</div>
-						</s:else>
-							<div style='float:left; margin-top: 5px;'>
+							<div style='margin-bottom: 20px; float:left; margin-top: 5px;'>
 								<button type="button" onclick="onClickCancel()"
 									id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">記事一覧へ</button>
 							</div>
 							<div style='float: right; margin-top: 5px;'>
 								<s:if test="boardVO.displayType == 'edit' ">
-									<button onsubmit="" onclick="return onClickSaveChk()"
+									<button type="button" onclick='$("#dialogSave").dialog("open");'
 									id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">編集確定</button>
 					            </s:if>
 					            <s:else>
-					            	<button onsubmit="" onclick="return onClickSaveChk()"
+					            	<button type="button" onclick='$("#dialogSave").dialog("open");'
 									id="btn_save" style="color:#fff;border-style:solid; background-color: #3c4790; border-radius: 4px">記事投稿</button>
 					            </s:else>
 							</div>
 				</article>
-				<s:if test="boardVO.errMessage != null">
-			       <div class="text-danger" style="margin-top: 10px;">
-			            <h6 class="col-4" style="margin:auto">
-			                <s:property value="boardVO.errMessage"/>
-						</h6>
-			       </div>
-		       </s:if>
 				<s:hidden id="boardid"  type="text" name="boardDto.boardid" />
 				<s:hidden id="displayType"  type="text" name="boardVO.displayType"/>
+				<s:hidden id="boardDto.createuser"  type="text" name="boardDto.createuser"/>
+				<s:hidden id="createdt"  type="text" name="boardDto.createdt"/>
 	</section>
 	</main>
 </form>
