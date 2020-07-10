@@ -35,7 +35,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	 * セッションからユーザー情報を取得する
 	 * @return
 	 */
-	protected AccountDTO getSessionUser2() {
+	protected AccountDTO getSessionUser() {
 		Object account = session.get(CommonContants.SESSION_USER);
 		if (account == null) {
 			return null;
@@ -47,7 +47,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	 * セッションからユーザー情報を取得する
 	 * @return
 	 */
-	protected AccountDTO getSessionUser() {
+	protected AccountDTO getSessionUser2() {
 		Object account = context.getSession().get(CommonContants.SESSION_USER);
 		if (account == null) {
 			return null;

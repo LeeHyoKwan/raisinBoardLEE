@@ -15,6 +15,10 @@ public class CommentDTO {
 	private String createuser;
 	private String createdt;
 	private String modiuser;
+	private String modidt;
+
+	private int replyid;
+	private int replyCount;
 
 	public String getCommentid() {
 		return commentid;
@@ -64,7 +68,19 @@ public class CommentDTO {
 	public void setModidt(String modidt) {
 		this.modidt = modidt;
 	}
-	private String modidt;
+	public int getReplyid() {
+		return replyid;
+	}
+	public void setReplyid(int replyid) {
+		this.replyid = replyid;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+
 
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="reply" type="com.raisin.model.dto.ReplyDTO"/>
+
+	<!-- comment情報取得 -->
+	<select id="selectReply" parameterClass="reply" resultClass="reply">
+		SELECT
+		*
+		FROM
+			board_reply
+			WHERE
+			1=1
+		<dynamic>
+			<isNotNull property="boardid">
+					AND boardid = #boardid#
+			</isNotNull>
+		</dynamic>
+		ORDER BY
+			boardid DESC
+	</select>
+
+</sqlMap>

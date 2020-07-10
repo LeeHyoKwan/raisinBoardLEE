@@ -7,25 +7,58 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 
 	<!-- comment情報取得 -->
 	<select id="selectComment" parameterClass="comment" resultClass="comment">
-		SELECT
-		*
-		FROM
-			board_comment
+			SELECT
+				boardid
+			    ,commentid
+			    ,content
+			    ,'' AS replyid
+			    ,userid
+			    ,createuser
+			    ,createdt
+			    ,modiuser
+			    ,modidt
+			    ,(SELECT COUNT(*) FROM board_reply WHERE A.boardid = boardid AND A.commentid = commentid) AS replyCount
+			FROM
+				board_comment A
 			WHERE
-			1=1
-		<dynamic>
-			<isNotNull property="boardid">
-					AND boardid = #boardid#
-			</isNotNull>
-		</dynamic>
-		<dynamic>
-			<isNotNull property="commentid">
-					AND commentid = #commentid#
-			</isNotNull>
-		</dynamic>
+				1=1
+			<dynamic>
+				<isNotNull property="boardid">
+						AND boardid = #boardid#
+				</isNotNull>
+			</dynamic>
+			<dynamic>
+				<isNotNull property="commentid">
+						AND commentid = #commentid#
+				</isNotNull>
+			</dynamic>
+			UNION
 
-		ORDER BY
-			boardid DESC
+			SELECT
+				boardid
+			    ,commentid
+			    ,content
+			    ,replyid AS replyid
+			    ,userid
+			    ,createuser
+			    ,createdt
+			    ,modiuser
+			    ,modidt
+			    ,(SELECT COUNT(*) FROM board_reply WHERE A.boardid = boardid AND A.commentid = commentid) AS replyCount
+			FROM board_reply A
+			WHERE
+				1=1
+			<dynamic>
+				<isNotNull property="boardid">
+						AND boardid = #boardid#
+				</isNotNull>
+			</dynamic>
+			<dynamic>
+				<isNotNull property="commentid">
+						AND commentid = #commentid#
+				</isNotNull>
+			</dynamic>
+				ORDER BY commentid,replyid
 	</select>
 
 	<!-- comment情報登録 -->

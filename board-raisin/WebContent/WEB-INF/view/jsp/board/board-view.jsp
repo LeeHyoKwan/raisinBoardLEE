@@ -135,39 +135,107 @@ $(function(){
 						<div>
 							<table class="cmt_tbl" id="commentTbl">
 								<s:iterator value="commentList" status = "stat">
-									<tr class="cmt_tr" align="center">
-							            <td class="cmt_cu" id="createuser" width="132px " align = "left"><s:property value = "createuser" /></td>
-							            <td onclick='replyOpen(this);' class="cmt_cnt" id="content" align = "left" style="cursor: pointer;"><s:property value = "content" /></td>
-							            <td class="date_time" id="createdt" align = "left"><s:property value = "createdt" /></td>
-							            <td id="content" align = "left">
-							            <s:if test="#session.SESSION_USER.userid == userid ">
-							            	<s:url var="deleteAction"  action="../comment/commentDeleteAction">
-									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
-									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
-									        </s:url>
-									        <s:url var="editAction"  action="../comment/commentFormAction">
-									            <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
-									            <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
-									        </s:url>
-									        <s:a  href="%{editAction}">
-									        	<i class="cmic xi-pen">編集&nbsp</i>
-									        </s:a>
-									         <s:a  href="javascript:onClickCommentDeleteList('%{deleteAction}')">
-								            	<i class="cmic xi-eraser">削除</i>
-									        </s:a>
-									    </s:if>
-							            </td>
-							      </tr>
-							      <tr style="border-top:1px solid #ddd;">
-							      	<td></td>
-							      	<td colspan= 3>
-							      		<div class="reply_div" style="height:180px; width:915px; background: #fafafa; border: 1px solid #ddd; display: none;">
-							      			<textarea style="width:892px; height:100px" class="cmt_txta" id="reply" name="commentDto.reply" maxlength="400"></textarea>
-							      			<button class="view_btn" onclick = "onClickCommentInsert()" style="float:right; margin-right: 10px;"
-												type="button" id="btn_comment_insert">投稿</button>
-							      		</div>
-							      	</td>
-							      </tr>
+									<s:if test="replyid==0">
+										<s:if test="replyCount==0">
+											<tr class="cmt_tr" align="center" style="border-bottom: 1px solid #ddd;">
+										</s:if>
+										<s:else>
+											<tr class="cmt_tr" align="center">
+										</s:else>
+										    <td class="cmt_cu" id="createuser" width="132px " align = "left">
+										    	<s:property value = "createuser" />
+										    </td>
+										    <s:if test="replyCount==0">
+											    <td onclick='replyOpen(this,0);' class="cmt_cnt" id="content" align = "left" style="cursor: pointer;">
+										    </s:if>
+										    <s:else>
+										    	<td onclick='replyOpen(this,1);' class="cmt_cnt" id="content" align = "left" style="cursor: pointer;">
+										    </s:else>
+										    	<s:property value = "content" />
+										    </td>
+										    <td class="date_time" id="createdt" align = "left">
+										    	<s:property value = "createdt" />
+										    </td>
+										    <td id="content" align = "left">
+												<s:if test="#session.SESSION_USER.userid == userid ">
+													<s:url var="deleteAction"  action="../comment/commentDeleteAction">
+													    <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
+													    <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
+												    </s:url>
+												    <s:url var="editAction"  action="../comment/commentFormAction">
+													    <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
+													    <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
+												    </s:url>
+												    <s:a  href="%{editAction}">
+												    	<i class="cmic xi-pen">編集&nbsp</i>
+												    </s:a>
+												    <s:a  href="javascript:onClickCommentDeleteList('%{deleteAction}')">
+												    	<i class="cmic xi-eraser">削除</i>
+												    </s:a>
+												</s:if>
+										    </td>
+									    </tr>
+								    </s:if>
+								    <s:if test="replyid==0">
+										<tr>
+										<td colspan= 4>
+											<div class="reply_div" style="height:160px; width:1020px; background: #fafafa; border: 1px solid #ddd;float: right; display: none;">
+												<textarea style="width:998px; height:100px" class="cmt_txta" id="reply" name="commentDto.reply" maxlength="400"></textarea>
+												<button class="view_btn" onclick = "onClickCommentInsert()" style="margin-right: 10px; float:right; margin-top: -9px;"
+													type="button" id="btn_comment_insert">投稿</button>
+											</div>
+										</tr>
+									</s:if>
+								    <s:else>
+								    	<s:if test="replyCount == replyid">
+											<tr style="border-bottom: 1px solid #ddd;">
+								    	</s:if>
+								    	<s:else>
+								    		<tr>
+								    	</s:else>
+												<td colspan= 4>
+													<div class="reply_div" style="height:160px; width:1020px; background: #fafafa; border: 1px solid #ddd;float: right; display: none;">
+														<textarea style="width:998px; height:100px" class="cmt_txta" id="reply" name="commentDto.reply" maxlength="400"></textarea>
+														<button class="view_btn" onclick = "onClickCommentInsert()" style="margin-right: 10px; float:right; margin-top: -9px;"
+															type="button" id="btn_comment_insert">投稿</button>
+													</div>
+													<s:if test="replyCount == replyid">
+														<div style="padding:5px; margin-bottom:10px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: -5px;">
+													</s:if>
+													<s:else>
+														<div style="padding:5px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: -5px;">
+													</s:else>
+														<div style="font-size: 12px;color: #777;float:left; width: 132px;">
+															<s:property value = "createuser" />
+														</div>
+														<div  style="float:left; width: 132px;">
+															<s:property value = "content" />
+														</div>
+														<div style="float:right; margin-right: 5px;">
+															<s:if test="#session.SESSION_USER.userid == userid ">
+																<s:url var="deleteAction"  action="../comment/commentDeleteAction">
+																    <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
+																    <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
+															    </s:url>
+															    <s:url var="editAction"  action="../comment/commentFormAction">
+																    <s:param name="commentDto.boardid"><s:property value="boardid" /></s:param>
+																    <s:param name="commentDto.commentid"><s:property value="commentid" /></s:param>
+															    </s:url>
+															    <s:a  href="%{editAction}">
+															    	<i class="cmic xi-pen">編集&nbsp</i>
+															    </s:a>
+															    <s:a  href="javascript:onClickCommentDeleteList('%{deleteAction}')">
+															    	<i class="cmic xi-eraser">削除</i>
+															    </s:a>
+															</s:if>
+														</div>
+														<div style="margin-right: 16px; font-size: 12px; color: #999;float:right">
+															<s:property value = "createdt" />
+														</div>
+													</div>
+												</td>
+										    </tr>
+								    </s:else>
 								</s:iterator>
 							</table>
 						</div>

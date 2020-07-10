@@ -132,11 +132,18 @@ function onClickBack(action){
 	location.href=action + "?boardDto.boardid=" + boardid;
 }
 
-function replyOpen(elem) {
-	$('.reply_div').css('display', 'none');
-	$(elem).parent().next()[0].children[1].children[0].style.display="block";
-	$(elem).parent().next()[0].children[1].children[0].style.marginBottom="10px";
-	$(elem).parent().next()[0].style.borderTop="none";
-	$(elem).parent().next()[0].style.borderBottom="1px solid #ddd";
+function replyOpen(elem,replyCount) {
+	if ($(elem).parent().next()[0].children[0].children[0].style.display != "block") {
+		$('.reply_div').css('display', 'none');
+		$(elem).parent().next()[0].children[0].children[0].style.display="block";
+		$(elem).parent().next()[0].children[0].children[0].style.marginBottom="2px";
+		if (replyCount == 0) {
+			$(elem).parent()[0].style.borderBottom="none"
+			$(elem).parent().next()[0].style.borderBottom="1px solid #ddd";
+			$(elem).parent().next()[0].children[0].children[0].style.marginBottom="10px"
+		}
+	} else {
+		$('.reply_div').css('display', 'none');
+	}
 }
 
