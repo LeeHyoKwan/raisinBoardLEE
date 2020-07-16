@@ -8,8 +8,29 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	<!-- board情報取得 -->
 	<select id="selectBoard" parameterClass="board" resultClass="board">
 		SELECT
-		*,
-		(SELECT COUNT(*) FROM develop_schema.board_comment WHERE A.boardid = boardid) AS commentCount
+		*
+		,(
+			SELECT COUNT(*) FROM (
+				SELECT
+					boardid
+					,commentid
+					,'' AS replyid
+				FROM
+					develop_schema.board_comment A
+				WHERE
+					1=1
+			UNION
+				SELECT
+					boardid
+					,commentid
+					,replyid AS replyid
+
+				FROM develop_schema.board_reply A
+				WHERE
+					1=1
+			) AS COUNTTABLE
+			WHERE A.boardid = COUNTTABLE.boardid
+		) AS commentCount
 		FROM
 			board A
 		<dynamic>

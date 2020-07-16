@@ -17,7 +17,31 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			    ,createdt
 			    ,modiuser
 			    ,modidt
-			    ,(SELECT COUNT(*) FROM board_reply WHERE A.boardid = boardid AND A.commentid = commentid) AS replyCount
+				,(
+					select max(replyid)
+					from
+						(SELECT
+							boardid
+							,commentid
+							,'' AS replyid
+						 FROM
+							develop_schema.board_comment A
+						 WHERE
+							 1=1
+							 AND boardid =#boardid#
+						 UNION
+						 SELECT
+							 boardid
+							 ,commentid
+							 ,replyid AS replyid
+						 FROM
+							develop_schema.board_reply A
+						 WHERE
+							 1=1
+							 AND boardid = #boardid#
+						 ) as B
+				          WHERE A.boardid = boardid AND A.commentid = commentid
+						 Group by B.boardid,B.commentid) as replyCount
 			FROM
 				board_comment A
 			WHERE
@@ -44,7 +68,31 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			    ,createdt
 			    ,modiuser
 			    ,modidt
-			    ,(SELECT COUNT(*) FROM board_reply WHERE A.boardid = boardid AND A.commentid = commentid) AS replyCount
+				,(
+					select max(replyid)
+					from
+						(SELECT
+							boardid
+							,commentid
+							,'' AS replyid
+						 FROM
+							develop_schema.board_comment A
+						 WHERE
+							 1=1
+							 AND boardid =#boardid#
+						 UNION
+						 SELECT
+							 boardid
+							 ,commentid
+							 ,replyid AS replyid
+						 FROM
+							develop_schema.board_reply A
+						 WHERE
+							 1=1
+							 AND boardid = #boardid#
+						 ) as B
+				          WHERE A.boardid = boardid AND A.commentid = commentid
+						 Group by B.boardid,B.commentid) as replyCount
 			FROM board_reply A
 			WHERE
 				1=1
@@ -58,9 +106,30 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 						AND commentid = #commentid#
 				</isNotNull>
 			</dynamic>
-				ORDER BY commentid,replyid
+				ORDER BY commentid,replyid*1
 	</select>
+	<!-- comment情報取得 -->
+	<select id="selectCommentObject" parameterClass="comment" resultClass="comment">
+		SELECT
+		*
+		FROM
+			board_comment
+			WHERE
+			1=1
+		<dynamic>
+			<isNotNull property="boardid">
+					AND boardid = #boardid#
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull property="commentid">
+					AND commentid = #commentid#
+			</isNotNull>
+		</dynamic>
 
+		ORDER BY
+			boardid DESC
+	</select>
 	<!-- comment情報登録 -->
 	<insert id="insertComment" parameterClass="comment">
 		INSERT INTO
@@ -79,8 +148,8 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			AND commentid = #commentid#
 	</delete>
 
-		<!-- board情報削除 -->
-	<delete id="updateComment" parameterClass="comment">
+	<!-- board情報削除 -->
+	<update id="updateComment" parameterClass="comment">
 		UPDATE
 			board_comment
 		SET
@@ -90,5 +159,5 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		WHERE
 			boardid = #boardid#
 			AND commentid = #commentid#
-	</delete>
+	</update>
 </sqlMap>

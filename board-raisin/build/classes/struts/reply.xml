@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<!-- 記事画面定義-->
+	<package name="reply" extends="common" namespace="/reply">
+
+		<!-- replyコマンド作成処理 -->
+		<action name = "replyWriteAction" class="com.raisin.action.board.BoardReplyAction" method="writeAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${boardDto.boardid}&amp;pagingVO.currentPage=${pagingVO.currentPage}</result>
+		</action>
+
+		<!-- 掲示板コマンド編集FORM処理 -->
+		<action name = "replyFormAction" class="com.raisin.action.board.BoardReplyAction" method="execute">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success">/WEB-INF/view/jsp/reply/reply-write.jsp</result>
+		</action>
+
+		<!-- 掲示板コマンド削除処理 -->
+		<action name = "replyDeleteAction" class="com.raisin.action.board.BoardReplyAction" method="deleteAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${replyDto.boardid}</result>
+		</action>
+
+		<!-- 掲示板コマンド編集処理 -->
+		<action name = "replyEditAction" class="com.raisin.action.board.BoardReplyAction" method="editAction">
+			<interceptor-ref name="loginChk"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="redirect">/board/viewForm?boardDto.boardid=${replyDto.boardid}</result>
+		</action>
+	</package>
+</struts>

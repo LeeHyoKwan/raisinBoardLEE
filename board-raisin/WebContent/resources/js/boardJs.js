@@ -60,6 +60,21 @@ function onClickCommentSaveChk(){
 	return true;
 }
 
+function onClickReplySaveChk(reply){
+	const lengthVlReply = 400;
+	if (isEmpty(reply)) {
+		alert("本文を入力してください。");
+		$('#reply').focus();
+		return false;
+	}
+	if (lengthChk(reply,lengthVlReply)) {
+		alert(lengthVlReply + "字以下で入力してください。");
+		$('#reply').focus();
+		return false;
+	}
+	return true;
+}
+
 function userKeyPress(flag){
 	if (window.event.keyCode == 13) {
 		event.returnValue=false;
@@ -147,3 +162,11 @@ function replyOpen(elem,replyCount) {
 	}
 }
 
+function onClickReplyInsert(elem, commentid){
+	const content = $(elem).parent().children()[0].value;
+	if(!onClickReplySaveChk(content)){
+		return false;
+	}
+	document.boardView_form.action = "../reply/replyWriteAction?replyDto.commentid="+commentid+"+ &replyDto.content=" + content+"";
+	document.boardView_form.submit();
+}
