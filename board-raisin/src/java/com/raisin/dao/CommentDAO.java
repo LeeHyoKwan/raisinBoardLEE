@@ -31,7 +31,7 @@ public class CommentDAO extends BaseDAO {
 	 * @throws SQLException
 	 */
 	public CommentDTO selectCommentObj(CommentDTO commentDto) throws SQLException {
-		return (CommentDTO)super.queryForObject("selectComment", commentDto);
+		return (CommentDTO)super.queryForObject("selectCommentObject", commentDto);
 	}
 
 	/**

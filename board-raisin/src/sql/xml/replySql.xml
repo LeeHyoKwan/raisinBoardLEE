@@ -22,4 +22,63 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			boardid DESC
 	</select>
 
+<!-- comment情報取得 -->
+	<select id="selectReplyObject" parameterClass="reply" resultClass="reply">
+		SELECT
+		*
+		FROM
+			board_reply
+			WHERE
+			1=1
+		<dynamic>
+			<isNotNull property="boardid">
+					AND boardid = #boardid#
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull property="commentid">
+					AND commentid = #commentid#
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull property="replyid">
+					AND replyid = #replyid#
+			</isNotNull>
+		</dynamic>
+		ORDER BY
+			boardid DESC
+	</select>
+
+		<!-- comment情報登録 -->
+	<insert id="insertReply" parameterClass="reply">
+		INSERT INTO
+			board_reply
+			(`boardid`, commentid, `userid`, `content`, `createuser`, `createdt`, `modiuser`, `modidt`)
+		VALUES
+			(#boardid#, #commentid#, #userid#, #content#, #createuser#, sysdate(), #modiuser#, sysdate())
+	</insert>
+
+	<!-- board情報削除 -->
+	<delete id="deleteReply" parameterClass="reply">
+		DELETE FROM
+			board_reply
+		WHERE
+			boardid = #boardid#
+			AND commentid = #commentid#
+			AND replyid = #replyid#
+	</delete>
+
+	<!-- board情報削除 -->
+	<update id="updateReply" parameterClass="reply">
+		UPDATE
+			board_reply
+		SET
+			content = #content#,
+			modiuser = #modiuser#,
+			modidt = sysdate()
+		WHERE
+			boardid = #boardid#
+			AND commentid = #commentid#
+			AND replyid = #replyid#
+	</update>
 </sqlMap>

@@ -24,4 +24,44 @@ public class ReplyDAO extends BaseDAO {
 		return (List<ReplyDTO>) super.queryForList("selectReply", replyDto);
 	}
 
+	/**
+	 * 掲示板のコメント情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public ReplyDTO selectReplyObj(ReplyDTO replyDto) throws SQLException {
+		return (ReplyDTO)super.queryForObject("selectReplyObject", replyDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void insertReply(ReplyDTO replyDto) throws SQLException {
+		super.insert("insertReply", replyDto);
+	}
+
+
+	/**
+	 * 掲示板のコメント情報を削除する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void deleteReply(ReplyDTO replyDto) throws SQLException {
+		super.delete("deleteReply", replyDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を更新する
+	 *
+	 * @return
+	 * @throws SQLExceptionupdateBoard
+	 */
+	public void updateReply(ReplyDTO replyDto) throws SQLException {
+		super.update("updateReply", replyDto);
+	}
 }

@@ -37,4 +37,55 @@ public class ReplyService extends BaseService {
 		return replyDAO.selectReply(replyDto);
 	}
 
+	/**
+	 * 掲示板のコメント情報を取得する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public ReplyDTO getReplyObj(ReplyDTO replyDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		return replyDAO.selectReplyObj(replyDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を登録する
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void insertReply(ReplyDTO replyDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		replyDAO.insertReply(replyDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を削除する。
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void deleteReply(ReplyDTO replyDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		replyDAO.deleteReply(replyDto);
+	}
+
+	/**
+	 * 掲示板のコメント情報を更新する。
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public void updateReply(ReplyDTO replyDto) throws SQLException {
+		super.startTransaction();
+		super.commitTransaction();
+		super.endTransaction();
+		replyDAO.updateReply(replyDto);
+	}
 }

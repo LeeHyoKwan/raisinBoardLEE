@@ -10,6 +10,7 @@ import com.raisin.action.BaseAction;
 import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
 import com.raisin.model.dto.CommentDTO;
+import com.raisin.model.vo.PagingVO;
 import com.raisin.service.CommentService;
 
 /**
@@ -29,6 +30,8 @@ public class BoardComentAction extends BaseAction {
 	private CommentDTO commentDto;
 
 	private CommentService service;
+
+	private PagingVO pagingVO;
 
 	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
 
@@ -139,6 +142,14 @@ public class BoardComentAction extends BaseAction {
 
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
+	}
+
+	public PagingVO getPagingVO() {
+		return pagingVO;
+	}
+
+	public void setPagingVO(PagingVO pagingVO) {
+		this.pagingVO = pagingVO;
 	}
 
 }

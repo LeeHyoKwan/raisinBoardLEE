@@ -17,6 +17,7 @@ public class ReplyDTO {
 	private String modidt;
 	private String modiuser;
 	private String userid;
+
 	public int getBoardid() {
 		return boardid;
 	}
