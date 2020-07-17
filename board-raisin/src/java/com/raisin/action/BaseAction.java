@@ -1,5 +1,6 @@
 package com.raisin.action;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
@@ -9,6 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.raisin.constants.CommonContants;
 import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
+import com.raisin.model.dto.CommentDTO;
 import com.raisin.model.vo.PagingVO;
 
 /**
@@ -92,10 +94,36 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	protected void setPaging(BoardDTO boardDto, PagingVO pagingVO) {
 		int totalCount = boardDto.getRowCount();// 全掲示物数
 		// pagingAction オブジェクト生成7
-		PagingAction page = new PagingAction(
-        		pagingVO.getCurrentPage(), totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage());
+		PagingAction page = new PagingAction();
+		page.PagingAction1(pagingVO.getCurrentPage(), totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage());
         // ページ html生成
         pagingVO.setPagingHtml(page.getPagingHtml().toString());
+	}
+
+	/**
+	 * ページング処理
+	 * @param account
+	 */
+	protected List<CommentDTO> setPagingCmt(List<CommentDTO> list, PagingVO pagingVO) {
+		int totalCount = list.size();// 全掲示物数
+		// pagingAction オブジェクト生成7
+		PagingAction page = new PagingAction();
+		int currentPage = pagingVO.getCurrentPageCmt();
+		if (currentPage == 0) {
+			currentPage = totalCount;
+		}
+		page.cmtPagingAction(currentPage, totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage());
+
+        // ページ html生成
+        pagingVO.setPagingHtmlCmt(page.getPagingHtml().toString());
+        // 現在ページで表示する最後番号設定
+        int lastCount = totalCount;
+        // 現在ページの最後の番号が全体の番号より小さい場合はlastCountを+1に設定
+        if(page.getEndCount() < totalCount) {
+        	lastCount = page.getEndCount() + 1;
+        }
+        // 全リストから現在ページのリストを設定
+        return list = list.subList(page.getStartCount(), lastCount);
 	}
 
 }

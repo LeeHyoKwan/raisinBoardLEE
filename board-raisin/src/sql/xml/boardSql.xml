@@ -31,6 +31,8 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			) AS COUNTTABLE
 			WHERE A.boardid = COUNTTABLE.boardid
 		) AS commentCount
+		, (SELECT COUNT(*) FROM BOARD_VOTE WHERE A.boardid = boardid AND voteCountUp = 'true') AS voteCountUp
+   		,(SELECT COUNT(*) FROM BOARD_VOTE WHERE A.boardid = boardid AND voteCountDown = 'true') AS voteCountDown
 		FROM
 			board A
 		<dynamic>

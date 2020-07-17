@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="vote" type="com.raisin.model.dto.VoteDTO"/>
+
+<!-- vote情報取得 -->
+	<select id="selectVoteObject" parameterClass="map" resultClass="vote">
+		SELECT
+		*
+		FROM
+			board_vote
+			WHERE
+			1=1
+		<dynamic>
+			<isNotNull property="boardid">
+					AND boardid = #boardid#
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull property="userid">
+					AND userid = #userid#
+			</isNotNull>
+		</dynamic>
+		ORDER BY
+			boardid DESC
+	</select>
+
+	<!-- vote情報登録 -->
+	<insert id="insertVote" parameterClass="map">
+		INSERT INTO
+			board_vote
+			(`boardid`, `userid`, `createdt`, `voteCountUp`, `voteCountDown`)
+		VALUES
+			(#boardid#
+			, #userid#
+			, sysdate()
+			, #voteCountUp#
+			, #voteCountDown#
+			)
+	</insert>
+
+	<!-- vote情報削除 -->
+	<update id="updateVote" parameterClass="map">
+		UPDATE
+			board_vote
+		SET
+			voteCountUp = #voteCountUp#,
+			voteCountDown = #voteCountDown#
+		WHERE
+			boardid = #boardid#
+			AND userid = #userid#
+	</update>
+</sqlMap>

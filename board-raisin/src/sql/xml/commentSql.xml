@@ -11,7 +11,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 				boardid
 			    ,commentid
 			    ,content
-			    ,'' AS replyid
+			    ,0 AS replyid
 			    ,userid
 			    ,createuser
 			    ,createdt
@@ -23,7 +23,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 						(SELECT
 							boardid
 							,commentid
-							,'' AS replyid
+							,0 AS replyid
 						 FROM
 							develop_schema.board_comment A
 						 WHERE
@@ -74,7 +74,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 						(SELECT
 							boardid
 							,commentid
-							,'' AS replyid
+							,0 AS replyid
 						 FROM
 							develop_schema.board_comment A
 						 WHERE

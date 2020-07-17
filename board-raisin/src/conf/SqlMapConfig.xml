@@ -19,4 +19,5 @@
     <sqlMap resource="xml/boardSql.xml"/>
     <sqlMap resource="xml/commentSql.xml"/>
     <sqlMap resource="xml/replySql.xml"/>
+    <sqlMap resource="xml/voteSql.xml"/>
 </sqlMapConfig>
