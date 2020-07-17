@@ -16,8 +16,11 @@ public class PagingAction
       private StringBuffer pagingHtml; // パージングHTML
 
       // ページングコンストラクター
-      public PagingAction(int currentPage, int totalCount, int blockCount, int blockPage)
-      {
+      public PagingAction() {
+      }
+
+      // ページングコンストラクター
+      public void PagingAction1(int currentPage, int totalCount, int blockCount, int blockPage) {
             this.blockCount = blockCount;
             this.blockPage = blockPage;
             this.currentPage = currentPage;
@@ -99,6 +102,89 @@ public class PagingAction
 
             }
       }
+      public void cmtPagingAction(int currentPageCmt, int totalCount, int blockCount, int blockPage) {
+    	  this.blockCount = blockCount;
+          this.blockPage = blockPage;
+          this.currentPage = currentPageCmt;
+          this.totalCount = totalCount;
+
+          // 全ページ数
+          totalPage = (int)Math.ceil((double) totalCount / blockCount);
+
+          if(totalPage == 0){
+          	totalPage = 1;
+          }
+
+          // 現在ページが全ページ数より大きければ、全ページ数で設定
+          if(currentPage > totalPage){
+          	currentPage = totalPage;
+          }
+
+          // 現在ページの最初と最後の掲示物の番号を取得
+          startCount = (currentPage - 1) * blockCount;
+          endCount = startCount + blockCount - 1;
+
+          // 最初ページと最後ページを取得
+          startPage = (int)((currentPage - 1) / blockPage) * blockPage + 1;
+          endPage = startPage + blockPage - 1;
+
+          // 最後ページが全ページ数より大きければ、全ページ数で設定
+          if(endPage > totalPage) {
+          	endPage = totalPage;
+          }
+          // ページングHTML
+          pagingHtml = new StringBuffer();
+
+          if(currentPage > blockPage) {
+	            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+	                     + (1) + ">");
+	            pagingHtml.append("最初へ");
+	            pagingHtml.append("</a>");
+	            pagingHtml.append("&nbsp;&nbsp;");
+
+	            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+	                     + (startPage - 1) + ">");
+	            pagingHtml.append("前へ");
+	            pagingHtml.append("</a>");
+          }
+          pagingHtml.append("&nbsp;&nbsp;");
+
+          // ページ番号、現在ページは赤色で表示し、リンクを除去
+          for(int i = startPage; i <= endPage; i++) {
+            if(i > totalPage) {
+          	  break;
+            }
+            if(i == currentPage) {
+              pagingHtml.append("<b> <font color='#d31900' style="+ "'    margin-left: 9px;text-decoration: underline;'"+">");
+              pagingHtml.append(i);
+              pagingHtml.append("</font></b>");
+            }
+            else {
+              pagingHtml.append("&nbsp;<a style=" +"'margin-left: 9px;font-size: 14px;font-weight: bold;color:#333;'" + "href='../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt=");
+              pagingHtml.append(i);
+              pagingHtml.append("'>");
+              pagingHtml.append(i);
+              pagingHtml.append("</a>");
+            }
+            pagingHtml.append("");
+          }
+          pagingHtml.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+
+          if(totalPage - startPage >= blockPage) {
+            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+                   + (endPage + 1) + ">");
+            pagingHtml.append("次へ");
+            pagingHtml.append("</a>");
+
+            pagingHtml.append("&nbsp;&nbsp;");
+            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+	                     + (totalPage) + ">");
+            pagingHtml.append("最後へ");
+            pagingHtml.append("</a>");
+
+          }
+      }
+
 
 	public int getCurrentPage() {
 		return currentPage;

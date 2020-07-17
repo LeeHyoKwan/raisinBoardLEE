@@ -8,14 +8,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.raisin.action.BaseAction;
+import com.raisin.constants.CommonContants;
+import com.raisin.manager.MessageManager;
+import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
 import com.raisin.model.dto.CommentDTO;
-import com.raisin.model.dto.ReplyDTO;
+import com.raisin.model.dto.VoteDTO;
 import com.raisin.model.vo.BoardVO;
 import com.raisin.model.vo.PagingVO;
 import com.raisin.service.BoardService;
 import com.raisin.service.CommentService;
 import com.raisin.service.ReplyService;
+import com.raisin.service.VoteService;
 
 /**
  * 記事詳細アクションクラス
@@ -37,7 +41,7 @@ public class BoardViewAction extends BaseAction {
 
 	private CommentDTO commentDto;
 
-	private ReplyDTO replyDto;
+	private VoteDTO voteDto;
 
 	private BoardService service;
 
@@ -45,13 +49,13 @@ public class BoardViewAction extends BaseAction {
 
 	private ReplyService replyService;
 
+	private VoteService voteService;
+
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
 	private List<BoardDTO> allList = new ArrayList<BoardDTO>();
 
 	private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
-
-	private List<ReplyDTO> replytList = new ArrayList<ReplyDTO>();
 
 
 	/** コンストラクタ */
@@ -68,12 +72,12 @@ public class BoardViewAction extends BaseAction {
 			replyService = new ReplyService();
 		}
 
-		if (commentDto == null) {
-			commentDto = new CommentDTO();
+		if (voteService == null) {
+			voteService = new VoteService();
 		}
 
-		if (replyDto == null) {
-			replyDto = new ReplyDTO();
+		if (commentDto == null) {
+			commentDto = new CommentDTO();
 		}
 
 		if (boardVO == null) {
@@ -102,8 +106,6 @@ public class BoardViewAction extends BaseAction {
 			commentDto.setBoardid(boardDto.getBoardid());
 			commentList = commentService.getComment(commentDto);
 
-//			replyDto.setBoardid(Integer.parseInt(boardDto.getBoardid()));
-//			replytList = replyService.getReply(replyDto);
 			final String selBoardid = boardDto.getBoardid();
 
 			// 全掲示板取得（下段）
@@ -113,6 +115,7 @@ public class BoardViewAction extends BaseAction {
 			service.getBoardCount(boardDto);
 			super.setPaging(boardDto, pagingVO);
 
+			commentList = super.setPagingCmt(commentList, pagingVO);
 			// 該当掲示物の番号設定
 			boardDto.setBoardid(selBoardid);
 
@@ -152,7 +155,28 @@ public class BoardViewAction extends BaseAction {
 	public String voteAction() throws Exception {
 		logger.debug("---------------- start {}.{} ----------------", "BoardViewAction", "voteUp");
 		try {
-			service.updateVotecount(boardDto.getBoardid(),boardVO.getVoteKbn());
+			AccountDTO account = super.getSessionUser();
+			String voteCountUp = "false";
+			String voteCountDown = "false";
+			voteDto = voteService.selectVoteObj(boardDto.getBoardid(),account.getUserid());
+			final String voteKbn = boardVO.getVoteKbn();
+			if (voteDto == null) {
+				if ("up".equals(voteKbn)) {
+					voteCountUp = "true";
+				} else {
+					voteCountDown = "true";
+				}
+				voteService.insertVote(boardDto.getBoardid(),account.getUserid(),voteCountUp,voteCountDown);
+			} else {
+				voteCountUp = voteDto.getVoteCountUp();
+				voteCountDown = voteDto.getVoteCountDown();
+
+				if("true".equals(voteCountUp) || "true".equals(voteCountDown)) {
+					String errMsg = MessageManager.getMessage(CommonContants.MESSAGE_BOARD_VOTE_REQUIRE);
+					boardVO.setErrMessage(errMsg);
+					return INPUT;
+				}
+			}
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -185,6 +209,14 @@ public class BoardViewAction extends BaseAction {
 		this.boardDto = boardDto;
 	}
 
+	public VoteDTO getVoteDto() {
+		return voteDto;
+	}
+
+	public void setVoteDto(VoteDTO voteDto) {
+		this.voteDto = voteDto;
+	}
+
 	public List<CommentDTO> getCommentList() {
 		return commentList;
 	}
@@ -193,24 +225,8 @@ public class BoardViewAction extends BaseAction {
 		this.commentList = commentList;
 	}
 
-	public List<ReplyDTO> getReplytList() {
-		return replytList;
-	}
-
-	public void setReplytList(List<ReplyDTO> replytList) {
-		this.replytList = replytList;
-	}
-
 	public CommentDTO getCommentDto() {
 		return commentDto;
-	}
-
-	public ReplyDTO getReplyDto() {
-		return replyDto;
-	}
-
-	public void setReplyDto(ReplyDTO replyDto) {
-		this.replyDto = replyDto;
 	}
 
 	public void setCommentDto(CommentDTO commentDto) {

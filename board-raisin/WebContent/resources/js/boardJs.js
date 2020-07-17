@@ -161,12 +161,34 @@ function replyOpen(elem,replyCount) {
 		$('.reply_div').css('display', 'none');
 	}
 }
-
+function userKeyPressReply(elem,commentid,flag){
+	if (window.event.keyCode == 13) {
+		event.returnValue=false;
+		if (flag == 'replyInsert') {
+			onClickReplyInsert(elem, commentid);
+		}
+	} else {
+		return;
+	}
+}
 function onClickReplyInsert(elem, commentid){
-	const content = $(elem).parent().children()[0].value;
+	var content = $(elem).parent().children()[0].value;
 	if(!onClickReplySaveChk(content)){
 		return false;
 	}
-	document.boardView_form.action = "../reply/replyWriteAction?replyDto.commentid="+commentid+"+ &replyDto.content=" + content+"";
+	content = encodeURIComponent(content);
+	var url = "../reply/replyWriteAction?replyDto.commentid="+commentid+"+ &replyDto.content=" + content+""
+	document.boardView_form.action = url;
 	document.boardView_form.submit();
 }
+
+//function voteClick(voteKbn) {
+//		$.ajax({
+//			url: "../board/voteAction?boardVO.voteKbn="+voteKbn+""",
+//            type: "POST",
+//            data: {
+//                no: ${content.board_no},
+//                id: '${id}'
+//            },
+//		})
+//}

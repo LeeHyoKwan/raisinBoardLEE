@@ -62,7 +62,7 @@ $(function(){
 				<table id="boardTable"></table>
 				<table class="page_table">
 					<tr>
-						<td colspan = "5">
+						<td>
 							<s:property value="pagingVO.pagingHtml"  escapeHtml = "false" />
 						</td>
 					</tr>

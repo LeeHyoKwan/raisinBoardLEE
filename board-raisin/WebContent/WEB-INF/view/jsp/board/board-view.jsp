@@ -180,7 +180,7 @@ $(function(){
 										<tr>
 										<td colspan= 4>
 											<div class="reply_div" style="height:160px; width:1020px; background: #fafafa; border: 1px solid #ddd;float: right; display: none;">
-												<textarea style="width:998px; height:100px" class="cmt_txta" id="reply" maxlength="400"></textarea>
+												<textarea style="width:998px; height:100px" class="cmt_txta" id="reply" maxlength="400" onkeypress = "userKeyPressReply(this,<s:property value = "commentid" />,'replyInsert')"></textarea>
 												<button class="view_btn" onclick = "onClickReplyInsert(this,<s:property value = "commentid" />)" style="margin-right: 10px; float:right; margin-top: -9px;"
 													type="button" id="btn_comment_insert">投稿</button>
 											</div>
@@ -195,13 +195,21 @@ $(function(){
 								    	</s:else>
 												<td colspan= 4>
 													<div class="reply_div" style="height:160px; width:1020px; background: #fafafa; border: 1px solid #ddd;float: right; display: none;">
-														<textarea style="width:998px; height:100px" class="cmt_txta" id="reply" maxlength="400"></textarea>
+														<textarea style="width:998px; height:100px" class="cmt_txta" id="reply" maxlength="400" onkeypress = "userKeyPressReply(this,<s:property value = "commentid" />,'replyInsert')"></textarea>
 														<button class="view_btn" onclick = "onClickReplyInsert(this,<s:property value = "commentid" />)" style="margin-right: 10px; float:right; margin-top: -9px;"
 															type="button" id="btn_comment_insert">投稿</button>
 													</div>
 													<s:if test="replyCount == replyid">
-														<div style="padding:5px; margin-bottom:10px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: -5px;">
+														<s:if test="#stat.index==0">
+															<div style="padding:5px; margin-bottom:10px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: 10px;">
+														</s:if>
+														<s:else>
+															<div style="padding:5px; margin-bottom:10px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: -5px;">
+														</s:else>
 													</s:if>
+													<s:elseif test="#stat.index==0">
+														<div style="padding:5px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: 10px;">
+													</s:elseif>
 													<s:else>
 														<div style="padding:5px; font-size: 13px; background: #fafafa; border: 1px solid #ddd;width: 1020px;float: right;margin-top: -5px;">
 													</s:else>
@@ -249,9 +257,15 @@ $(function(){
 								</s:iterator>
 							</table>
 						</div>
-						<s:set var="commentSize"><s:label name="boardDto.commentCount" /></s:set>
-						<s:if test="%{#commentSize!=0}">
-							<div style="height:69px">
+						<s:if test="%{boardDto.commentCount !=0}">
+							<div style="display: table-cell; vertical-align: middle; height: 50px; width: 1051px;">
+								<table class="page_table">
+									<tr>
+										<td>
+											<s:property value="pagingVO.pagingHtmlCmt"  escapeHtml = "false" />
+										</td>
+									</tr>
+								</table>
 							</div>
 						</s:if>
 						<!-- コメント入力欄 -->
@@ -288,7 +302,7 @@ $(function(){
 		<table id="boardTable"></table>
 			<table class="page_table">
 				<tr>
-					<td colspan = "5">
+					<td>
 						<s:property value = "pagingVO.pagingHtml"  escapeHtml = "false" />
 					</td>
 				</tr>
@@ -351,5 +365,8 @@ $(function(){
 <div id="dialogCommentDeleteList" style="display:none;">
    <p>コメントを削除しますか?</p>
 </div>
+<s:if test="boardVO.errMessage != null">
+	<script>alert('<s:property value="boardVO.errMessage"/>');</script>
+</s:if>
 </body>
 </html>
