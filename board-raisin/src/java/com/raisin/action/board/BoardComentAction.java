@@ -10,8 +10,10 @@ import com.raisin.action.BaseAction;
 import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
 import com.raisin.model.dto.CommentDTO;
+import com.raisin.model.dto.ReplyDTO;
 import com.raisin.model.vo.PagingVO;
 import com.raisin.service.CommentService;
+import com.raisin.service.ReplyService;
 
 /**
  * 記事コマンドアクションクラス
@@ -29,7 +31,11 @@ public class BoardComentAction extends BaseAction {
 
 	private CommentDTO commentDto;
 
+	private ReplyDTO replyDto;
+
 	private CommentService service;
+
+	private ReplyService replyService;
 
 	private PagingVO pagingVO;
 
@@ -42,6 +48,14 @@ public class BoardComentAction extends BaseAction {
 	public BoardComentAction() {
 		if (service == null) {
 			service = new CommentService();
+		}
+
+		if (replyService == null) {
+			replyService = new ReplyService();
+		}
+
+		if (replyDto == null) {
+			replyDto = new ReplyDTO();
 		}
 	}
 
@@ -56,7 +70,7 @@ public class BoardComentAction extends BaseAction {
 		} finally {
 			logger.info("---------------- end {}.{} ----------------", "BoardComentAction", "execute");
 		}
-		return SUCCESS;
+		return super.isAuthority(commentDto.getUserid());
 	}
 
 	public String writeAction() throws Exception {
@@ -86,6 +100,9 @@ public class BoardComentAction extends BaseAction {
 		try {
 			// コマンド削除
 			service.deleteBoard(commentDto);
+			replyDto.setBoardid(Integer.parseInt(commentDto.getBoardid()));
+			replyDto.setCommentid(Integer.parseInt(commentDto.getCommentid()));
+			replyService.deleteReply(replyDto);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -101,7 +118,7 @@ public class BoardComentAction extends BaseAction {
 			// ユーザーセッション情報
 			AccountDTO account = super.getSessionUser();
 			commentDto.setModiuser(account.getUsername());
-			// コマンド削除
+			// コマンド更新
 			service.updateBoard(commentDto);
 		} catch (Exception e) {
 			logger.error(e, e);

@@ -39,6 +39,9 @@ public class BoardListAction extends BaseAction {
 
 	private List<BoardDTO> list = new ArrayList<BoardDTO>();
 
+	private int rowCountTest;
+	private int pagingCountTest;
+
 	/** コンストラクタ */
 	public BoardListAction() {
 		if (service == null) {
@@ -64,6 +67,10 @@ public class BoardListAction extends BaseAction {
 			list = service.getBoard(boardDto);
 			service.getBoardCount(boardDto);
 			super.setPaging(boardDto, pagingVO);
+
+
+			rowCountTest = boardDto.getRowCount();
+			pagingCountTest = rowCountTest/10;
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;
@@ -158,5 +165,22 @@ public class BoardListAction extends BaseAction {
 	public void setPagingVO(PagingVO pagingVO) {
 		this.pagingVO = pagingVO;
 	}
+
+	public int getRowCountTest() {
+		return rowCountTest;
+	}
+
+	public void setRowCountTest(int rowCountTest) {
+		this.rowCountTest = rowCountTest;
+	}
+
+	public int getPagingCountTest() {
+		return pagingCountTest;
+	}
+
+	public void setPagingCountTest(int pagingCountTest) {
+		this.pagingCountTest = pagingCountTest;
+	}
+
 
 }

@@ -25,6 +25,7 @@
 		<action name = "commentFormAction" class="com.raisin.action.board.BoardComentAction" method="execute">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
+			<result name="input" type="redirect">/board/viewForm?boardDto.boardid=${commentDto.boardid}</result>
 			<result name="success">/WEB-INF/view/jsp/board/comment-write.jsp</result>
 		</action>
 

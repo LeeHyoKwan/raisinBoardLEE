@@ -13,6 +13,7 @@ import com.raisin.manager.MessageManager;
 import com.raisin.model.dto.AccountDTO;
 import com.raisin.model.dto.BoardDTO;
 import com.raisin.model.dto.CommentDTO;
+import com.raisin.model.dto.ReplyDTO;
 import com.raisin.model.dto.VoteDTO;
 import com.raisin.model.vo.BoardVO;
 import com.raisin.model.vo.PagingVO;
@@ -40,6 +41,8 @@ public class BoardViewAction extends BaseAction {
 	private PagingVO pagingVO;
 
 	private CommentDTO commentDto;
+
+	private ReplyDTO replyDto;
 
 	private VoteDTO voteDto;
 
@@ -80,6 +83,10 @@ public class BoardViewAction extends BaseAction {
 			commentDto = new CommentDTO();
 		}
 
+		if (replyDto == null) {
+			replyDto = new ReplyDTO();
+		}
+
 		if (boardVO == null) {
 			boardVO = new BoardVO();
 		}
@@ -93,14 +100,14 @@ public class BoardViewAction extends BaseAction {
 	public String execute() throws Exception {
 		logger.debug("---------------- start {}.{} ----------------", "BoardViewAction", "execute");
 		try {
+			// 掲示物の詳細情報設定
+			boardDto = service.getBoardObj(boardDto);
+
 			// 初期リストから照会した場合照会数をカウントする
 			if ("view".equals(boardVO.getDisplayType())) {
 				// 照会カウンター更新
 				service.updateBoardcount(boardDto);
 			}
-
-			// 掲示物の詳細情報設定
-			boardDto = service.getBoardObj(boardDto);
 
 			//commentデータを取得し、リストに保存
 			commentDto.setBoardid(boardDto.getBoardid());
@@ -115,7 +122,9 @@ public class BoardViewAction extends BaseAction {
 			service.getBoardCount(boardDto);
 			super.setPaging(boardDto, pagingVO);
 
-			commentList = super.setPagingCmt(commentList, pagingVO);
+			if (boardDto.getCommentCount() != 0) {
+				commentList = super.setPagingCmt(commentList, pagingVO, selBoardid);
+			}
 			// 該当掲示物の番号設定
 			boardDto.setBoardid(selBoardid);
 
@@ -131,9 +140,15 @@ public class BoardViewAction extends BaseAction {
 	public String writeForm() throws Exception {
 		logger.debug("---------------- start {}.{} ----------------", "BoardViewAction", "writeForm");
 		// 掲示物の詳細情報設定
-		boardDto = service.getBoardObj(boardDto);
-		logger.debug("---------------- end {}.{} ----------------", "BoardViewAction", "writeForm");
-		return SUCCESS;
+		try {
+			boardDto = service.getBoardObj(boardDto);
+		} catch (Exception e) {
+			logger.error(e, e);
+			throw e;
+		} finally {
+			logger.debug("---------------- end {}.{} ----------------", "BoardViewAction", "writeForm");
+		}
+		return super.isAuthority(boardDto.getUserid());
 	}
 
 	public String deleteAction() throws Exception {
@@ -142,7 +157,9 @@ public class BoardViewAction extends BaseAction {
 			//削除処理
 			service.deleteBoard(boardDto);
 			commentDto.setBoardid(boardDto.getBoardid());
+			replyDto.setBoardid(Integer.parseInt(boardDto.getBoardid()));
 			commentService.deleteBoard(commentDto);
+			replyService.deleteReply(replyDto);
 		} catch (Exception e) {
 			logger.error(e, e);
 			throw e;

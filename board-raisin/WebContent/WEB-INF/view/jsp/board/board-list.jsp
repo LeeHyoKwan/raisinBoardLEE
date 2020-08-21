@@ -123,6 +123,29 @@ $(function(){
 			</div>
 		</form>
 	</section>
+
+	<s:bean name="org.apache.struts2.util.Counter" var="testCounter">
+		<s:param name="first">0</s:param>
+		<s:param name="last"><s:property value='pagingCountTest'/></s:param>
+	</s:bean>
+	<s:iterator value="testCounter" status="stat">
+	<s:if test="#testCounter.current > 5">
+	</s:if>
+	<s:else>
+		<s:if test="pagingVO.currentPage == #testCounter.current ">
+			<font color="red">
+				<span>
+					<s:property value="#testCounter.current" />
+				</span>
+			</font>
+		</s:if>
+		<s:else>
+			<span>
+				<a href="#"><s:property value="#testCounter.current" /></a>
+			</span>
+		</s:else>
+	</s:else>
+	</s:iterator>
 </main>
 <div id="dialogDeleteList" style="display:none;">
    <p>削除しますか?</p>

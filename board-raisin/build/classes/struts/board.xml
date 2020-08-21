@@ -54,6 +54,7 @@
 		<action name = "editForm" class="com.raisin.action.board.BoardViewAction" method="writeForm">
 			<interceptor-ref name="loginChk"/>
 			<interceptor-ref name="params"/>
+			<result name="input" type="redirect">/board/index</result>
 			<result name="success">/WEB-INF/view/jsp/board/board-write.jsp</result>
 		</action>
 

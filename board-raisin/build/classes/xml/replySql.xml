@@ -63,9 +63,22 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		DELETE FROM
 			board_reply
 		WHERE
-			boardid = #boardid#
-			AND commentid = #commentid#
-			AND replyid = #replyid#
+			1 = 1
+			<dynamic>
+				<isNotNull property="boardid">
+						AND boardid = #boardid#
+				</isNotNull>
+			</dynamic>
+			<dynamic>
+				<isNotNull property="commentid">
+						AND commentid = #commentid#
+				</isNotNull>
+			</dynamic>
+			<dynamic>
+				<isNotEqual property="replyid" compareValue="0">
+						AND replyid = #replyid#
+				</isNotEqual>
+			</dynamic>
 	</delete>
 
 	<!-- board情報削除 -->
