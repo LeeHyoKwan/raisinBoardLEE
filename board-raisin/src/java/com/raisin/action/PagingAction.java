@@ -102,7 +102,7 @@ public class PagingAction
 
             }
       }
-      public void cmtPagingAction(int currentPageCmt, int totalCount, int blockCount, int blockPage) {
+      public void cmtPagingAction(int currentPageCmt, int totalCount, int blockCount, int blockPage, String boardid) {
     	  this.blockCount = blockCount;
           this.blockPage = blockPage;
           this.currentPage = currentPageCmt;
@@ -136,13 +136,13 @@ public class PagingAction
           pagingHtml = new StringBuffer();
 
           if(currentPage > blockPage) {
-	            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+	            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid="+ boardid +"&pagingVO.currentPageCmt="
 	                     + (1) + ">");
 	            pagingHtml.append("最初へ");
 	            pagingHtml.append("</a>");
 	            pagingHtml.append("&nbsp;&nbsp;");
 
-	            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+	            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid="+ boardid +"&pagingVO.currentPageCmt="
 	                     + (startPage - 1) + ">");
 	            pagingHtml.append("前へ");
 	            pagingHtml.append("</a>");
@@ -160,7 +160,7 @@ public class PagingAction
               pagingHtml.append("</font></b>");
             }
             else {
-              pagingHtml.append("&nbsp;<a style=" +"'margin-left: 9px;font-size: 14px;font-weight: bold;color:#333;'" + "href='../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt=");
+              pagingHtml.append("&nbsp;<a style=" +"'margin-left: 9px;font-size: 14px;font-weight: bold;color:#333;'" + "href='../board/viewForm.action?boardDto.boardid="+ boardid +"&pagingVO.currentPageCmt=");
               pagingHtml.append(i);
               pagingHtml.append("'>");
               pagingHtml.append(i);
@@ -171,13 +171,13 @@ public class PagingAction
           pagingHtml.append("&nbsp;&nbsp;&nbsp;&nbsp;");
 
           if(totalPage - startPage >= blockPage) {
-            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid="+ boardid +"&pagingVO.currentPageCmt="
                    + (endPage + 1) + ">");
             pagingHtml.append("次へ");
             pagingHtml.append("</a>");
 
             pagingHtml.append("&nbsp;&nbsp;");
-            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid=188&pagingVO.currentPageCmt="
+            pagingHtml.append("<a href=../board/viewForm.action?boardDto.boardid="+ boardid +"&pagingVO.currentPageCmt="
 	                     + (totalPage) + ">");
             pagingHtml.append("最後へ");
             pagingHtml.append("</a>");

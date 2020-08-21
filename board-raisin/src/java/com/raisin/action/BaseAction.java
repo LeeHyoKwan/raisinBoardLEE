@@ -74,6 +74,18 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	}
 
 	/**
+	 * ユーザー判断
+	 * @param account
+	 */
+	protected String isAuthority(String userid) {
+		AccountDTO account = getSessionUser();
+		if (!account.getUserid().equals(userid)) {
+			return INPUT;
+		}
+		return SUCCESS;
+	}
+
+	/**
 	 * ページング用LIMIT設定
 	 * @param account
 	 */
@@ -84,7 +96,6 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 		} else {
 			boardDto.setLimitStart(currentPage * 10 - 10);
 		}
-
 	}
 
 	/**
@@ -104,7 +115,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 	 * ページング処理
 	 * @param account
 	 */
-	protected List<CommentDTO> setPagingCmt(List<CommentDTO> list, PagingVO pagingVO) {
+	protected List<CommentDTO> setPagingCmt(List<CommentDTO> list, PagingVO pagingVO, String boardid) {
 		int totalCount = list.size();// 全掲示物数
 		// pagingAction オブジェクト生成7
 		PagingAction page = new PagingAction();
@@ -112,7 +123,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 		if (currentPage == 0) {
 			currentPage = totalCount;
 		}
-		page.cmtPagingAction(currentPage, totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage());
+		page.cmtPagingAction(currentPage, totalCount, pagingVO.getBlockCount(), pagingVO.getBlockPage(), boardid);
 
         // ページ html生成
         pagingVO.setPagingHtmlCmt(page.getPagingHtml().toString());
